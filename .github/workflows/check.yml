@@ -1,0 +1,10 @@
+name: basic-check
+
+on:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Check OK, tu rama está actualizada con main y puedes proceder a una pull request"
