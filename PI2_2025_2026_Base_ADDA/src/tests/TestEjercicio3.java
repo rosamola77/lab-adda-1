@@ -14,8 +14,6 @@ public class TestEjercicio3 {
 		testsEjercicio3Ap3();
 	}
 
-
-	public static int count = 0;
 	public static void testsEjercicio3Ap3() {
 		
 		String file = "ficheros\\PI2E3_DatosEntrada.txt";
