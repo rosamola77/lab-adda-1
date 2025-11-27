@@ -75,6 +75,9 @@ public class Ejercicio3 {
 				if (g.getEdgeTarget(c) != i) {
 					lsIn.add(g.getEdgeTarget(c));
 				}
+				if (g.getEdgeSource(c) != i) {
+					lsIn.add(g.getEdgeSource(c));
+				}
 			}
 			res.put(i, lsIn);                                                                                  //AÑADIR A RES CADA INVESTIGADOR CON SU LISTA 
 			col.put(i, lsCol);
