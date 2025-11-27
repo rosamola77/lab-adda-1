@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -84,15 +85,15 @@ public class Ejercicio3 {
 		}
 		
 		List<Colaboracion> top = new ArrayList<>();
-		for (List<Colaboracion> l : col.values()) {
-			top.add(l.get(0));
+		for (Entry<Investigador, List<Investigador>> l : res.entrySet()) {
+			top.add(g.getEdge(l.getKey(), l.getValue().get(0)));
 		}
 		
 		GraphColors.toDot(g,"ficheros/grafos/EJ3C.gv",
 				 v-> v.toString(),											// Etiqueta de vertices
 				 e-> e.getNColaboraciones().intValue()+"",					// Etiqueta de aristas
 				 v -> GraphColors.color(Color.black), 		                // Coloreado de vertices
-				 e -> GraphColors.colorIf(Color.black, top.contains(e)));	// Coloreado de aristas
+				 e -> GraphColors.colorIf(Color.blue, top.contains(e)));	// Coloreado de aristas
 		
         return res;
 	}

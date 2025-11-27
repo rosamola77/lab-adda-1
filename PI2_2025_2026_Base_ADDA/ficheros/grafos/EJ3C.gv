@@ -9,15 +9,15 @@ strict graph G {
   8 [ color="black" label="inv-8" ];
   9 [ color="black" label="inv-9" ];
   1 -- 6 [ label="3" ];
-  1 -- 2 [ color="black" label="5" ];
-  1 -- 4 [ color="black" label="7" ];
-  4 -- 7 [ color="black" label="6" ];
+  1 -- 2 [ color="blue" label="5" ];
+  1 -- 4 [ color="blue" label="7" ];
+  4 -- 7 [ color="blue" label="6" ];
   4 -- 5 [ label="3" ];
   4 -- 6 [ label="5" ];
-  5 -- 8 [ color="black" label="4" ];
-  6 -- 9 [ color="black" label="3" ];
-  6 -- 7 [ color="black" label="6" ];
-  7 -- 8 [ color="black" label="6" ];
+  5 -- 8 [ color="blue" label="4" ];
+  6 -- 9 [ color="blue" label="3" ];
+  6 -- 7 [ color="blue" label="6" ];
+  7 -- 8 [ color="blue" label="6" ];
   7 -- 9 [ label="2" ];
-  2 -- 3 [ color="black" label="1" ];
+  2 -- 3 [ color="blue" label="1" ];
 }
