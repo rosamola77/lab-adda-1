@@ -3,13 +3,16 @@ package ejercicio3;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Queue;
 import java.util.Set;
 import java.util.function.Predicate;
 
 import org.jgrapht.Graph;
+import org.jgrapht.Graphs;
 
 import us.lsi.colors.GraphColors;
 import us.lsi.colors.GraphColors.Color;
@@ -71,7 +74,7 @@ public class Ejercicio3 {
 			for (Colaboracion c : g.edgesOf(i)) {                                                              //RECORRER LAS ARISTAS DEL VERTICE Y METERLAS EN LA LISTA DE COLABS
 				lsCol.add(c);
 			}
-			lsCol.sort(cmp.reversed());                                                                                   //ORDENAR COLABS POR CMP
+			lsCol.sort(cmp.reversed());                                                                        //ORDENAR COLABS POR CMP
 			for (Colaboracion c : lsCol) {                                                                     //TRANSFORMAR LISTA DE COLABS ORDENADA EN LISTA ORDENADA DE INVESTIGADORES
 				if (g.getEdgeTarget(c) != i) {
 					lsIn.add(g.getEdgeTarget(c));
@@ -99,7 +102,59 @@ public class Ejercicio3 {
 	}
 	
 	public static Pair<Investigador,Investigador> getParMasLejano_E3D (Graph<Investigador,Colaboracion> g) {
-	   return null;  
+		
+		record Pareja(Investigador i1, Investigador i2, Integer d) {
+			
+			private static Pareja BFS(Graph<Investigador,Colaboracion> g, Investigador i, Investigador j) {
+				if (i.equals(j)) {
+					return new Pareja(i, j, 0);
+				}
+				
+				Map<Investigador, Integer> dist = new HashMap<>();
+			    Queue<Investigador> q = new LinkedList<>();
+
+			    dist.put(i, 0);
+			    q.add(i);
+
+			    while (!q.isEmpty()) {
+			        Investigador current = q.poll();
+			        int d = dist.get(current);
+
+			        for (Colaboracion edge : g.edgesOf(current)) {
+			            Investigador neighbor = Graphs.getOppositeVertex(g, edge, current);
+
+			            if (!dist.containsKey(neighbor)) {
+			                dist.put(neighbor, d + 1);
+			                q.add(neighbor);
+
+			                if (neighbor.equals(j)) {
+			                    int distanceInEdges = d + 1;
+			                    int distanceInVertices = Math.max(0, distanceInEdges - 1);
+			                    return new Pareja(i, j, distanceInVertices);
+			                }
+			            }
+			        }
+			    }
+			    return new Pareja(i, j, -1);
+			}
+			
+		}
+		
+		 
+		List<Pareja> list = new ArrayList<>();
+		Comparator<Pareja> cmp = Comparator.comparing(e -> e.d());
+		
+		
+		for (Investigador i : g.vertexSet()) {
+			List<Pareja> l = new ArrayList<>();
+			for (Investigador j : g.vertexSet()) {
+				l.add(Pareja.BFS(g, i, j));
+			}
+			list.addAll(l);
+		}
+		list.sort(cmp.reversed());
+		Pair<Investigador, Investigador> res = new Pair<Investigador, Investigador>(list.getFirst().i1, list.getFirst().i2);
+	   return res;  
 		
 	}
 	
