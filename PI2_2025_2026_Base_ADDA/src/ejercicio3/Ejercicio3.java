@@ -1,6 +1,7 @@
 package ejercicio3;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -138,6 +139,42 @@ public class Ejercicio3 {
 			    return new Pareja(i, j, -1);
 			}
 			
+			private static List<Colaboracion> getCamino(Graph<Investigador,Colaboracion> g, Investigador i, Investigador j) {
+				List<Colaboracion> camino = new ArrayList<>();
+				if (i.equals(j)) return camino;
+				
+				Map<Investigador, Investigador> pred = new HashMap<>();
+			    Queue<Investigador> q = new LinkedList<>();
+
+			    pred.put(i, null);
+			    q.add(i);
+
+			    while (!q.isEmpty()) {
+			        Investigador current = q.poll();
+
+			        for (Colaboracion edge : g.edgesOf(current)) {
+			            Investigador neighbor = Graphs.getOppositeVertex(g, edge, current);
+
+			            if (!pred.containsKey(neighbor)) {
+			                pred.put(neighbor, current);
+			                q.add(neighbor);
+
+			                if (neighbor.equals(j)) {
+			                    Investigador step = j;
+			                    while (pred.get(step) != null) {
+			                        Investigador previous = pred.get(step);
+			                        camino.add(g.getEdge(previous, step));
+			                        step = previous;
+			                    }
+			                    Collections.reverse(camino);
+			                    return camino;
+			                }
+			            }
+			        }
+			    }
+			    return camino;
+			}
+			
 		}
 		
 		 
@@ -154,8 +191,14 @@ public class Ejercicio3 {
 		}
 		list.sort(cmp.reversed());
 		Pair<Investigador, Investigador> res = new Pair<Investigador, Investigador>(list.getFirst().i1, list.getFirst().i2);
-	   return res;  
 		
+		GraphColors.toDot(g,"ficheros/grafos/EJ3D.gv",
+				 v-> v.toString(),																						// Etiqueta de vertices
+				 e-> e.getNColaboraciones().intValue()+"",																// Etiqueta de aristas
+				 v -> GraphColors.color(Color.black), 		                											// Coloreado de vertices
+				 e -> GraphColors.colorIf(Color.magenta, Pareja.getCamino(g, res.first(), res.second()).contains(e)));	// Coloreado de aristas
+	
+	   return res;  
 	}
 	
 	public static List<Set<Investigador>> getReuniones_E3E (Graph<Investigador,Colaboracion> g) {
