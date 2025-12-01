@@ -9,16 +9,44 @@ import java.util.stream.IntStream;
 import us.lsi.common.List2;
 import us.lsi.streams.Stream2;
 
+/**
+ * SolucionTareasProcesadoresNoIncremental
+ *
+ * <p>Implementación no incremental de {@link SolucionTareasProcesadores}.
+ * Calcula las cargas de los procesadores bajo demanda sumando las
+ * duraciones de las tareas asignadas.</p>
+ *
+ * <p>Esta implementación es más simple pero menos eficiente que
+ * {@link SolucionTareasProcesadoresIncremental} para operaciones frecuentes.</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see SolucionTareasProcesadores
+ * @see SolucionTareasProcesadoresIncremental
+ */
 public class SolucionTareasProcesadoresNoIncremental implements SolucionTareasProcesadores  {
 
-
+	/** Número de procesadores disponibles. */
 	static Integer numeroDeProcesadores;
+	
+	/** Lista de tareas asignadas a cada procesador. */
 	private List<List<Tarea>> tareasEnProcesador;
 
+	/**
+	 * Constructor que crea una solución a partir de una asignación existente.
+	 *
+	 * @param tareasEnProcesador lista de tareas por procesador
+	 */
 	SolucionTareasProcesadoresNoIncremental(List<List<Tarea>> tareasEnProcesador) {
 		this.tareasEnProcesador = tareasEnProcesador;
 	}
 	
+	/**
+	 * Constructor que crea una solución vacía con el número de procesadores dado.
+	 *
+	 * @param np número de procesadores
+	 */
 	SolucionTareasProcesadoresNoIncremental(Integer np) {
 		super();
 		numeroDeProcesadores = np;
@@ -28,32 +56,34 @@ public class SolucionTareasProcesadoresNoIncremental implements SolucionTareasPr
 				.collect(Collectors.toList());
 	}
 
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#getObjetivo()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Double getObjetivo() {
 		return getTiempoDelMasCargado();
 	}
 
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#getTareasEnProcesador()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<List<Tarea>> getTareasEnProcesador() {
 		return tareasEnProcesador;
 	}
 
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#getTareasDeProcesador(int)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<Tarea> getTareasDeProcesador(int i) {
 		return tareasEnProcesador.get(i);
 	}
 	
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#getCargaProcesador(int)
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>Esta implementación calcula la suma de duraciones bajo demanda.</p>
 	 */
 	@Override
 	public Double getCargaProcesador(int i){
@@ -62,8 +92,11 @@ public class SolucionTareasProcesadoresNoIncremental implements SolucionTareasPr
 				.mapToDouble(t->t.getDuracion())
 				.sum();
 	}
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#getCargaProcesadores()
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>Esta implementación calcula todas las cargas bajo demanda.</p>
 	 */
 	@Override
 	public List<Double> getCargaProcesadores() {
@@ -72,24 +105,25 @@ public class SolucionTareasProcesadoresNoIncremental implements SolucionTareasPr
 				 .boxed()
 				 .collect(Collectors.toList());		
 	}
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#addTareaAProcesador(java.lang.Integer, java.lang.Integer)
+	
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void addTareaAProcesador(Integer p, Integer t) {
 		this.tareasEnProcesador.get(p).add(Tarea.tareas.get(t));
 	}
 	
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#removeTareaAProcesador(java.lang.Integer, java.lang.Integer)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void removeTareaAProcesador(Integer p, Integer t) {
 		this.tareasEnProcesador.get(p).remove(Tarea.tareas.get(t));
 	}
 	
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#getTiempoDelMasCargado()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Double getTiempoDelMasCargado() {
@@ -99,8 +133,8 @@ public class SolucionTareasProcesadoresNoIncremental implements SolucionTareasPr
 				.getAsDouble();
 	}
 	
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#copy()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public SolucionTareasProcesadores copy() {
@@ -109,8 +143,8 @@ public class SolucionTareasProcesadoresNoIncremental implements SolucionTareasPr
 				   .collect(Collectors.toList()));
 	}
 	
-	/* (non-Javadoc)
-	 * @see us.lsi.bt.tareasyprocesadores.SolucionTareasProcesadores#nuevoObjetivo(java.lang.Integer, java.lang.Integer)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Double nuevoObjetivo(Integer p, Integer t) {
@@ -119,6 +153,11 @@ public class SolucionTareasProcesadoresNoIncremental implements SolucionTareasPr
 		return ls.stream().max(Comparator.naturalOrder()).get();
 	}
 	
+	/**
+	 * Devuelve una representación en cadena de la solución.
+	 *
+	 * @return representación textual con las tareas por procesador y sus cargas
+	 */
 	@Override
 	public String toString() {
 		var s = Stream2.enumerate(this.getTareasEnProcesador().stream());

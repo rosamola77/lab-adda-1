@@ -10,19 +10,48 @@ import us.lsi.common.Files2;
 import us.lsi.common.List2;
 import us.lsi.common.Set2;
 
-
-
+/**
+ * DatosAfinidad
+ *
+ * <p>Clase que gestiona los datos globales para el problema de asignaci√≥n
+ * de clientes a trabajadores maximizando la afinidad. Mantiene las listas
+ * de trabajadores y clientes disponibles.</p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * DatosAfinidad datos = DatosAfinidad.create("clientes.txt");
+ * List<Cliente> clientes = DatosAfinidad.clientes;
+ * List<String> trabajadores = DatosAfinidad.trabajadores;
+ * }</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see Cliente
+ * @see SolucionAfinidad
+ */
 public class DatosAfinidad {
 	
+	/** Lista de nombres de trabajadores disponibles. */
 	public static List<String> trabajadores;
+	
+	/** Lista de clientes a atender. */
 	public static List<Cliente> clientes;	
 	
+	/**
+	 * Constructor privado.
+	 */
 	private DatosAfinidad() {
 			
 	}	
+	
 	/**
-	 * Define un problemaAfinidad de ejemplo con 8 clientes y 3 trabajadores
-	 * @return Un problema de ejemplo
+	 * Crea un problema de afinidad de ejemplo con 8 clientes y 3 trabajadores.
+	 *
+	 * <p>Los clientes de ejemplo tienen distintas franjas horarias y
+	 * preferencias de trabajadores.</p>
+	 *
+	 * @return una nueva instancia de {@code DatosAfinidad} con datos de ejemplo
 	 */
 	public static DatosAfinidad createEjemplo(){
 		clientes= List2.of(
@@ -43,15 +72,15 @@ public class DatosAfinidad {
 	}
 	
 	/**
-	 * Define un ProblemaAfinidad cogiendo los datos de un fichero de texto.
-	 * 
-	 * Cada lÌnea del fichero de texto tendr· la estructura:
-	 * nombreCliente, franjaHoraria, trabajadororesAfines
-	 * 
-	 * Por su lado, trabajadoresAfines ser·n los nombres de los trabajadores separados por ;
-	 * 
-	 * @param file El archivo para leer los datos
-	 * @return El problema creado
+	 * Crea un problema de afinidad leyendo los datos de un fichero de texto.
+	 *
+	 * <p>Cada l√≠nea del fichero debe tener la estructura:
+	 * {@code nombreCliente,franjaHoraria,trabajadoresAfines}</p>
+	 *
+	 * <p>Los trabajadores afines se separan por punto y coma (;).</p>
+	 *
+	 * @param file ruta del fichero con los datos
+	 * @return una nueva instancia de {@code DatosAfinidad}
 	 */
 	public static DatosAfinidad create(String file){
 		Set<String> trab= new HashSet<>();			
