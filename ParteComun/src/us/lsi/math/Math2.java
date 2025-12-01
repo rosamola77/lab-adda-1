@@ -11,13 +11,22 @@ import us.lsi.common.List2;
 import us.lsi.common.Preconditions;
 
 
-
+/**
+ * <p>Clase de utilidades matematicas.</p>
+ * 
+ * <p>Proporciona metodos para calculos matematicos, numeros aleatorios,
+ * primalidad, codificacion binaria y otras operaciones numericas.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class Math2 {
 
 	
 	/**
+	 * Devuelve una representacion simplificada de un Double.
+	 * 
 	 * @param d Un Double
-	 * @return Representaci�n simplificada de un Double 
+	 * @return Representacion simplificada (+, -, +valor, o valor)
 	 */
 	public static String simplify(Double d){
 		String s = "";

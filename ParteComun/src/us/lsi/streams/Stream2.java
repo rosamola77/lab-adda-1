@@ -40,8 +40,22 @@ import us.lsi.common.Preconditions;
 import us.lsi.common.Set2;
 import us.lsi.math.Math2;
 
+/**
+ * <p>Clase de utilidades para operaciones con Streams.</p>
+ * 
+ * <p>Proporciona metodos para crear, combinar y transformar streams
+ * de formas avanzadas como zip, enumerate, cartesian product y join.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class Stream2 {
 	
+	/**
+	 * Escribe un stream de strings a un fichero.
+	 * 
+	 * @param s Stream de strings
+	 * @param file Ruta del fichero
+	 */
 	public static void writeStream(Stream<String> s, String file) {
 		Iterable<String> it = ()->s.iterator();
 		try {

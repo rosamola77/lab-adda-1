@@ -15,8 +15,22 @@ import org.mozilla.universalchardet.UniversalDetector;
 
 import us.lsi.common.Preconditions;
 
+/**
+ * <p>Clase de utilidades para operaciones con ficheros.</p>
+ * 
+ * <p>Proporciona metodos para detectar codificacion de caracteres,
+ * leer y escribir ficheros de texto, y obtener rutas de ficheros.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class FileTools {
 	
+	/**
+	 * Detecta la codificacion de caracteres de un fichero.
+	 * 
+	 * @param file Ruta del fichero
+	 * @return Nombre de la codificacion detectada o cadena vacia si no se detecta
+	 */
 	public static String detectCharset(String file) {  
 		
 	    String encoding;  
