@@ -7,23 +7,56 @@ import java.util.function.Supplier;
 import org.jgrapht.Graph;
 import org.jgrapht.GraphType;
 
+/**
+ * CompleteGraphView
+ *
+ * <p>Vista de grafo completo que anade aristas virtuales entre todos
+ * los pares de vertices que no estan conectados en el grafo original.
+ * Las aristas virtuales se crean bajo demanda con un peso por defecto.</p>
+ *
+ * @param <V> tipo de los vertices
+ * @param <E> tipo de las aristas
+ *
+ * @author Miguel Toro
+ */
 public class CompleteGraphView<V, E> implements Graph<V, E> {
 
+	/** Grafo base. */
 	private Graph<V, E> graph;
+	/** Fabrica de aristas virtuales. */
 	private Supplier<E> edgeWeightFactory;
+	/** Peso por defecto de aristas virtuales. */
 	public Double weight = 2000.;
 	
+	/**
+	 * Crea una vista de grafo completo.
+	 *
+	 * @param <V> tipo de los vertices
+	 * @param <E> tipo de las aristas
+	 * @param graph grafo base
+	 * @param edgeWeightFactory fabrica de aristas
+	 * @return nueva vista de grafo completo
+	 */
 	public static <V, E> CompleteGraphView<V, E> of(Graph<V, E> graph, Supplier<E> edgeWeightFactory) {
 		return new CompleteGraphView<V, E>(graph, 
 				edgeWeightFactory);
 	}
 	
+	/**
+	 * Constructor privado.
+	 *
+	 * @param graph grafo base
+	 * @param edgeWeightFactory fabrica de aristas
+	 */
 	private CompleteGraphView(Graph<V, E> graph, Supplier<E> edgeWeightFactory) {
 		super();
 		this.graph = graph;
 		this.edgeWeightFactory = edgeWeightFactory;
 	}
 	
+	/**
+	 * Anade explicitamente todas las aristas faltantes.
+	 */
 	public void addEdges() {
 		Set<V> vertices = graph.vertexSet();
 		for (V v0 : vertices) {
@@ -82,6 +115,13 @@ public class CompleteGraphView<V, E> implements Graph<V, E> {
 		return graph.getAllEdges(arg0, arg1);
 	}
 
+	/**
+	 * Obtiene la arista entre dos vertices, creandola si no existe.
+	 *
+	 * @param v0 vertice origen
+	 * @param v1 vertice destino
+	 * @return la arista existente o una nueva virtual
+	 */
 	public E getEdge(V v0, V v1) {
 		E edge = null;
 		if(v0.equals(v1)) return null;

@@ -10,24 +10,77 @@ import org.jgrapht.Graph;
 import org.jgrapht.GraphType;
 
 
+/**
+ * SubGraphView
+ *
+ * <p>Vista de subgrafo que filtra vertices y aristas segun predicados.
+ * No crea una copia del grafo, sino que proporciona una vista filtrada
+ * del grafo original.</p>
+ *
+ * @param <V> tipo de los vertices
+ * @param <E> tipo de las aristas
+ * @param <G> tipo del grafo base
+ *
+ * @author Miguel Toro
+ */
 public class SubGraphView<V, E, G extends Graph<V,E>> implements Graph<V, E> {
 
+	/**
+	 * Crea una vista de subgrafo con filtros de vertices y aristas.
+	 *
+	 * @param <V> tipo de los vertices
+	 * @param <E> tipo de las aristas
+	 * @param <G> tipo del grafo
+	 * @param graph grafo base
+	 * @param vertices predicado para filtrar vertices
+	 * @param edges predicado para filtrar aristas
+	 * @return nueva vista de subgrafo
+	 */
 	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> of(G graph, Predicate<V> vertices, Predicate<E> edges) {
 		return  new SubGraphView<V, E, G>(graph, vertices, edges);
 	}
 	
+	/**
+	 * Crea una vista de subgrafo filtrando solo vertices.
+	 *
+	 * @param <V> tipo de los vertices
+	 * @param <E> tipo de las aristas
+	 * @param <G> tipo del grafo
+	 * @param graph grafo base
+	 * @param vertices predicado para filtrar vertices
+	 * @return nueva vista de subgrafo
+	 */
 	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> of(G graph, Predicate<V> vertices) {
 		return  new SubGraphView<V, E, G>(graph, vertices,e->true);
 	}
 	
+	/**
+	 * Crea una vista de subgrafo filtrando solo aristas.
+	 *
+	 * @param <V> tipo de los vertices
+	 * @param <E> tipo de las aristas
+	 * @param <G> tipo del grafo
+	 * @param graph grafo base
+	 * @param edges predicado para filtrar aristas
+	 * @return nueva vista de subgrafo
+	 */
 	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> ofEdges(G graph, Predicate<E> edges) {
 		return  new SubGraphView<V, E, G>(graph, v->true, edges);
 	}
 	
+	/** Grafo base. */
 	private G graph;
+	/** Predicado de filtrado de vertices. */
 	private Predicate<V> vertices;
+	/** Predicado de filtrado de aristas. */
 	private Predicate<E> edges;
 	
+	/**
+	 * Constructor con conjunto de vertices.
+	 *
+	 * @param graph grafo base
+	 * @param vertices conjunto de vertices a incluir
+	 */
 	private SubGraphView(G graph, Set<V> vertices) {
 		super();
 		this.graph = graph;
@@ -35,6 +88,13 @@ public class SubGraphView<V, E, G extends Graph<V,E>> implements Graph<V, E> {
 		this.edges = e->true;
 	}
 
+	/**
+	 * Constructor con predicados.
+	 *
+	 * @param graph grafo base
+	 * @param vertices predicado de vertices
+	 * @param edges predicado de aristas
+	 */
 	private SubGraphView(G graph, Predicate<V> vertices, Predicate<E> edges) {
 		super();
 		this.graph = graph;
