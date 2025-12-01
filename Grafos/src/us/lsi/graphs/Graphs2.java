@@ -22,18 +22,56 @@ import us.lsi.graphs.views.CompleteGraphView;
 import us.lsi.graphs.views.PathToGraph;
 import us.lsi.graphs.views.SubGraphView;
 
+/**
+ * <p>Clase de utilidades para operaciones con grafos JGraphT.</p>
+ * 
+ * <p>Proporciona metodos estaticos para crear grafos, encontrar vertices
+ * cercanos y lejanos, convertir entre tipos de grafos, crear subgrafos
+ * y vistas de grafos.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class Graphs2 {
 	
+	/**
+	 * Obtiene el peso de una arista entre dos vertices.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param graph El grafo
+	 * @param v1 Primer vertice
+	 * @param v2 Segundo vertice
+	 * @return El peso de la arista entre v1 y v2
+	 */
 	public static <V, E> Double weightOfEdge(Graph<V,E> graph, V v1, V v2) {
 		E e = graph.getEdge(v1,v2); 
 		Double w = graph.getEdgeWeight(e); 
 		return w;
 	}
 	
+	/**
+	 * Obtiene el vertice mas cercano a uno dado.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param graph El grafo
+	 * @param vertex Vertice de referencia
+	 * @return El vertice vecino mas cercano
+	 */
 	public static <V, E> V closestVertex(Graph<V,E> graph, V vertex) {
 		return closestVertex(graph,vertex,v->true);
 	}
 	
+	/**
+	 * Obtiene el vertice mas cercano a uno dado que cumpla un predicado.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param graph El grafo
+	 * @param vertex Vertice de referencia
+	 * @param p Predicado de filtrado
+	 * @return El vertice vecino mas cercano que cumple el predicado
+	 */
 	public static <V, E> V closestVertex(Graph<V,E> graph, V vertex, Predicate<V> p) {
 		return (Graphs.neighborSetOf(graph,vertex)).stream()
 				.filter(p)
@@ -41,10 +79,29 @@ public class Graphs2 {
 				.get();
 	}
 	
+	/**
+	 * Obtiene el vertice mas lejano a uno dado.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param graph El grafo
+	 * @param vertex Vertice de referencia
+	 * @return El vertice vecino mas lejano
+	 */
 	public static <V, E> V furthestVertex(Graph<V,E> graph, V vertex) {
 		return furthestVertex(graph,vertex,v->true);
 	}
 	
+	/**
+	 * Obtiene el vertice mas lejano a uno dado que cumpla un predicado.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param graph El grafo
+	 * @param vertex Vertice de referencia
+	 * @param p Predicado de filtrado
+	 * @return El vertice vecino mas lejano que cumple el predicado
+	 */
 	public static <V, E> V furthestVertex(Graph<V,E> graph, V vertex, Predicate<V> p) {
 		return (Graphs.neighborSetOf(graph,vertex)).stream()
 				.filter(p)
@@ -52,48 +109,136 @@ public class Graphs2 {
 				.get();
 	}
 	
+	/**
+	 * Crea un grafo simple no dirigido vacio.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @return Un nuevo grafo simple
+	 */
 	public static <V,E> SimpleGraph<V, E> simpleGraph() {
 		return new SimpleGraph<V,E>(null,null,false);
 	}
 	
+	/**
+	 * Crea un grafo simple no dirigido con proveedores.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param vs Proveedor de vertices
+	 * @param es Proveedor de aristas
+	 * @param weighted Si el grafo es ponderado
+	 * @return Un nuevo grafo simple
+	 */
     public static <V,E> SimpleGraph<V, E> simpleGraph(Supplier<V> vs, Supplier<E> es, boolean weighted) {
         return new SimpleGraph<V,E>(vs, es, weighted);
     }
     
+    /**
+     * Crea un grafo simple ponderado no dirigido vacio.
+     * 
+     * @param <V> Tipo de los vertices
+     * @param <E> Tipo de las aristas
+     * @return Un nuevo grafo ponderado
+     */
     public static <V,E> SimpleWeightedGraph<V, E> simpleWeightedGraph() {
 		return new SimpleWeightedGraph<>(null,null);
 	}
     
 
+    /**
+     * Crea un grafo simple ponderado no dirigido con proveedores.
+     * 
+     * @param <V> Tipo de los vertices
+     * @param <E> Tipo de las aristas
+     * @param vs Proveedor de vertices
+     * @param es Proveedor de aristas
+     * @return Un nuevo grafo ponderado
+     */
     public static <V,E> SimpleWeightedGraph<V, E> simpleWeightedGraph(Supplier<V> vs, Supplier<E> es) {
         return new SimpleWeightedGraph<>(vs, es);
     }
     
+    /**
+     * Crea un grafo simple dirigido vacio.
+     * 
+     * @param <V> Tipo de los vertices
+     * @param <E> Tipo de las aristas
+     * @return Un nuevo grafo dirigido
+     */
     public static <V,E> SimpleDirectedGraph<V, E> simpleDirectedGraph() {
 		return new SimpleDirectedGraph<>(null,null,false);
 	}
     
+    /**
+     * Anade un camino a un nuevo grafo dirigido.
+     * 
+     * @param <V> Tipo de los vertices
+     * @param <E> Tipo de las aristas
+     * @param gp Camino a anadir
+     * @return Grafo dirigido con el camino
+     */
     public static <V,E> SimpleDirectedGraph<V, E> addPathToGraph(GraphPath<V,E> gp) {
     	SimpleDirectedGraph<V, E> g = Graphs2.simpleDirectedGraph();
     	return PathToGraph.addPathToGraph(g, gp);
     }
     
+    /**
+     * Anade un camino a un grafo dirigido existente.
+     * 
+     * @param <V> Tipo de los vertices
+     * @param <E> Tipo de las aristas
+     * @param g Grafo destino
+     * @param gp Camino a anadir
+     * @return El grafo con el camino anadido
+     */
     public static <V,E> SimpleDirectedGraph<V, E> addPathToGraph(SimpleDirectedGraph<V,E> g, GraphPath<V,E> gp) {
     	return PathToGraph.addPathToGraph(g, gp);
     }
     
+    /**
+     * Crea un grafo simple dirigido ponderado vacio.
+     * 
+     * @param <V> Tipo de los vertices
+     * @param <E> Tipo de las aristas
+     * @return Un nuevo grafo dirigido ponderado
+     */
     public static <V,E> SimpleDirectedWeightedGraph<V, E> simpleDirectedWeightedGraph() {
 		return new SimpleDirectedWeightedGraph<>(null,null);
 	}
     
+    /**
+     * Crea un multigrafo dirigido ponderado vacio.
+     * 
+     * @param <V> Tipo de los vertices
+     * @param <E> Tipo de las aristas
+     * @return Un nuevo multigrafo dirigido ponderado
+     */
     public static <V,E> DirectedWeightedMultigraph<V,E> directedWeightedMultigraph() {
     	return new DirectedWeightedMultigraph<>(null,null);
     }
 
+    /**
+     * Obtiene los vertices de una arista.
+     * 
+     * @param <V> Tipo de los vertices
+     * @param <E> Tipo de las aristas
+     * @param graph El grafo
+     * @param edge La arista
+     * @return Conjunto con los dos vertices de la arista
+     */
 	public static <V,E> Set<V> getVertices(Graph<V,E> graph, E edge){
 		return Set.of(graph.getEdgeSource(edge),graph.getEdgeTarget(edge));
 	}
-		
+	
+	/**
+	 * Crea un grafo dirigido con las aristas invertidas.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param graph Grafo original
+	 * @return Grafo con todas las aristas invertidas
+	 */
 	public static <V, E> SimpleDirectedGraph<V, E> inversedDirectedGraph(SimpleDirectedGraph<V, E> graph){
 		SimpleDirectedGraph<V, E> gs = Graphs2.simpleDirectedGraph();
 		for (V v : graph.vertexSet()) {
@@ -108,6 +253,15 @@ public class Graphs2 {
 	}
 	
 	
+	/**
+	 * Convierte un grafo no dirigido ponderado en uno dirigido.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param graph Grafo no dirigido
+	 * @param edgeReverse Funcion para crear aristas inversas
+	 * @return Grafo dirigido ponderado equivalente
+	 */
 	public static <V, E> SimpleDirectedWeightedGraph<V, E> toDirectedWeightedGraph(SimpleWeightedGraph<V, E> graph,
 			Function<E, E> edgeReverse) {
 		SimpleDirectedWeightedGraph<V, E> gs = new SimpleDirectedWeightedGraph<V, E>(graph.getVertexSupplier(),
@@ -128,6 +282,14 @@ public class Graphs2 {
 		return gs;
 	}
 
+	/**
+	 * Convierte un grafo simple en uno dirigido.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param graph Grafo no dirigido
+	 * @return Grafo dirigido equivalente
+	 */
 	public static <V,E> SimpleDirectedGraph<V,E> toDirectedGraph(SimpleGraph<V,E> graph){
 		SimpleDirectedGraph<V,E> gs = 
 				new SimpleDirectedGraph<V,E>(
@@ -144,16 +306,50 @@ public class Graphs2 {
 		return gs;
 	}
 	
+	/**
+	 * Crea un subgrafo con vertices filtrados.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param <G> Tipo del grafo
+	 * @param graph Grafo original
+	 * @param pv Predicado para filtrar vertices
+	 * @param creator Proveedor del nuevo grafo
+	 * @return Subgrafo con los vertices que cumplen el predicado
+	 */
 	public static <V,E,G extends Graph<V,E>> G subGraphOfVertices(G graph, 
 			Predicate<V> pv,
 			Supplier<G> creator) {
 		return subGraph(graph,pv,null,creator);
 	}
 	
+	/**
+	 * Crea un subgrafo con aristas filtradas.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param <G> Tipo del grafo
+	 * @param graph Grafo original
+	 * @param pe Predicado para filtrar aristas
+	 * @param creator Proveedor del nuevo grafo
+	 * @return Subgrafo con las aristas que cumplen el predicado
+	 */
 	public static <V, E, G extends Graph<V, E>> G subGraphOfEdges(G graph, Predicate<E> pe, Supplier<G> creator) {
 		return subGraph(graph, null, pe, creator);
 	}
 	
+	/**
+	 * Crea un subgrafo con vertices y aristas filtrados.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param <G> Tipo del grafo
+	 * @param graph Grafo original
+	 * @param pv Predicado para filtrar vertices (null para todos)
+	 * @param pe Predicado para filtrar aristas (null para todas)
+	 * @param creator Proveedor del nuevo grafo
+	 * @return Subgrafo filtrado
+	 */
 	public static <V, E, G extends Graph<V, E>> G subGraph(G graph, Predicate<V> pv, Predicate<E> pe,
 			Supplier<G> creator) {
 
@@ -175,6 +371,19 @@ public class Graphs2 {
 		return r;
 	}
 
+	/**
+	 * Crea un grafo completo explicito a partir de uno existente.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param <G> Tipo del grafo
+	 * @param graph Grafo original
+	 * @param weight Peso por defecto para aristas nuevas
+	 * @param creator Proveedor del nuevo grafo
+	 * @param edgeCreator Proveedor de nuevas aristas
+	 * @param edgeWeight Funcion de peso para aristas
+	 * @return Grafo completo
+	 */
 	public static <V, E, G extends Graph<V, E>> G explicitCompleteGraph(
 			G graph, 
 			Double weight,
@@ -201,22 +410,72 @@ public class Graphs2 {
 		return r;
 	}
 	
+	/**
+	 * Crea una vista de grafo completo.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param g Grafo base
+	 * @param edgeWeightFactory Fabrica de aristas con peso
+	 * @return Vista de grafo completo
+	 */
 	public static <V, E> Graph<V, E> completeGraphView(Graph<V, E> g, Supplier<E> edgeWeightFactory) {
 			return CompleteGraphView.of(g, edgeWeightFactory);
 	}
 	
+	/**
+	 * Crea una vista de subgrafo.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param <G> Tipo del grafo
+	 * @param graph Grafo base
+	 * @param vertices Predicado para filtrar vertices
+	 * @param edges Predicado para filtrar aristas
+	 * @return Vista de subgrafo
+	 */
 	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> subGraphView(G graph, Predicate<V> vertices, Predicate<E> edges) {
 		return  SubGraphView.of(graph, vertices, edges);
 	}
 	
+	/**
+	 * Crea una vista de subgrafo filtrando solo vertices.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param <G> Tipo del grafo
+	 * @param graph Grafo base
+	 * @param vertices Predicado para filtrar vertices
+	 * @return Vista de subgrafo
+	 */
 	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> subGraphView(G graph, Predicate<V> vertices) {
 		return  SubGraphView.of(graph, vertices,e->true);
 	}
 	
+	/**
+	 * Crea una vista de subgrafo filtrando solo aristas.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param <G> Tipo del grafo
+	 * @param graph Grafo base
+	 * @param edges Predicado para filtrar aristas
+	 * @return Vista de subgrafo
+	 */
 	public static <V, E, G extends Graph<V,E>> SubGraphView<V, E, G> subGraphViewOfEdges(G graph, Predicate<E> edges) {
 		return  SubGraphView.of(graph, v->true, edges);
 	}
 
+	/**
+	 * Obtiene el vertice opuesto de una arista dado un vertice.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas (debe extender SimpleEdge)
+	 * @param graph El grafo
+	 * @param edge La arista
+	 * @param vertex El vertice conocido
+	 * @return El vertice opuesto
+	 */
 	public static <V, E extends SimpleEdge<V>> V getOppositeVertex(Graph<V, E> graph, E edge, V vertex) {
 		V r = null;
 		if (edge.source().equals(vertex)) r = edge.target();
@@ -225,6 +484,17 @@ public class Graphs2 {
 		return r;
 	}
 	
+	/**
+	 * Sustituye una arista por un camino en un grafo.
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
+	 * @param <G> Tipo del grafo
+	 * @param graph Grafo a modificar
+	 * @param edge Arista a sustituir
+	 * @param graphPath Camino de sustitucion
+	 * @return El grafo modificado
+	 */
 	public static <V, E, G extends Graph<V, E>> G sustituteEdge(G graph, E edge, GraphPath<V,E> graphPath) {
 		Graph<V,E> origin = graphPath.getGraph();
 		graph.removeEdge(edge);
@@ -235,12 +505,18 @@ public class Graphs2 {
 	}
 	
 	/**
+	 * Convierte un grafo no dirigido en uno dirigido para flujo.
+	 * 
+	 * <p>Los vertices fuente no tienen aristas de entrada y
+	 * los sumideros no tienen aristas de salida.</p>
+	 * 
+	 * @param <V> Tipo de los vertices
+	 * @param <E> Tipo de las aristas
 	 * @param graph Un grafo no dirigido
-	 * @param edgeReverse Una funci�n que produce una arista inversa con el mismo peso
-	 * @param sources Los v�rtices que ser�n fuentes
-	 * @param targets Los v�rtices que ser�n sumideros
-	 * @return Un grafo dirigido donde los v�rtices fuente no tienen aristas de entrada y 
-	 * los sumideros no tienen aristas de salida
+	 * @param edgeReverse Una funcion que produce una arista inversa con el mismo peso
+	 * @param sources Los vertices que seran fuentes
+	 * @param targets Los vertices que seran sumideros
+	 * @return Un grafo dirigido para problemas de flujo
 	 */
 	public static <V,E> SimpleDirectedWeightedGraph<V,E> toDirectedWeightedGraphFlow(
 			SimpleWeightedGraph<V,E> graph, 
