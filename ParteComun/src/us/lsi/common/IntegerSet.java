@@ -12,31 +12,54 @@ import us.lsi.streams.Collectors2;
 import us.lsi.streams.Stream2;
 
 /**
- * @author migueltoro
- *
- * Un conjunto de un rango de enteros
+ * <p>Un conjunto eficiente de enteros basado en BitSet.</p>
+ * 
+ * <p>Implementa la interfaz Set para enteros, utilizando internamente
+ * un BitSet para almacenar los elementos de forma compacta y eficiente.
+ * Permite operaciones de conjuntos como union, interseccion y diferencia.</p>
+ * 
+ * @author Miguel Toro
  */
 public class IntegerSet implements Set<Integer> {
 	
 	/**
+	 * Crea un IntegerSet vacio con limite inferior y numero de digitos especificados.
+	 * 
 	 * @param infLimit Limite inferior del conjunto de enteros
-	 * @param numDigits N�mero de digitos usados para representar el conjunto
-	 * @return Un RangeIntegerSet
+	 * @param numDigits Numero de digitos usados para representar el conjunto
+	 * @return Un nuevo IntegerSet vacio
 	 */
 	public static IntegerSet empty(Integer infLimit, Integer numDigits) {
 		return new IntegerSet(infLimit, numDigits);
 	}
 	
+	/**
+	 * Crea un IntegerSet vacio con valores por defecto.
+	 * 
+	 * @return Un nuevo IntegerSet vacio
+	 */
 	public static IntegerSet empty() {
 		return IntegerSet.empty(0, 10);
 	}
 	
+	/**
+	 * Crea un IntegerSet con los elementos especificados.
+	 * 
+	 * @param elems Elementos a incluir
+	 * @return Un nuevo IntegerSet con los elementos
+	 */
 	public static IntegerSet of(Integer... elems) {
 		IntegerSet r = IntegerSet.empty();
 		r.addAll(Arrays.asList(elems));
 		return r;
 	}
 	
+	/**
+	 * Crea un IntegerSet a partir de una coleccion.
+	 * 
+	 * @param elems Coleccion de elementos
+	 * @return Un nuevo IntegerSet con los elementos
+	 */
 	public static IntegerSet of(Collection<Integer> elems) {
 		IntegerSet r = IntegerSet.empty();
 		for(Integer e:elems) {
@@ -45,6 +68,13 @@ public class IntegerSet implements Set<Integer> {
 		return r;
 	}
 	
+	/**
+	 * Crea un IntegerSet con el rango [a, b).
+	 * 
+	 * @param a Limite inferior (incluido)
+	 * @param b Limite superior (excluido)
+	 * @return Un nuevo IntegerSet con el rango
+	 */
 	public static IntegerSet range(Integer a, Integer b) {
 		IntegerSet r = IntegerSet.empty();
 		IntStream.range(a,b).boxed().toList();
@@ -52,11 +82,26 @@ public class IntegerSet implements Set<Integer> {
 		return r;
 	}
 	
+	/**
+	 * Crea un IntegerSet con el rango [a, b) con paso c.
+	 * 
+	 * @param a Limite inferior (incluido)
+	 * @param b Limite superior (excluido)
+	 * @param c Paso
+	 * @return Un nuevo IntegerSet con el rango
+	 */
 	public static IntegerSet range(Integer a, Integer b, Integer c){		
 		return Stream2.range(a, b, c).boxed()
 			 .collect(Collectors2.toIntegerSet());
 	}	
 	
+	/**
+	 * Parsea un IntegerSet desde una cadena.
+	 * 
+	 * @param s Cadena con los elementos
+	 * @param sep Separadores a usar
+	 * @return Un nuevo IntegerSet
+	 */
 	public static IntegerSet parse(String s, String sep) {
 		IntegerSet r = IntegerSet.empty();
 		Arrays.stream(s.split("[" + sep + "]"))
@@ -66,6 +111,12 @@ public class IntegerSet implements Set<Integer> {
 		return r;
 	}
 	
+	/**
+	 * Parsea un IntegerSet desde un array de tokens.
+	 * 
+	 * @param tokens Array de cadenas con los valores
+	 * @return Un nuevo IntegerSet
+	 */
 	public static IntegerSet parse(String[] tokens) {
 		IntegerSet r = IntegerSet.empty();
 		Arrays.stream(tokens).filter(e -> e != null && e.length() > 0)
@@ -74,11 +125,19 @@ public class IntegerSet implements Set<Integer> {
 		return r;
 	}
 	
+	/**
+	 * Crea una copia de un IntegerSet.
+	 * 
+	 * @param s Conjunto a copiar
+	 * @return Una nueva copia del conjunto
+	 */
 	public static IntegerSet copy(IntegerSet s) {
 		return new IntegerSet(s);
 	}
 	
+	/** Limite inferior del rango de enteros */
 	private final Integer infLimit;
+	/** BitSet interno para almacenar los elementos */
 	private final BitSet bits;
 
 	private IntegerSet(Integer infLimit, Integer numDigits) {
