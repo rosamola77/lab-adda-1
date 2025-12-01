@@ -14,15 +14,74 @@ import us.lsi.tiposrecursivos.TLeaf;
 import us.lsi.tiposrecursivos.TNary;
 import us.lsi.tiposrecursivos.Tree;
 
+/**
+ * Ejercicio1
+ *
+ * <p>Proporciona utilidades para calcular el camino desde la raíz hasta una hoja
+ * que maximice el producto de los valores almacenados en los nodos. Se soportan
+ * árboles binarios ({@code BinaryTree<Integer>}) y árboles n-arios
+ * ({@code Tree<Integer>}).</p>
+ *
+ * <p>Los métodos están pensados para no modificar las estructuras originales y
+ * devuelven listas con los valores del camino raíz->hoja que maximizan el producto.</p>
+ *
+ * @author Álvaro Rosa
+ * @version 1.0
+ * @since 1.0
+ * @see us.lsi.tiposrecursivos.BinaryTree
+ * @see us.lsi.tiposrecursivos.Tree
+ */
 public class Ejercicio1 {
 
+    /**
+     * Tupla interna que almacena un camino (lista de enteros) y su producto asociado.
+     *
+     * <p>Se usa como contenedor auxiliar para transportar el mejor camino y su
+     * producto durante las recursiones.</p>
+     *
+     * @implNote Registro privado usado internamente por los métodos recursivos.
+     */
     record Tupla (List<Integer> camino, Integer prod) {
-	}
+    }
 
+    /**
+     * Devuelve el camino raíz->hoja en un árbol binario cuyo producto de valores
+     * es máximo.
+     *
+     * <p>Ejemplo de uso:
+     * {@code
+     * BinaryTree<Integer> tree = // construir árbol;
+     * List<Integer> camino = Ejercicio1.caminoMaximo(tree);
+     * System.out.println("Camino máximo: " + camino);
+     * }</p>
+     *
+     * @param tree árbol binario de {@code Integer}; no debe ser {@code null}
+     * @return lista de {@code Integer} con los valores del camino raíz->hoja que maximiza el producto; devuelve una lista vacía si el árbol está vacío
+     * @throws NullPointerException si {@code tree} es {@code null}
+     * @see #caminoMaximoAux(BinaryTree, List, Integer, Tupla)
+     * @implSpec La implementación recorre el árbol visitando cada nodo exactamente una vez, por lo que la complejidad es O(n) donde n es el número de nodos.
+     */
     public static List<Integer> caminoMaximo(BinaryTree<Integer> tree) {
         return caminoMaximoAux(tree, new ArrayList<>(), 1, new Tupla(new ArrayList<>(), 1)).camino();
     }
 
+    /**
+     * Implementación auxiliar recursiva para calcular el camino de producto máximo
+     * en un árbol binario.
+     *
+     * <p>Este método evalúa los tres casos del tipo sellado {@code BinaryTree}:
+     * vacío, hoja y árbol con subárboles izquierdo y derecho. Mantiene el camino
+     * acumulado y el producto parcial.</p>
+     *
+     * @param tree subárbol actual (instancia de {@code BinaryTree<Integer>})
+     * @param currentPath camino acumulado desde la raíz hasta el nodo actual (sin incluir hijos aún)
+     * @param currentProd producto acumulado de los valores en {@code currentPath}
+     * @param max tupla que contiene el mejor camino y producto encontrado hasta ahora; se actualizará si se encuentra un camino mejor
+     * @return tupla con el mejor camino y su producto tras procesar {@code tree}
+     * @throws NullPointerException si alguno de los parámetros requeridos por la lógica es {@code null}
+     * @see #caminoMaximo(BinaryTree)
+     * @implNote Método privado usado internamente; no modifica el árbol original.
+     */
     private static Tupla caminoMaximoAux(BinaryTree<Integer> tree, List<Integer> currentPath, Integer currentProd, Tupla max) {
         return switch (tree) {
             case BEmpty() -> max;
@@ -36,10 +95,45 @@ public class Ejercicio1 {
         };
     }
 
+    /**
+     * Devuelve el camino raíz->hoja en un árbol n-ario cuyo producto de valores
+     * es máximo.
+     *
+     * <p>Soporta la jerarquía sellada {@code Tree<Integer>} con casos {@code TEmpty},
+     * {@code TLeaf} y {@code TNary}.</p>
+     *
+     * <p>Ejemplo de uso:
+     * {@code
+     * Tree<Integer> tree = // construir árbol n-ario;
+     * List<Integer> camino = Ejercicio1.caminoMaximo(tree);
+     * System.out.println("Camino máximo (n-ario): " + camino);
+     * }</p>
+     *
+     * @param tree árbol n-ario de {@code Integer}; no debe ser {@code null}
+     * @return lista de {@code Integer} con el camino raíz->hoja que maximiza el producto; lista vacía si el árbol está vacío
+     * @throws NullPointerException si {@code tree} es {@code null}
+     * @see #caminoMaximoAux2(Tree, List, Integer, Tupla)
+     * @implSpec La implementación visita cada nodo una vez; complejidad O(n) en número de nodos.
+     */
     public static List<Integer> caminoMaximo(Tree<Integer> tree) {
         return caminoMaximoAux2(tree, new ArrayList<>(), 1, new Tupla(new ArrayList<>(), 1)).camino();
     }
 
+    /**
+     * Implementación auxiliar recursiva para {@link #caminoMaximo(Tree)}.
+     *
+     * <p>Para el caso {@code TNary} construye el nuevo camino y producto parcial,
+     * y recorre cada hijo actualizando el máximo encontrado.</p>
+     *
+     * @param tree subárbol actual (instancia de {@code Tree<Integer>})
+     * @param currentPath camino acumulado hasta el nodo actual
+     * @param currentProd producto acumulado de la ruta actual
+     * @param max tupla con el mejor camino y producto encontrado hasta el momento
+     * @return tupla que contiene el mejor camino y producto tras procesar {@code tree}
+     * @throws NullPointerException si alguno de los parámetros necesarios es {@code null}
+     * @see #caminoMaximo(Tree)
+     * @implNote Método privado usado internamente; itera sobre la colección de hijos de {@code TNary}.
+     */
     private static Tupla caminoMaximoAux2(Tree<Integer> tree, List<Integer> currentPath, Integer currentProd, Tupla max) {
         return switch (tree) {
             case TEmpty() -> max;
