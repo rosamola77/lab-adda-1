@@ -7,12 +7,16 @@ import us.lsi.graphs.views.IntegerVertexGraphView;
 
 
 /**
- * @author Miguel Toro
- * 
- * Un grafo simple dirigido y sin peso. La informaci�n de la red est�
- * guardada en los v�rtices y las aristas que son de los tipos 
- * FlowVertex y FlowEdge.
+ * FlowGraph
  *
+ * <p>Grafo simple dirigido y sin peso para modelar redes de flujo.
+ * La informacion de la red esta guardada en los vertices y las aristas
+ * que son de los tipos FlowVertex y FlowEdge.</p>
+ *
+ * <p>Soporta vertices fuente, sumidero e intermedios para problemas
+ * de flujo maximo y minimo.</p>
+ *
+ * @author Miguel Toro
  */
 
 
@@ -20,29 +24,50 @@ public class FlowGraph extends SimpleDirectedGraph<FlowVertex, FlowEdge> {
 
 	
 	/**
-	 * 
+	 * Version para serializacion.
 	 */
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * Un v�rtice de una red de Flujo puede ser una Fuente, un Sumidero o
-	 * un v�rtice intermedio
-	 *
+	 * Tipos de optimizacion para problemas de flujo.
 	 */
-	public enum FGType{Max,Min}	
+	public enum FGType{
+		/** Maximizar flujo. */
+		Max,
+		/** Minimizar flujo. */
+		Min
+	}	
 	
+	/** Indica si todos los valores deben ser enteros. */
 	public static Boolean allInteger = false;
 
+	/**
+	 * Crea un nuevo grafo de flujo vacio.
+	 *
+	 * @return nuevo FlowGraph
+	 */
 	public static FlowGraph create() {
 		return new FlowGraph(FlowEdge.class);
 	}
 
+	/**
+	 * Constructor privado.
+	 *
+	 * @param arg0 clase de las aristas
+	 */
 	private FlowGraph(Class<? extends FlowEdge> arg0) {
 		super(arg0);
 	}
 	
+	/** Vista con vertices enteros. */
 	private IntegerVertexGraphView<FlowVertex, FlowEdge> integerGraph = null;
 
+	/**
+	 * Crea un grafo de flujo desde un fichero.
+	 *
+	 * @param file ruta del fichero
+	 * @return nuevo FlowGraph
+	 */
 	public static FlowGraph newGraph(String file) {
 		FlowGraph r = GraphsReader.<FlowVertex,FlowEdge,FlowGraph>
 		    newGraph(file, 
@@ -53,6 +78,12 @@ public class FlowGraph extends SimpleDirectedGraph<FlowVertex, FlowEdge> {
 		return r;		
 	}
 	
+	/**
+	 * Verifica la validez del grafo de flujo.
+	 *
+	 * @param fg el grafo a verificar
+	 * @return true si es valido
+	 */
 	private static boolean check(FlowGraph fg){
 		boolean r = true;
 		for(FlowVertex v: fg.vertexSet()){
