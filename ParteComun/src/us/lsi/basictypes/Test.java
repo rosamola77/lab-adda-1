@@ -2,10 +2,19 @@ package us.lsi.basictypes;
 
 import us.lsi.common.String2;
 
+/**
+ * <p>Clase de pruebas para las estructuras de datos basicas.</p>
+ * 
+ * <p>Contiene pruebas para AList, LList y HashTable.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class Test {
 
 	/**
-	 * @param args Argumentos
+	 * Metodo principal que ejecuta las pruebas.
+	 * 
+	 * @param args Argumentos de linea de comandos (no utilizados)
 	 */
 	public static void main(String[] args) {
 
