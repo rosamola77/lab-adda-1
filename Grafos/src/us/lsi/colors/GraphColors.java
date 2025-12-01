@@ -25,27 +25,50 @@ import us.lsi.tiposrecursivos.ast.Exp;
 import us.lsi.tiposrecursivos.ast.Vertex;
 
 
+/**
+ * GraphColors
+ *
+ * <p>Clase de utilidades para exportar grafos a formato DOT con colores,
+ * estilos y formas personalizadas. Permite visualizar grafos, arboles
+ * binarios y ASTs.</p>
+ *
+ * @author Miguel Toro
+ */
 public class GraphColors {
 	
+	/**
+	 * Colores disponibles para nodos y aristas.
+	 */
 	public enum Color {
 		 green, yellow, red, gray, cyan, orange, magenta, blue, black,  blank
 	}
 	
+	/**
+	 * Tipos de punta de flecha para aristas.
+	 */
 	public enum ArrowHead {
 		none, normal, dot, inv, crow, tee, vee, diamond, box, curve, icurve
 	}
 	
+	/**
+	 * Estilos de linea para aristas y nodos.
+	 */
 	public enum Style {
 		dotted, bold, filled, solid, invis, arrowhead
 	}
 	
+	/**
+	 * Formas de nodos.
+	 */
 	public enum Shape {
 		box, polygon, ellipse, point, triangle, doublecircle
 	}
 	
 	/**
+	 * Crea atributos de color para DOT.
+	 *
 	 * @param c color
-	 * @return Un Map para ser a�adido en un exportToDot.
+	 * @return Mapa de atributos con el color
 	 */
 	public static Map<String,Attribute> color(Color c) {
 		String cl = c == Color.blank? "" : c.toString();

@@ -5,6 +5,14 @@ import java.util.Random;
 
 import us.lsi.common.String2;
 
+/**
+ * <p>Clase de pruebas para LargeInteger.</p>
+ * 
+ * <p>Contiene diversos metodos de prueba para verificar las operaciones
+ * aritmeticas de LargeInteger.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class TestLargeInteger {
 	
 	public static void test1() {

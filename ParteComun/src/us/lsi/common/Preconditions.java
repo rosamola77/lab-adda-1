@@ -1,10 +1,20 @@
 package us.lsi.common;
 
+/**
+ * <p>Clase de utilidades para validacion de precondiciones.</p>
+ * 
+ * <p>Proporciona metodos para verificar condiciones antes de ejecutar
+ * codigo, lanzando excepciones apropiadas cuando las condiciones no se cumplen.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class Preconditions {
 
 	/**
-	 * Checks that the boolean is true. Use for validating arguments to methods.
-	 * @param condition A condition
+	 * Verifica que una condicion sea verdadera.
+	 * 
+	 * @param condition Condicion a verificar
+	 * @throws IllegalArgumentException si la condicion es falsa
 	 */
 	public static void checkArgument(boolean condition){
 		if(!condition){
@@ -13,9 +23,11 @@ public class Preconditions {
 	}
 	
 	/**
-	 * Checks that the boolean is true. Use for validating arguments to methods.
-	 * @param message A message
-	 * @param condition A condition
+	 * Verifica que una condicion sea verdadera con mensaje de error.
+	 * 
+	 * @param condition Condicion a verificar
+	 * @param message Mensaje de error si falla
+	 * @throws IllegalArgumentException si la condicion es falsa
 	 */
 	public static void checkArgument(boolean condition, String message){
 		if(!condition){
@@ -24,18 +36,23 @@ public class Preconditions {
 	}
 
 	/**
-	 * Checks some state of the object, not dependent on the method arguments.  
-	 * @param condition A condition
+	 * Verifica un estado del objeto.
+	 * 
+	 * @param condition Condicion a verificar
+	 * @throws IllegalArgumentException si la condicion es falsa
 	 */
 	public static void checkState(boolean condition){
 		if(!condition){
 			throw new IllegalArgumentException();
 		}
 	}
+	
 	/**
-	 * Checks some state of the object, not dependent on the method arguments. 
-	 * @param message Mensaje a imprimir
-	 * @param condition A condition
+	 * Verifica un estado del objeto con mensaje de error.
+	 * 
+	 * @param condition Condicion a verificar
+	 * @param message Mensaje a imprimir si falla
+	 * @throws IllegalArgumentException si la condicion es falsa
 	 */
 	public static void checkState(boolean condition, String message){
 		if(!condition){
@@ -44,11 +61,12 @@ public class Preconditions {
 	}
 	
 	/**
-	 * Checks that the value is not null. 
-	 * Returns the value directly, so you can use checkNotNull(value) inline.
-	 * @param <T> El tipo del elemento	
-	 * @param reference Parámetro a comprobar
-	 * @return El parámetro a comprobar
+	 * Verifica que un valor no sea null.
+	 * 
+	 * @param <T> Tipo del elemento
+	 * @param reference Parametro a comprobar
+	 * @return El parametro si no es null
+	 * @throws NullPointerException si es null
 	 */
 	public static <T> T checkNotNull(T reference){
 		if(reference == null){
@@ -57,6 +75,15 @@ public class Preconditions {
 		return reference;
 	}
 	
+	/**
+	 * Verifica que un valor no sea null con mensaje personalizado.
+	 * 
+	 * @param <T> Tipo del elemento
+	 * @param reference Parametro a comprobar
+	 * @param mensaje Mensaje de error si es null
+	 * @return El parametro si no es null
+	 * @throws NullPointerException si es null
+	 */
 	public static <T> T checkNotNull(T reference, String mensaje){
 		if(reference == null){
 			throw new NullPointerException(mensaje);
@@ -65,12 +92,14 @@ public class Preconditions {
 	}
 		
 	/**
-	 * Checks that index is a valid element index into a list, string, or array with the specified size. 
-	 * An element index may range from 0 inclusive to size exclusive. 
-	 * You don't pass the list, string, or array directly; you just pass its size. 
-	 * @param index Un índice 
-	 * @param size El tamaño de la lista
-	 * @return Index El índice del elemento
+	 * Verifica que un indice sea valido para acceder a un elemento.
+	 * 
+	 * <p>Un indice de elemento valido esta en el rango [0, size).</p>
+	 * 
+	 * @param index Indice a verificar
+	 * @param size Tamano de la lista, string o array
+	 * @return El indice si es valido
+	 * @throws IndexOutOfBoundsException si el indice esta fuera de rango
 	 */
 	public static int checkElementIndex(int index, int size){
 		if(!(index>=0 && index<size)){
@@ -80,12 +109,14 @@ public class Preconditions {
 	}
 	
 	/**
-	 * Checks that index is a valid position index into a list, string, or array with the specified size. 
-	 * A position index may range from 0 inclusive to size inclusive. 
-	 * You don't pass the list, string, or array directly; you just pass its size. Returns index.
-	 * @param index El índice del elemento
-	 * @param size El tamaño de la lista
-	 * @return Index El índice del elemento
+	 * Verifica que un indice sea una posicion valida.
+	 * 
+	 * <p>Un indice de posicion valido esta en el rango [0, size].</p>
+	 * 
+	 * @param index Indice a verificar
+	 * @param size Tamano de la lista, string o array
+	 * @return El indice si es valido
+	 * @throws IndexOutOfBoundsException si el indice esta fuera de rango
 	 */
 	public static int checkPositionIndex(int index, int size){
 		if(!(index>=0 && index<=size)){

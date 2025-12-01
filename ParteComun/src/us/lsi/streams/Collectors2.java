@@ -21,8 +21,28 @@ import us.lsi.common.MutableType;
 import us.lsi.common.Set2;
 import us.lsi.common.SetMultimap;
 
+/**
+ * <p>Clase de utilidades para crear Collectors personalizados.</p>
+ * 
+ * <p>Proporciona metodos de factoria para crear collectors que agrupan,
+ * reducen y transforman elementos de streams de forma avanzada.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class Collectors2 {
 	
+	/**
+	 * Crea un Collector generico a partir de las operaciones basicas.
+	 * 
+	 * @param <E> Tipo de los elementos del stream
+	 * @param <B> Tipo del acumulador
+	 * @param <R> Tipo del resultado
+	 * @param supplier Proveedor del valor inicial
+	 * @param consumer Funcion de acumulacion
+	 * @param combiner Funcion para combinar resultados parciales
+	 * @param finisher Funcion para obtener el resultado final
+	 * @return Un nuevo Collector
+	 */
 	public static <E,B,R> Collector<E,MutableType<B>,R> of(
 			Supplier<B> supplier,
 			BiFunction<B,E,B> consumer,

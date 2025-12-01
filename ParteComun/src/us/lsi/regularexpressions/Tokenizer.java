@@ -12,8 +12,19 @@ import us.lsi.common.Preconditions;
 import us.lsi.common.Set2;
 
 
+/**
+ * <p>Analizador lexico para cadenas de texto.</p>
+ * 
+ * <p>Descompone una cadena en tokens identificando numeros,
+ * identificadores, operadores, separadores y simbolos especiales.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class Tokenizer {
 
+	/**
+	 * Tipos de tokens reconocidos.
+	 */
 	public enum TokenType{Integer,Double,Variable,Function,ReservedWord,Operator,Separator,Symbol};
 	public static Set<String> separators = Set2.of("{", "}", ",", ";", "(", ")");
 	private static String space = "\\s+";
@@ -87,13 +98,13 @@ public class Tokenizer {
 	}
 	
 	public Token currentToken() {
-		Preconditions.checkState(index>0, String.format("No hay token actual todavía %d",index));
+		Preconditions.checkState(index>0, String.format("No hay token actual todavï¿½a %d",index));
 		return 	tokens.get(index-1);	
 	}
 
 	public Token nextToken(){
 		Preconditions.checkState(hasMoreTokens(), 
-			String.format("Cadena acabada inesperadamente en la posición %d,%s",index(),suffix()));
+			String.format("Cadena acabada inesperadamente en la posiciï¿½n %d,%s",index(),suffix()));
 		Integer oldIndex = index;
 		index = index+1;
 		return 	tokens.get(oldIndex);	
@@ -105,7 +116,7 @@ public class Tokenizer {
 	
 	public Token seeNextToken() {
 		Preconditions.checkState(hasMoreTokens(), 
-			String.format("Cadena acabada inesperadamente en la posición %d,%s",index(),suffix()));
+			String.format("Cadena acabada inesperadamente en la posiciï¿½n %d,%s",index(),suffix()));
 	    return tokens.get(index);
 	}
 	
@@ -181,7 +192,7 @@ public class Tokenizer {
 				}
 			} else {
 				Preconditions.checkState(false, 
-						String.format("Caracter %c no reconocido en la posición %d",c,start));
+						String.format("Caracter %c no reconocido en la posiciï¿½n %d",c,start));
 			}			
 		}		
 		int oldStart = start;
@@ -227,7 +238,7 @@ public class Tokenizer {
 		List<TokenType> sl = Arrays.asList(s);
 		Token r = currentToken();
 		Preconditions.checkState(sl.contains(r.type),
-				String.format("\nSe esperaba %s \ny se ha encontrado %s en la posición \n%s", 
+				String.format("\nSe esperaba %s \ny se ha encontrado %s en la posiciï¿½n \n%s", 
 						sl.toString(), 
 						currentToken(),
 						suffix()));
@@ -243,13 +254,13 @@ public class Tokenizer {
 		List<String> sl = Arrays.asList(s);
 		Token r = currentToken();
 		Preconditions.checkState(sl.contains(r.text),
-				String.format("\nSe esperaba %s \ny se ha encontrado %s en la posición \n%s", 
+				String.format("\nSe esperaba %s \ny se ha encontrado %s en la posiciï¿½n \n%s", 
 						sl.toString(),r,suffix()));
 	}
 	
 	public void error() {
 		Preconditions.checkState(false, 
-				String.format("Token %s no reconocido en la posición %d, %s",
+				String.format("Token %s no reconocido en la posiciï¿½n %d, %s",
 						currentToken(),index(),suffix()));
 	}
 

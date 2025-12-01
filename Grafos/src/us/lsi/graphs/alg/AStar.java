@@ -30,15 +30,44 @@ import us.lsi.graphs.virtual.EGraph.Type;
 import us.lsi.path.EGraphPath;
 import us.lsi.streams.Stream2;
 
-
+/**
+ * AStar
+ *
+ * <p>Implementación del algoritmo A* para búsqueda de caminos óptimos
+ * en grafos. Utiliza una heurística para guiar la búsqueda y un
+ * montículo de Fibonacci para seleccionar eficientemente el siguiente
+ * vértice a explorar.</p>
+ *
+ * <p>El algoritmo combina la distancia recorrida con una estimación
+ * heurística de la distancia restante para priorizar los vértices
+ * más prometedores.</p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * EGraph<V,E> graph = ...;
+ * AStar<V,E,S> astar = AStar.of(graph);
+ * Optional<GraphPath<V,E>> path = astar.search();
+ * }</p>
+ *
+ * @param <V> tipo de los vértices
+ * @param <E> tipo de las aristas
+ * @param <S> tipo de la solución
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see EGraph
+ */
 public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 	
 	/**
-	 * @param <V> El tipo de los v&eacute;rtices
-	 * @param <E> El tipo de las aristas 
-	 * @param graph Un grafo
-	 * @param heuristic La heur&iacute;stica 
-	 * @return Una algoritmo de b&uacute;squeda de AStar
+	 * Crea un algoritmo A* inicializado con una solución voraz.
+	 *
+	 * @param <V> tipo de los vértices
+	 * @param <E> tipo de las aristas
+	 * @param <S> tipo de la solución
+	 * @param graph grafo con heurística definida
+	 * @return un nuevo algoritmo A*
 	 */
 	public static <V, E, S> AStar<V, E, S> ofGreedy(EGraph<V, E> graph) {
 		GreedyOnGraph<V, E> ga = GreedyOnGraph.of(graph);
@@ -47,29 +76,86 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		else return new AStar<V, E, S>(graph,null,null,null);
 	}
 	
+	/**
+	 * Crea un algoritmo A* básico.
+	 *
+	 * @param <V> tipo de los vértices
+	 * @param <E> tipo de las aristas
+	 * @param <S> tipo de la solución
+	 * @param graph grafo sobre el que buscar
+	 * @return un nuevo algoritmo A*
+	 */
 	public static <V, E, S> AStar<V, E, S> of(EGraph<V, E> graph) {
 		return new AStar<V, E, S>(graph,null,null,null);
 	}
 	
+	/**
+	 * Crea un algoritmo A* con valor inicial conocido.
+	 *
+	 * @param <V> tipo de los vértices
+	 * @param <E> tipo de las aristas
+	 * @param <S> tipo de la solución
+	 * @param graph grafo sobre el que buscar
+	 * @param bestValue mejor valor conocido
+	 * @param optimalPath mejor camino conocido
+	 * @return un nuevo algoritmo A*
+	 */
 	public static <V, E, S> AStar<V, E, S> of(EGraph<V, E> graph,Double bestValue,GraphPath<V, E> optimalPath) {
 		return new AStar<V, E, S>(graph,null,bestValue,optimalPath);
 	}
 	
+	/**
+	 * Crea un algoritmo A* con función de solución.
+	 *
+	 * @param <V> tipo de los vértices
+	 * @param <E> tipo de las aristas
+	 * @param <S> tipo de la solución
+	 * @param graph grafo sobre el que buscar
+	 * @param fsolution función que transforma camino en solución
+	 * @param bestValue mejor valor conocido
+	 * @param optimalPath mejor camino conocido
+	 * @return un nuevo algoritmo A*
+	 */
 	public static <V, E, S> AStar<V, E, S> of(EGraph<V, E> graph,
 			Function<GraphPath<V, E>, S> fsolution,Double bestValue,GraphPath<V, E> optimalPath) {
 		return new AStar<V, E, S>(graph,fsolution,bestValue,optimalPath);
 	}
 
+	/** Tipo de búsqueda. */
 	private Type type;
+	
+	/** Comparador según el tipo de optimización. */
 	public Comparator<Double> comparator;
+	
+	/** Grafo sobre el que se realiza la búsqueda. */
 	public EGraph<V,E> graph; 
+	
+	/** Mapa de vértices a sus datos en el montículo. */
 	public Map<V,Handle<Double,Data<V,E>>> tree;
+	
+	/** Montículo de Fibonacci para la cola de prioridad. */
 	public FibonacciHeap<Double,Data<V,E>> heap; 
-	private Double bestValue = null; //mejor valor estimado
-	private GraphPath<V, E> optimalPath = null; //mejor camino estimado
+	
+	/** Mejor valor estimado encontrado. */
+	private Double bestValue = null;
+	
+	/** Mejor camino encontrado. */
+	private GraphPath<V, E> optimalPath = null;
+	
+	/** Conjunto de soluciones (para tipo All). */
 	protected Set<S> solutions;
+	
+	/** Función que transforma camino en solución. */
 	protected Function<GraphPath<V,E>,S> fsolution;
 
+	/**
+	 * Constructor del algoritmo A*.
+	 *
+	 * @param graph grafo sobre el que buscar
+	 * @param fsolution función de transformación a solución
+	 * @param bestValue mejor valor inicial
+	 * @param optimalPath mejor camino inicial
+	 */
 	protected AStar(EGraph<V, E> graph, Function<GraphPath<V, E>, S> fsolution, Double bestValue, GraphPath<V, E> optimalPath) {
 		super();
 		this.graph = graph;
@@ -96,10 +182,21 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		this.fsolution = fsolution;
 	}
 	
+	/**
+	 * Verifica si un vértice ya ha sido cerrado (completamente procesado).
+	 *
+	 * @param v vértice a verificar
+	 * @return true si está cerrado
+	 */
 	public Boolean closed(V v) {
 		return this.tree.get(v).getValue().closed();
 	}
 	
+	/**
+	 * Obtiene un stream de los vértices explorados.
+	 *
+	 * @return stream de vértices
+	 */
 	public Stream<V> stream() {
 		return Stream2.of(this);
 	}
@@ -108,6 +205,13 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		return this;
 	}
 	
+	/**
+	 * Determina si un vértice debe ser olvidado (podado).
+	 *
+	 * @param actualDistance distancia actual desde el origen
+	 * @param v vértice a evaluar
+	 * @return true si debe ser podado
+	 */
 	private Boolean forget(Double actualDistance, V v) {
 		Double w = graph.estimatedWeightToEnd(v,actualDistance);
 		Boolean r = false;
@@ -148,18 +252,43 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		return vertexActual;
 	}
 
+	/**
+	 * Obtiene la arista que conecta un vértice con su predecesor hacia el origen.
+	 *
+	 * @param v vértice
+	 * @return arista hacia el origen
+	 */
 	public E getEdgeToOrigin(V v) {
 		return tree.get(v).getValue().edge;
 	}
 
+	/**
+	 * Obtiene el grafo de búsqueda.
+	 *
+	 * @return el grafo
+	 */
 	public EGraph<V, E> getGraph() {
 		return this.graph;
 	}
 	
+	/**
+	 * Reconstruye el camino desde el inicio hasta un vértice dado.
+	 *
+	 * @param startVertex vértice de inicio
+	 * @param last vértice final
+	 * @return camino reconstruido como Optional
+	 */
 	public Optional<GraphPath<V, E>> path(V startVertex, V last) {
 		return this.path(startVertex,Optional.of(last));
 	}
 	
+	/**
+	 * Reconstruye el camino desde el inicio hasta un vértice dado.
+	 *
+	 * @param startVertex vértice de inicio
+	 * @param last vértice final como Optional
+	 * @return camino reconstruido como Optional
+	 */
 	public Optional<GraphPath<V, E>> path(V startVertex, Optional<V> last) {
 		if (!last.isPresent() || !graph.goalHasSolution().test(last.get())) return Optional.empty();
 		V endVertex = last.get();
@@ -187,6 +316,11 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		return Optional.of(gp);
 	}
 
+	/**
+	 * Ejecuta la búsqueda A*.
+	 *
+	 * @return camino óptimo si existe
+	 */
 	public Optional<GraphPath<V, E>> search() {
 		V startVertex = graph.startVertex();
 		EGraphPath<V, E> ePath = graph.initialPath();
@@ -219,10 +353,20 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		return r;
 	}
 	
+	/**
+	 * Obtiene el conjunto de soluciones encontradas.
+	 *
+	 * @return conjunto de soluciones
+	 */
 	public Set<S> getSolutions() {
 		return this.solutions;
 	}
 	
+	/**
+	 * Construye un grafo dirigido con los vértices y aristas explorados.
+	 *
+	 * @return grafo de exploración
+	 */
 	public SimpleDirectedGraph<V,E> outGraph(){
 		SimpleDirectedGraph<V,E> g = Graphs2.simpleDirectedGraph();
 		for(V v:tree.keySet()) {
@@ -239,7 +383,15 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 		return g;
 	}
 	
-	
+	/**
+	 * Exporta un grafo con un camino destacado a formato DOT.
+	 *
+	 * @param <V> tipo de los vértices
+	 * @param <E> tipo de las aristas
+	 * @param g grafo a exportar
+	 * @param gp camino a destacar
+	 * @param file archivo de salida
+	 */
 	public static <V,E> void toDot(SimpleDirectedGraph<V,E> g, GraphPath<V,E> gp, String file){
 		List<V> vertices = gp.getVertexList();
 		List<E> edges = gp.getEdgeList();
@@ -251,13 +403,46 @@ public class AStar<V,E,S> implements Iterator<V>, Iterable<V> {
 						GraphColors.colorIf(Color.red, edges.contains(e))));
 	}
 	
-
+	/**
+	 * Data
+	 *
+	 * <p>Registro que almacena información de un vértice durante la búsqueda A*:
+	 * el vértice, la arista por la que se llegó, la distancia al origen y
+	 * si ya ha sido procesado completamente.</p>
+	 *
+	 * @param <V> tipo del vértice
+	 * @param <E> tipo de la arista
+	 * @param vertex el vértice
+	 * @param edge arista por la que se llegó
+	 * @param distanceToOrigin distancia acumulada desde el origen
+	 * @param closed si el vértice ya fue cerrado
+	 *
+	 * @author Miguel Toro
+	 */
 	public static record Data<V, E> (V vertex, E edge, Double distanceToOrigin, Boolean closed) {
 		
+		/**
+		 * Crea un nuevo registro Data (no cerrado).
+		 *
+		 * @param <V> tipo del vértice
+		 * @param <E> tipo de la arista
+		 * @param vertex el vértice
+		 * @param edge arista de llegada
+		 * @param distance distancia al origen
+		 * @return nuevo Data
+		 */
 		public static <V, E> Data<V, E> of(V vertex, E edge, Double distance) {
 			return new Data<>(vertex, edge, distance,false);
 		}
 
+		/**
+		 * Crea una copia del Data marcada como cerrada.
+		 *
+		 * @param <V> tipo del vértice
+		 * @param <E> tipo de la arista
+		 * @param d Data original
+		 * @return Data con closed=true
+		 */
 		public static <V, E> Data<V, E> toTrue(Data<V, E> d) {
 			return new Data<>(d.vertex, d.edge, d.distanceToOrigin,true);
 		}

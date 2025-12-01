@@ -8,37 +8,110 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-
+/**
+ * <p>Clase de utilidades para operaciones con mapas.</p>
+ * 
+ * <p>Proporciona metodos estaticos para crear, copiar, combinar
+ * e invertir mapas de forma funcional.</p>
+ * 
+ * @author Miguel Toro
+ */
 public class Map2 {
 	
+	/**
+	 * Crea una copia del mapa con un nuevo par clave-valor.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @param m Mapa original
+	 * @param key Clave a insertar
+	 * @param value Valor a asociar
+	 * @return Nueva copia del mapa con el par insertado
+	 */
 	public static <K,V> Map<K,V> put(Map<K,V> m, K key,V value){	
 		Map<K,V> c = new HashMap<>(m);
 		c.put(key, value);
 		return c;
 	}
 	
+	/**
+	 * Crea una copia del mapa insertando el par solo si la clave no existe.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @param m Mapa original
+	 * @param key Clave a insertar
+	 * @param value Valor a asociar
+	 * @return Nueva copia del mapa
+	 */
 	public static <K,V> Map<K,V> putIfAbsent(Map<K,V> m, K key,V value){	
 		Map<K,V> c = new HashMap<>(m);
 		c.putIfAbsent(key, value);
 		return c;
 	}
-		
+	
+	/**
+	 * Crea una entrada de mapa.
+	 * 
+	 * @param <K> Tipo de la clave
+	 * @param <V> Tipo del valor
+	 * @param key Clave
+	 * @param value Valor
+	 * @return Nueva entrada
+	 */
 	public static <K,V> Entry<K,V> entry(K key,V value){	
 		return new SimpleEntry<>(key,value);
 	}
+	
+	/**
+	 * Crea un mapa vacio.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @return Un nuevo mapa vacio
+	 */
 	public static <K,V> Map<K,V> empty(){
 		return new HashMap<>();
 	}
+	
+	/**
+	 * Crea una copia de un mapa.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @param r Mapa a copiar
+	 * @return Nueva copia del mapa
+	 */
 	public static <K,V> Map<K,V> of(Map<K,V> r){
 		return new HashMap<>(r);
 	}
 	
+	/**
+	 * Crea un mapa con un par clave-valor.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @param key Clave
+	 * @param value Valor
+	 * @return Nuevo mapa con el par
+	 */
 	public static <K,V> Map<K,V> of(K key,V value){
 		Map<K,V> m = new HashMap<>();
 		m.put(key,value);
 		return m;
 	}
 	
+	/**
+	 * Crea un mapa con dos pares clave-valor.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @param key1 Primera clave
+	 * @param value1 Primer valor
+	 * @param key2 Segunda clave
+	 * @param value2 Segundo valor
+	 * @return Nuevo mapa con los pares
+	 */
 	public static <K,V> Map<K,V> of(K key1,V value1,K key2,V value2){
 		Map<K,V> m = new HashMap<>();
 		m.put(key1,value1);
@@ -46,6 +119,19 @@ public class Map2 {
 		return m;
 	}
 	
+	/**
+	 * Crea un mapa con tres pares clave-valor.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @param key1 Primera clave
+	 * @param value1 Primer valor
+	 * @param key2 Segunda clave
+	 * @param value2 Segundo valor
+	 * @param key3 Tercera clave
+	 * @param value3 Tercer valor
+	 * @return Nuevo mapa con los pares
+	 */
 	public static <K,V> Map<K,V> of(K key1,V value1,K key2,V value2,K key3,V value3){
 		Map<K,V> m = new HashMap<>();
 		m.put(key1,value1);
@@ -55,10 +141,12 @@ public class Map2 {
 	}
 	
 	/**
-	 * @param <K> tipo de las claves
-	 * @param <V> tipo de los valores
+	 * Invierte un mapa, intercambiando claves y valores.
+	 * 
+	 * @param <K> Tipo de las claves originales
+	 * @param <V> Tipo de los valores originales
 	 * @param m Un Map
-	 * @return Un map inverso asumiendo que los elementos en todos los conjuntos imagen son distintos
+	 * @return Un mapa inverso asumiendo que todos los valores son distintos
 	 */
 	public static <K,V> Map<V,K> reverseHashMap(Map<K,V> m){
 		return m.keySet().stream()
@@ -66,12 +154,14 @@ public class Map2 {
 	}
 	
 	/**
-	 * @param <K> tipo de las claves
-	 * @param <V> tipo de los valores
-	 * @param <R> nuevo tipo de los valores
-	 * @param f una funci�n
+	 * Transforma los valores de un mapa aplicando una funcion.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores originales
+	 * @param <R> Tipo de los nuevos valores
 	 * @param m Un Map
-	 * @return Un map cambiando los valores imagen aplicandole una funci�n
+	 * @param f Una funcion de transformacion
+	 * @return Un mapa con los valores transformados
 	 */
 	public static <K,V,R> Map<K,R> of(Map<K,V> m,Function<V,R> f){
 		return m.entrySet().stream()
@@ -80,9 +170,11 @@ public class Map2 {
 	}
 	
 	/**
-	 * @param <K> tipo de las claves
-	 * @param <V> tipo de los valores
-	 * @param entries Una serie de pares clave valor
+	 * Crea un mapa a partir de una serie de entradas.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @param entries Una serie de pares clave-valor
 	 * @return Un Map construido con esas claves
 	 */
 	@SuppressWarnings("unchecked")
@@ -96,12 +188,31 @@ public class Map2 {
         return result;
     }
 	
+	/**
+	 * Combina dos mapas en uno nuevo.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @param m1 Primer mapa
+	 * @param m2 Segundo mapa
+	 * @return Mapa combinado (m2 sobrescribe m1 en caso de conflicto)
+	 */
 	public static <K, V> Map<K, V> merge(Map<K,V> m1, Map<K,V> m2) {
 		Map<K, V> r = new HashMap<>(m1);
 		r.putAll(m2);
 		return r;
 	}
 	
+	/**
+	 * Combina dos mapas usando un operador para resolver conflictos.
+	 * 
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 * @param m1 Primer mapa
+	 * @param m2 Segundo mapa
+	 * @param op Operador para combinar valores en caso de claves duplicadas
+	 * @return Mapa combinado
+	 */
 	public static <K, V> Map<K, V> merge(Map<K,V> m1, Map<K,V> m2, BinaryOperator<V> op) {
 		BinaryOperator<V> nop = BinaryOperator2.of(op);
 		Map<K, V> r = new HashMap<>(m1);
@@ -111,10 +222,15 @@ public class Map2 {
 	}
     
 	/**
+	 * Crea un mapa perezoso basado en una funcion.
+	 * 
+	 * <p>Este Map solo tiene disponible el metodo get.
+	 * Los valores se calculan bajo demanda usando la funcion.</p>
+	 * 
 	 * @param <K> El tipo de las claves 
 	 * @param <V> El tipo de los valores 
-	 * @param f Una funci�n
-	 * @return Un Map cuyo dominio y valores son los de la funci�n. Este Map s�lo tiene disponible el m�todo get.
+	 * @param f Una funcion que calcula valores a partir de claves
+	 * @return Un Map cuyo dominio y valores son los de la funcion
 	 */
 	public static <K,V> Map<K, V> of(Function<K,V> f){
 		MapOfFunction<K,V> r = new Map2.MapOfFunction<>(f);
@@ -122,24 +238,52 @@ public class Map2 {
 		
 	}
 
+	/**
+	 * Metodo principal para pruebas.
+	 * 
+	 * @param args Argumentos de linea de comandos (no utilizados)
+	 */
 	public static void main(String[] args) {
 		
 		
 	}
 	
+	/**
+	 * <p>Implementacion interna de Map basado en una funcion.</p>
+	 * 
+	 * <p>Solo soporta la operacion get, calculando valores bajo demanda.</p>
+	 * 
+	 * @author Miguel Toro
+	 *
+	 * @param <K> Tipo de las claves
+	 * @param <V> Tipo de los valores
+	 */
 	private static class MapOfFunction<K,V>  extends HashMap<K,V> implements Map<K,V>{
 
 		/**
-		 * 
+		 * Serial version UID
 		 */
 		private static final long serialVersionUID = 1L;
+		
+		/** Funcion que calcula valores */
 		Function<? super K, ? extends V> f;
 		
+		/**
+		 * Constructor.
+		 * 
+		 * @param f Funcion para calcular valores
+		 */
 		public MapOfFunction(Function<? super K, ? extends V> f) {
 			super();
 			this.f = f;
 		}
 		
+		/**
+		 * Obtiene el valor asociado a una clave, calculandolo si es necesario.
+		 * 
+		 * @param key Clave a buscar
+		 * @return Valor asociado o null
+		 */
 		@SuppressWarnings("unchecked")
 		@Override
 		public V get(Object key){
