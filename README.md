@@ -25,7 +25,7 @@ El repositorio incluye tanto las herramientas y bibliotecas base utilizadas para
 | Proyecto | Descripción |
 |----------|-------------|
 | `DatosCompartidos` | Clases de datos compartidas entre proyectos |
-| `Geneticos` | Implementación de algoritmos genéticos |
+| `Genéticos` | Implementación de algoritmos genéticos |
 | `Grafos` | Estructuras de datos y algoritmos sobre grafos |
 | `ParteComun` | Utilidades y clases comunes |
 | `Parsers` | Analizadores sintácticos |
