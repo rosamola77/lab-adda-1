@@ -87,7 +87,7 @@ public class DatosBufete {
 	 * Muestra los datos cargados por consola.
 	 */
 	public static void toConsole() {
-		System.out.println("N� de casos: "+NUM_CASOS);
+		System.out.println("Num. de casos: "+NUM_CASOS);
 		abogados.forEach(System.out::println);		
 	}
 	

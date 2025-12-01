@@ -53,7 +53,7 @@ public class TipoSolucion {
 	 * Imprime una línea decorativa en la consola.
 	 */
 	private static void pintarLinea() {
-		System.out.println(IntStream.range(0, 10).mapToObj(i->"o").collect(Collectors.joining("~~~~�~~~~", "\n", "\n")));		
+		System.out.println(IntStream.range(0, 10).mapToObj(i->"o").collect(Collectors.joining("~~~~*~~~~", "\n", "\n")));		
 	}	
 }
 
