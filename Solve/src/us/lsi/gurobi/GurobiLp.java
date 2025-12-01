@@ -16,10 +16,36 @@ import java.util.stream.Collectors;
 
 import gurobi.*;
 
+/**
+ * GurobiLp
+ *
+ * <p>Clase que proporciona integración con el solver Gurobi para
+ * resolver modelos de programación lineal entera (PLI).</p>
+ *
+ * <p>Lee modelos en formato LP desde ficheros y los resuelve
+ * utilizando la API de Gurobi, manejando casos especiales como
+ * modelos infactibles o no acotados.</p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * GurobiLp.solve("modelo.lp");
+ * // o para obtener la solución programáticamente:
+ * GurobiSolution sol = GurobiLp.solveSolution("modelo.lp");
+ * System.out.println("Objetivo: " + sol.objVal);
+ * }</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see GurobiSolution
+ */
 public class GurobiLp {
   
-//	public static void main(String[] args) {
-	
+	/**
+	 * Resuelve un modelo LP y muestra el resultado por consola.
+	 *
+	 * @param file ruta del fichero con el modelo en formato LP
+	 */
 	public static void solve(String file) {
 		Locale.setDefault(Locale.of("en", "US"));
 		Optional<GurobiSolution> solution = GurobiLp.gurobi(file);
@@ -38,21 +64,30 @@ public class GurobiLp {
 				.collect(Collectors.joining("\n")));
 	}
 	
+	/**
+	 * Resuelve un modelo LP y devuelve la solución.
+	 *
+	 * @param file ruta del fichero con el modelo en formato LP
+	 * @return la solución del modelo
+	 * @throws java.util.NoSuchElementException si no se puede resolver el modelo
+	 */
 	public static GurobiSolution solveSolution(String file) {
 		Locale.setDefault(Locale.of("en", "US"));
 		GurobiSolution solution = GurobiLp.gurobi(file).get();
 		return solution;
 	}
 	
+	/**
+	 * Resuelve un modelo LP usando Gurobi.
+	 *
+	 * <p>Maneja casos especiales como modelos infactibles o no acotados,
+	 * desactivando el preprocesamiento y reintentando si es necesario.</p>
+	 *
+	 * @param file ruta del fichero con el modelo en formato LP
+	 * @return Optional con la solución si se encuentra, vacío en caso contrario
+	 */
 	public static Optional<GurobiSolution> gurobi(String file) {
-
-//		if (args.length < 1) {
-//			System.out.println("Usage: java Lp filename");
-//			System.exit(1);
-//		}
 		GRBModel model = null;
-//		double[] xvals = null;
-//		String[] names = null;
 		Double objval = null;
 		GRBVar[] vars = null;
 		Map<String, Double> map = null;
@@ -71,32 +106,9 @@ public class GurobiLp {
 				optimstatus = model.get(GRB.IntAttr.Status);
 			}
 
-//			if (optimstatus == GRB.Status.OPTIMAL || optimstatus == GRB.Status.SUBOPTIMAL) {
-//                System.out.println("Optimization was successful");
-//                System.out.println("Objective value: " + model.get(GRB.DoubleAttr.ObjVal));
-			// Get the variable values
-//				double objval = model.get(GRB.DoubleAttr.ObjVal);
-//				System.out.println("Optimal objective: " + objval);
-//            } else if (optimstatus == GRB.Status.SUBOPTIMAL) {
-//                System.out.println("Suboptimal objective: " + model.get(GRB.DoubleAttr.ObjVal));
-//			} else if (optimstatus == GRB.Status.INFEASIBLE) {
-//				System.out.println("Model is infeasible");
-//
-//				// Compute and write out IIS
-//				model.computeIIS();
-//				model.write("model.ilp");
-//			} else if (optimstatus == GRB.Status.UNBOUNDED) {
-//				System.out.println("Model is unbounded");
-//			} else {
-//				System.out.println("Optimization was stopped with status = " + optimstatus);
-//			}
-
 			if (optimstatus == GRB.Status.OPTIMAL || optimstatus == GRB.Status.SUBOPTIMAL) {
-//				System.out.println("Optimization was successful");
 				objval = model.get(GRB.DoubleAttr.ObjVal);
 				vars = model.getVars();
-//				xvals = model.get(GRB.DoubleAttr.X, model.getVars());
-//				names = model.get(GRB.DoubleAttr.VarName, model.getVars());
 				map = new HashMap<>();
 				for (GRBVar v : vars) {
 					map.put(v.get(GRB.StringAttr.VarName), v.get(GRB.DoubleAttr.X));
@@ -109,7 +121,6 @@ public class GurobiLp {
 
 		} catch (GRBException e) {
 			return Optional.empty();
-//			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
 		}
 		if (model == null || objval == null || map == null) {
 			return Optional.empty();
