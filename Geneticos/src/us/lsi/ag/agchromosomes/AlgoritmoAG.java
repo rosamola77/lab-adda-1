@@ -20,94 +20,139 @@ import us.lsi.ag.agstopping.StoppingConditionFactory;
 import us.lsi.common.Preconditions;
 
 /**
- * <p> Implementaci�n de un Algoritmo Gen�tico </p>
- * 
- * 
- * @author Miguel Toro
+ * AlgoritmoAG
  *
+ * <p>Implementación de un Algoritmo Genético (AG) para resolver problemas
+ * de optimización. Utiliza la librería Apache Commons Math para la
+ * mecánica del algoritmo genético.</p>
+ *
+ * <p>El algoritmo evoluciona una población de cromosomas mediante
+ * operadores de selección, cruce y mutación hasta cumplir una
+ * condición de parada.</p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * AlgoritmoAG<List<Integer>, Solucion> ag = AlgoritmoAG.of(problema);
+ * ag.ejecuta();
+ * Solucion mejor = ag.bestSolution();
+ * }</p>
+ *
+ * @param <V> tipo de los valores decodificados del cromosoma
+ * @param <S> tipo de la solución del problema
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see ChromosomeData
+ * @see AChromosome
  */
 public class AlgoritmoAG<V,S> {
 	
 	/**
-	 * @param <C> Tipo del cromosoma
-	 * @param p Problema
-	 * @return AlgoritmoAG
+	 * Crea un algoritmo genético para el problema dado.
+	 *
+	 * @param <V> tipo de los valores decodificados
+	 * @param <S> tipo de la solución
+	 * @param chromosomeData datos del problema
+	 * @return un nuevo algoritmo genético configurado
 	 */
-	
 	public static <V,S> AlgoritmoAG<V,S> of(ChromosomeData<V,S> chromosomeData) {
 		return new AlgoritmoAG<V,S>(chromosomeData);
 	}
 	
 	/**
-	 * Tama�o de la poblaci�n. Usualmente de un valor cercano a la DIMENSION de los cromosomas o mayor
+	 * Tamaño de la población.
+	 * 
+	 * <p>Usualmente un valor cercano a la dimensión de los cromosomas o mayor.</p>
 	 */
 	public static int POPULATION_SIZE = 30;
 	
 	/**
-	 * Tasa de elitismo. El porcentaje especificado de los mejores cromosomas pasa a la siguiente generaci�n sin cambio
+	 * Tasa de elitismo.
+	 * 
+	 * <p>El porcentaje especificado de los mejores cromosomas pasa a la
+	 * siguiente generación sin cambio.</p>
 	 */
 	public static double ELITISM_RATE = 0.2;
 	
 	/**
-	 * Tasa de cruce: Indica con qu� frecuencia se va a realizar la cruce. 
-	 * Si no hay un cruce, la descendencia es copia exacta de los padres. 
-	 * Si hay un cruce, la descendencia est� hecha de partes del cromosoma de los padres. 
-	 * Si la probabilidad de cruce es 100%, entonces todos los hijos se hacen mediante cruce de los padres
-	 * Si es 0%, la nueva generaci�n se hace de copias exactas de los cromosomas de los padres.
-	 * El cruce se hace con la esperanza de que los nuevos cromosomas tendr�n las partes buenas de los padres
-	 * y tal vez los nuevos cromosomas ser�n mejores. Sin embargo, es bueno dejar una cierta parte de la poblaci�n sobrevivir a la siguiente generaci�n.
+	 * Tasa de cruce.
 	 * 
-	 * <br>
-	 * Tasa de cruce. Valores usuales entre  0,.8 y 0.95
+	 * <p>Indica con qué frecuencia se realiza el cruce. Si no hay cruce,
+	 * la descendencia es copia exacta de los padres. Si hay cruce, la
+	 * descendencia está hecha de partes del cromosoma de los padres.</p>
+	 * 
+	 * <p>El cruce se hace con la esperanza de que los nuevos cromosomas
+	 * tendrán las partes buenas de los padres y tal vez serán mejores.</p>
+	 *
+	 * <p>Valores usuales entre 0.8 y 0.95.</p>
 	 */
-	
 	public static double CROSSOVER_RATE = 0.8;
 	
 	/**
-	 * La tasa de de mutaci�n indica con qu� frecuencia ser�n mutados cada uno de los cromosomas mutados. 
-	 * Si no hay mutaci�n, la descendencia se toma despu�s de cruce sin ning�n cambio. 
-	 * Si se lleva a cabo la mutaci�n, se cambia una parte del cromosoma. 
-	 * Si probabilidad de mutaci�n es 100%, toda cromosoma se cambia, si es 0%, no se cambia ninguno. 
-	 * La mutaci�n se hace para evitar que se caiga en un m�ximo local.
+	 * Tasa de mutación.
 	 * 
-	 * 
-	 * Tasa de mutaci�n. Valores usales entre 0.5 y 1.
+	 * <p>Indica con qué frecuencia serán mutados los cromosomas. Si no hay
+	 * mutación, la descendencia se toma después del cruce sin cambio.
+	 * La mutación se hace para evitar caer en máximos locales.</p>
+	 *
+	 * <p>Valores usuales entre 0.5 y 1.</p>
 	 */
 	public static double MUTATION_RATE = 0.6;
 	
-
+	/** Tiempo de inicio de la ejecución. */
 	public static long INITIAL_TIME;
+	
+	/** Tiempo de finalización de la ejecución. */
 	public static long FINAL_TIME;
 	
-	
+	/** Cromosoma base para crear la población. */
 	public AChromosome<V,?,S>  aChromosome;
+	
+	/** Datos del problema. */
 	public ChromosomeData<V,S> data;
+	
+	/** Política de cruce. */
 	public CrossoverPolicy crossOverPolicy;
+	
+	/** Política de mutación. */
 	public MutationPolicy mutationPolicy;
+	
+	/** Política de selección. */
 	public SelectionPolicy selectionPolicy;
+	
+	/** Condición de parada. */
 	private StoppingCondition stopCond;
 
 	/**
-	 * Lista con los mejores cromosomas de cada una de la generaciones si se usa la condici�n de parada SolutionsNumbers.
-	 * En otro caso null.
+	 * Lista con los mejores cromosomas de cada generación.
+	 * 
+	 * <p>Disponible si se usa la condición de parada SolutionsNumbers.
+	 * En otro caso null.</p>
  	 */
 	public static List<Chromosome> bestChromosomes;
 	
-
+	/** Población inicial. */
 	protected static Population initialPopulation;
 	
-	
+	/** Mejor cromosoma de la población final. */
 	protected static Chromosome bestFinal;
+	
+	/** Población final tras la evolución. */
 	protected static Population finalPopulation;
+	
+	/** Mejor fitness encontrado. */
 	public static Double bestFitNess;
 	
+	/** Generador de números aleatorios. */
 	public static JDKRandomGenerator random;
 	
 	
 	/**
-	 * @param problema Problema a resolver
+	 * Constructor que crea un algoritmo genético para el problema dado.
+	 *
+	 * @param chromosomeData datos del problema a resolver
 	 */
-
 	public AlgoritmoAG(ChromosomeData<V,S> chromosomeData) {
 		super();
 		AlgoritmoAG.random = new JDKRandomGenerator();		
@@ -123,7 +168,9 @@ public class AlgoritmoAG<V,S> {
 	}
 
 	/**
-	 * Inicializa aleatoriamente la población.
+	 * Genera una población inicial aleatoria.
+	 *
+	 * @return población inicial con cromosomas aleatorios
 	 */
 	public ElitisticListPopulation randomPopulation() {
 		List<Chromosome> popList = new LinkedList<>();
@@ -135,7 +182,10 @@ public class AlgoritmoAG<V,S> {
 	}	
 
 	/**
-	 * Ejecuta el algoritmo
+	 * Ejecuta el algoritmo genético.
+	 *
+	 * <p>Inicializa la población, evoluciona hasta cumplir la condición
+	 * de parada y almacena la mejor solución encontrada.</p>
 	 */
 	public void ejecuta() {
 		AlgoritmoAG.INITIAL_TIME = System.currentTimeMillis();
@@ -157,34 +207,57 @@ public class AlgoritmoAG<V,S> {
 	}
 
 	/**
-	 * @return Población inicial
+	 * Obtiene la población inicial.
+	 *
+	 * @return la población inicial
 	 */
 	public Population getInitialPopulation() {
 		return initialPopulation;
 	}
 
 	/**
-	 * @return El mejor cromosoma en la poblaci�n final
+	 * Obtiene el mejor cromosoma de la población final.
+	 *
+	 * @return el mejor cromosoma
 	 */
-	
 	protected Chromosome getBestChromosome() {
 		return bestFinal;
 	}
 	
+	/**
+	 * Obtiene el mejor cromosoma como AChromosome.
+	 *
+	 * @return el mejor cromosoma tipado
+	 */
 	@SuppressWarnings("unchecked")
 	public AChromosome<V,?,S> getBestAChromosome() {
 		return (AChromosome<V,?,S>)bestFinal;
 	}
 	
+	/**
+	 * Obtiene el mejor valor de fitness.
+	 *
+	 * @return el mejor fitness
+	 */
 	public Double getBestFitness() {
 		return bestFinal.fitness();
 	}
 
+	/**
+	 * Obtiene la lista de mejores cromosomas de cada generación.
+	 *
+	 * @return lista de mejores cromosomas
+	 */
 	protected List<Chromosome> getBestChromosomes(){
 		return bestChromosomes.stream()
 				.collect(Collectors.toList());
 	}
 	
+	/**
+	 * Obtiene la lista de mejores cromosomas como AChromosome.
+	 *
+	 * @return lista de mejores cromosomas tipados
+	 */
 	@SuppressWarnings("unchecked")
 	public List<AChromosome<V, ?, S>> getBestAChromosomes(){
 		return bestChromosomes.stream()
@@ -193,17 +266,29 @@ public class AlgoritmoAG<V,S> {
 	}
 
 	/**
-	 * @return Población final
+	 * Obtiene la población final.
+	 *
+	 * @return la población final tras la evolución
 	 */
 	public Population getFinalPopulation() {
 		return finalPopulation;
 	}	
 	
+	/**
+	 * Obtiene la mejor solución encontrada.
+	 *
+	 * @return la solución correspondiente al mejor cromosoma
+	 */
 	public S bestSolution() {
 		V d = this.getBestAChromosome().decode();
 		return this.data.solution(d);
 	}
 	
+	/**
+	 * Obtiene el conjunto de mejores soluciones encontradas.
+	 *
+	 * @return conjunto de soluciones de los mejores cromosomas
+	 */
 	@SuppressWarnings("unchecked")
 	public Set<S> bestSolutions() {
 		return this.getBestChromosomes().stream()
@@ -211,10 +296,20 @@ public class AlgoritmoAG<V,S> {
 				.collect(Collectors.toSet());
 	} 
 	
+	/**
+	 * Obtiene la condición de parada utilizada.
+	 *
+	 * @return la condición de parada
+	 */
 	public StoppingCondition stoppingCondition() {
 		return this.stopCond;
 	}
 	
+	/**
+	 * Obtiene el tiempo de ejecución del algoritmo.
+	 *
+	 * @return tiempo en milisegundos
+	 */
 	public static Long time() {
 		return (AlgoritmoAG.FINAL_TIME - AlgoritmoAG.INITIAL_TIME);
 	}
