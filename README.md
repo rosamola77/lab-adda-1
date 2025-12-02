@@ -117,10 +117,19 @@ Este repositorio incluye documentación en español para la librería **JGraphT*
 
 ### Adjuntar Javadoc en Eclipse
 
-1. `Project` → `Properties` → `Java Build Path` → `Libraries`
-2. Expande `jgrapht-core-1.5.0.jar` y pulsa `Javadoc location...`
-3. Selecciona `Javadoc in archive...` y elige `ParteComun/lib/jgrapht-core-1.5.0-javadoc.jar`
-4. Aceptar. Eclipse mostrará la documentación al solicitar Javadoc de una clase/método.
+**En el proyecto ParteComun o Grafos** (donde está JGraphT):
+
+1. Clic derecho sobre el proyecto (`ParteComun` o `Grafos`) → `Properties`
+2. Ve a `Java Build Path` → pestaña `Libraries`
+3. Expande `jgrapht-core-1.5.0.jar` (dentro de la carpeta `lib`)
+4. Selecciona `Javadoc location` y pulsa `Edit...`
+5. Selecciona `Javadoc in archive` → `External file`
+6. Pulsa `Browse...` y navega hasta `ParteComun/lib/jgrapht-core-1.5.0-javadoc.jar`
+7. En `Path within archive` escribe: `/` (solo la barra)
+8. Pulsa `Validate...` para verificar que Eclipse encuentra `index.html` y `package-list`
+9. Pulsa `OK` y `Apply and Close`
+
+**Verificar**: Sitúa el cursor sobre una clase de JGraphT (ej: `SimpleGraph`) y pulsa `F2` o `Shift+F2` para ver la documentación en español.
 
 ---
 
