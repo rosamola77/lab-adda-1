@@ -124,6 +124,46 @@ System.out.println("Número de aristas: " + aristas.size());</code></pre>
     <pre><code>Set&lt;DefaultEdge&gt; aristasDeMadrid = g.edgesOf("Madrid");
 System.out.println("Madrid tiene " + aristasDeMadrid.size() + " conexiones");</code></pre>
 
+    <h4>getAllEdges(V source, V target)</h4>
+    <div class="method-signature">Set&lt;E&gt; getAllEdges(V sourceVertex, V targetVertex)</div>
+    <p>Devuelve todas las aristas entre dos vértices. Útil en multigrafos donde puede haber múltiples aristas.</p>
+    <pre><code>Set&lt;DefaultEdge&gt; todasAristas = g.getAllEdges("Madrid", "Barcelona");
+System.out.println("Aristas entre Madrid y Barcelona: " + todasAristas.size());</code></pre>
+
+    <h4>incomingEdgesOf(V v) / outgoingEdgesOf(V v)</h4>
+    <div class="method-signature">Set&lt;E&gt; incomingEdgesOf(V vertex)<br>Set&lt;E&gt; outgoingEdgesOf(V vertex)</div>
+    <p>Para grafos dirigidos: aristas entrantes y salientes de un vértice.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+// ... añadir vértices y aristas ...
+Set&lt;DefaultEdge&gt; entrantes = dg.incomingEdgesOf("Madrid");  // Aristas que llegan a Madrid
+Set&lt;DefaultEdge&gt; salientes = dg.outgoingEdgesOf("Madrid");  // Aristas que salen de Madrid</code></pre>
+
+    <h4>containsEdge(E e)</h4>
+    <div class="method-signature">boolean containsEdge(E e)</div>
+    <p>Comprueba si una arista específica existe en el grafo.</p>
+    <pre><code>DefaultEdge e = g.getEdge("Madrid", "Barcelona");
+if (g.containsEdge(e)) {
+    System.out.println("La arista existe");
+}</code></pre>
+
+    <h4>removeAllEdges(V source, V target)</h4>
+    <div class="method-signature">Set&lt;E&gt; removeAllEdges(V sourceVertex, V targetVertex)</div>
+    <p>Elimina todas las aristas entre dos vértices. Devuelve el conjunto de aristas eliminadas.</p>
+    <pre><code>Set&lt;DefaultEdge&gt; eliminadas = g.removeAllEdges("Madrid", "Barcelona");</code></pre>
+
+    <h4>removeAllEdges(Collection)</h4>
+    <div class="method-signature">boolean removeAllEdges(Collection&lt;? extends E&gt; edges)</div>
+    <p>Elimina una colección de aristas del grafo.</p>
+    <pre><code>Set&lt;DefaultEdge&gt; aristasAEliminar = new HashSet&lt;&gt;();
+// ... añadir aristas a eliminar ...
+g.removeAllEdges(aristasAEliminar);</code></pre>
+
+    <h4>removeAllVertices(Collection)</h4>
+    <div class="method-signature">boolean removeAllVertices(Collection&lt;? extends V&gt; vertices)</div>
+    <p>Elimina una colección de vértices y todas sus aristas incidentes.</p>
+    <pre><code>List&lt;String&gt; ciudadesAEliminar = Arrays.asList("Madrid", "Barcelona");
+g.removeAllVertices(ciudadesAEliminar);</code></pre>
+
     <h3>Información del Grafo</h3>
 
     <h4>degreeOf(V v)</h4>
@@ -162,6 +202,26 @@ wg.addVertex("Barcelona");
 DefaultWeightedEdge e = wg.addEdge("Madrid", "Barcelona");
 wg.setEdgeWeight(e, 621.0);  // Distancia en km
 double peso = wg.getEdgeWeight(e);  // 621.0</code></pre>
+
+    <h4>setEdgeWeight(V source, V target, double weight)</h4>
+    <div class="method-signature">void setEdgeWeight(V sourceVertex, V targetVertex, double weight)</div>
+    <p>Establece el peso de la arista entre dos vértices directamente (sin obtener la arista).</p>
+    <pre><code>wg.setEdgeWeight("Madrid", "Barcelona", 621.0);  // Más directo</code></pre>
+
+    <h4>getType()</h4>
+    <div class="method-signature">GraphType getType()</div>
+    <p>Devuelve información sobre el tipo del grafo (dirigido, ponderado, permite bucles, etc.).</p>
+    <pre><code>GraphType tipo = g.getType();
+System.out.println("¿Dirigido? " + tipo.isDirected());
+System.out.println("¿Ponderado? " + tipo.isWeighted());
+System.out.println("¿Permite bucles? " + tipo.isAllowingSelfLoops());
+System.out.println("¿Permite múltiples aristas? " + tipo.isAllowingMultipleEdges());</code></pre>
+
+    <h4>getVertexSupplier() / getEdgeSupplier()</h4>
+    <div class="method-signature">Supplier&lt;V&gt; getVertexSupplier()<br>Supplier&lt;E&gt; getEdgeSupplier()</div>
+    <p>Devuelve los proveedores (suppliers) para crear nuevos vértices y aristas automáticamente.</p>
+    <pre><code>Supplier&lt;String&gt; vertexSupplier = g.getVertexSupplier();
+Supplier&lt;DefaultEdge&gt; edgeSupplier = g.getEdgeSupplier();</code></pre>
 
     <h2>💡 Ejemplos Completos</h2>
 

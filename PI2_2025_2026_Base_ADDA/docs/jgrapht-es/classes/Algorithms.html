@@ -290,6 +290,105 @@ System.out.println("¿Tiene ciclos? " + tieneCiclos);
 Set&lt;String&gt; verticesEnCiclos = detector.findCycles();
 System.out.println("Vértices en ciclos: " + verticesEnCiclos);</code></pre>
 
+    <h2>✂️ Corte Mínimo</h2>
+
+    <h3>StoerWagnerMinimumCut</h3>
+    <p><code>org.jgrapht.alg.StoerWagnerMinimumCut</code></p>
+    <p>Encuentra el corte mínimo de un grafo no dirigido ponderado usando el algoritmo de Stoer-Wagner.</p>
+
+    <pre><code>import org.jgrapht.alg.StoerWagnerMinimumCut;
+
+Graph&lt;String, DefaultWeightedEdge&gt; grafo = 
+    new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+// ... construir grafo ...
+
+StoerWagnerMinimumCut&lt;String, DefaultWeightedEdge&gt; minCut = 
+    new StoerWagnerMinimumCut&lt;&gt;(grafo);
+
+double pesoCorteMínimo = minCut.minCutWeight();
+Set&lt;String&gt; ladoDelCorte = minCut.minCut();
+System.out.println("Peso del corte mínimo: " + pesoCorteMínimo);
+System.out.println("Vértices de un lado del corte: " + ladoDelCorte);</code></pre>
+
+    <h2>📈 Flujo Máximo</h2>
+
+    <h3>EdmondsKarpMFImpl</h3>
+    <p><code>org.jgrapht.alg.flow.EdmondsKarpMFImpl</code></p>
+    <p>Implementación del algoritmo de Edmonds-Karp para calcular el flujo máximo.</p>
+
+    <pre><code>import org.jgrapht.alg.flow.EdmondsKarpMFImpl;
+
+Graph&lt;String, DefaultWeightedEdge&gt; red = 
+    new SimpleDirectedWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+// ... construir red de flujo ...
+
+EdmondsKarpMFImpl&lt;String, DefaultWeightedEdge&gt; flujoMax = 
+    new EdmondsKarpMFImpl&lt;&gt;(red);
+
+double flujoMaximo = flujoMax.calculateMaximumFlow("fuente", "sumidero");
+System.out.println("Flujo máximo: " + flujoMaximo);</code></pre>
+
+    <h2>🔍 Cliques</h2>
+
+    <h3>BronKerboschCliqueFinder</h3>
+    <p><code>org.jgrapht.alg.clique.BronKerboschCliqueFinder</code></p>
+    <p>Encuentra todos los cliques máximales de un grafo.</p>
+
+    <pre><code>import org.jgrapht.alg.clique.BronKerboschCliqueFinder;
+
+Graph&lt;String, DefaultEdge&gt; grafo = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+// ... construir grafo ...
+
+BronKerboschCliqueFinder&lt;String, DefaultEdge&gt; cliqueFinder = 
+    new BronKerboschCliqueFinder&lt;&gt;(grafo);
+
+// Obtener todos los cliques máximales
+Iterator&lt;Set&lt;String&gt;&gt; cliques = cliqueFinder.iterator();
+while (cliques.hasNext()) {
+    Set&lt;String&gt; clique = cliques.next();
+    System.out.println("Clique: " + clique);
+}</code></pre>
+
+    <h2>🎯 Emparejamiento (Matching)</h2>
+
+    <h3>HopcroftKarpMaximumCardinalityBipartiteMatching</h3>
+    <p><code>org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching</code></p>
+    <p>Encuentra el emparejamiento máximo en un grafo bipartito.</p>
+
+    <pre><code>import org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching;
+import org.jgrapht.alg.interfaces.MatchingAlgorithm.Matching;
+
+Graph&lt;String, DefaultEdge&gt; bipartito = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+// ... construir grafo bipartito ...
+
+Set&lt;String&gt; particion1 = new HashSet&lt;&gt;(Arrays.asList("A1", "A2", "A3"));
+Set&lt;String&gt; particion2 = new HashSet&lt;&gt;(Arrays.asList("B1", "B2", "B3"));
+
+HopcroftKarpMaximumCardinalityBipartiteMatching&lt;String, DefaultEdge&gt; matching = 
+    new HopcroftKarpMaximumCardinalityBipartiteMatching&lt;&gt;(bipartito, particion1, particion2);
+
+Matching&lt;String, DefaultEdge&gt; resultado = matching.getMatching();
+System.out.println("Aristas del emparejamiento: " + resultado.getEdges());
+System.out.println("Tamaño del emparejamiento: " + resultado.getEdges().size());</code></pre>
+
+    <h2>🔀 Clausura Transitiva</h2>
+
+    <h3>TransitiveClosure</h3>
+    <p><code>org.jgrapht.alg.TransitiveClosure</code></p>
+    <p>Calcula la clausura transitiva de un grafo dirigido.</p>
+
+    <pre><code>import org.jgrapht.alg.TransitiveClosure;
+
+Graph&lt;String, DefaultEdge&gt; dag = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(dag, "A", "B");
+Graphs.addEdgeWithVertices(dag, "B", "C");
+
+// Calcular clausura transitiva (modifica el grafo)
+TransitiveClosure.INSTANCE.closeSimpleDirectedGraph(dag);
+
+// Ahora existe arista directa A → C
+boolean existeACDirecto = dag.containsEdge("A", "C");  // true</code></pre>
+
     <h2>📊 Orden Topológico</h2>
 
     <h3>TopologicalOrderIterator</h3>
@@ -337,7 +436,18 @@ import org.jgrapht.traverse.TopologicalOrderIterator;
 
 // Conectividad y ciclos
 import org.jgrapht.alg.connectivity.ConnectivityInspector;
-import org.jgrapht.alg.cycle.CycleDetector;</code></pre>
+import org.jgrapht.alg.cycle.CycleDetector;
+
+// Flujo y corte
+import org.jgrapht.alg.StoerWagnerMinimumCut;
+import org.jgrapht.alg.flow.EdmondsKarpMFImpl;
+
+// Cliques y emparejamiento
+import org.jgrapht.alg.clique.BronKerboschCliqueFinder;
+import org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching;
+
+// Clausura transitiva
+import org.jgrapht.alg.TransitiveClosure;</code></pre>
 
     <h2>🔗 Ver También</h2>
     <ul>

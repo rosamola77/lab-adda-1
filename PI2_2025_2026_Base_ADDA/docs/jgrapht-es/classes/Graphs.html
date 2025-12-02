@@ -138,6 +138,62 @@ Graphs.addAllVertices(g, ciudades);  // Añade las 4 ciudades</code></pre>
 Graph&lt;String, DefaultEdge&gt; copia = new SimpleGraph&lt;&gt;(DefaultEdge.class);
 Graphs.addGraph(copia, original);  // copia = original</code></pre>
 
+    <h3>addGraphReversed</h3>
+    <div class="method-signature">static &lt;V, E&gt; void addGraphReversed(Graph&lt;? super V, ? super E&gt; destination, Graph&lt;V, E&gt; source)</div>
+    <p>Copia un grafo invirtiendo la dirección de todas las aristas. Útil para grafos dirigidos.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; original = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(original, "A", "B");  // A → B
+
+Graph&lt;String, DefaultEdge&gt; invertido = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addGraphReversed(invertido, original);  // Ahora tiene B → A</code></pre>
+
+    <h3>addAllEdges</h3>
+    <div class="method-signature">static &lt;V, E&gt; boolean addAllEdges(Graph&lt;? super V, ? super E&gt; dest, Graph&lt;V, E&gt; source, Collection&lt;? extends E&gt; edges)</div>
+    <p>Copia un conjunto de aristas de un grafo a otro.</p>
+    <pre><code>Set&lt;DefaultEdge&gt; aristasSeleccionadas = ...;
+Graphs.addAllEdges(destino, origen, aristasSeleccionadas);</code></pre>
+
+    <h3>addOutgoingEdges / addIncomingEdges</h3>
+    <div class="method-signature">static &lt;V, E&gt; void addOutgoingEdges(Graph&lt;V, E&gt; g, V source, Iterable&lt;V&gt; targets)<br>static &lt;V, E&gt; void addIncomingEdges(Graph&lt;V, E&gt; g, V target, Iterable&lt;V&gt; sources)</div>
+    <p>Añade múltiples aristas salientes o entrantes a un vértice de una vez.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+List&lt;String&gt; destinos = Arrays.asList("B", "C", "D");
+
+// Crea aristas A→B, A→C, A→D
+Graphs.addOutgoingEdges(dg, "A", destinos);
+
+// Crea aristas B→Z, C→Z, D→Z
+List&lt;String&gt; origenes = Arrays.asList("B", "C", "D");
+Graphs.addIncomingEdges(dg, "Z", origenes);</code></pre>
+
+    <h3>testIncidence</h3>
+    <div class="method-signature">static &lt;V, E&gt; boolean testIncidence(Graph&lt;V, E&gt; g, E e, V v)</div>
+    <p>Comprueba si una arista es incidente a un vértice (es decir, si el vértice es uno de los extremos).</p>
+    <pre><code>DefaultEdge e = g.getEdge("A", "B");
+boolean esIncidente = Graphs.testIncidence(g, e, "A");  // true
+boolean noIncidente = Graphs.testIncidence(g, e, "C");  // false</code></pre>
+
+    <h3>undirectedGraph</h3>
+    <div class="method-signature">static &lt;V, E&gt; Graph&lt;V, E&gt; undirectedGraph(Graph&lt;V, E&gt; g)</div>
+    <p>Devuelve una vista no dirigida de un grafo dirigido. Las modificaciones en la vista afectan al original.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; dirigido = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+// ... construir grafo dirigido ...
+
+Graph&lt;String, DefaultEdge&gt; vistaNoDirigida = Graphs.undirectedGraph(dirigido);
+// Ahora se puede recorrer ignorando la dirección de las aristas</code></pre>
+
+    <h3>removeVertexAndPreserveConnectivity</h3>
+    <div class="method-signature">static &lt;V, E&gt; boolean removeVertexAndPreserveConnectivity(Graph&lt;V, E&gt; g, V vertex)</div>
+    <p>Elimina un vértice pero conecta sus predecesores con sus sucesores, preservando la conectividad del grafo.</p>
+    <pre><code>// Grafo: A → B → C
+Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(dg, "A", "B");
+Graphs.addEdgeWithVertices(dg, "B", "C");
+
+// Eliminar B conectando A directamente con C
+Graphs.removeVertexAndPreserveConnectivity(dg, "B");
+// Resultado: A → C</code></pre>
+
     <h2>💡 Ejemplos Completos</h2>
 
     <h3>Ejemplo 1: Construcción rápida de un grafo</h3>
