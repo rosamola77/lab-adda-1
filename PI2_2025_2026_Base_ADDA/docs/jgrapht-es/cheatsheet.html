@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheatsheet — JGraphT Documentación en español</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="class-header">
+        <h1>🚀 Cheatsheet — JGraphT</h1>
+        <p>Referencia rápida con las ~20 operaciones más frecuentes</p>
+    </div>
+
+    <div class="navigation">
+        <ul>
+            <li><strong>Navegación:</strong></li>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="cheatsheet.html">Cheatsheet</a></li>
+            <li><a href="classes/Graph.html">Graph</a></li>
+            <li><a href="classes/Graphs.html">Graphs</a></li>
+            <li><a href="classes/Algorithms.html">Algoritmos</a></li>
+        </ul>
+    </div>
+
+    <h2>📦 Imports Básicos</h2>
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.alg.spanning.KruskalMinimumSpanningTree;
+import org.jgrapht.alg.color.GreedyColoring;
+import org.jgrapht.traverse.*;
+import org.jgrapht.alg.connectivity.ConnectivityInspector;</code></pre>
+
+    <h2>1️⃣ Crear Grafos</h2>
+    
+    <div class="cheatsheet-item">
+        <h4>Grafo simple no dirigido</h4>
+        <pre><code>Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Grafo dirigido</h4>
+        <pre><code>Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Grafo ponderado no dirigido</h4>
+        <pre><code>Graph&lt;String, DefaultWeightedEdge&gt; wg = new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Grafo dirigido y ponderado</h4>
+        <pre><code>Graph&lt;String, DefaultWeightedEdge&gt; dwg = new SimpleDirectedWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);</code></pre>
+    </div>
+
+    <h2>2️⃣ Añadir Vértices y Aristas</h2>
+
+    <div class="cheatsheet-item">
+        <h4>Añadir vértice</h4>
+        <pre><code>g.addVertex("A");
+g.addVertex("B");</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Añadir arista (vértices deben existir)</h4>
+        <pre><code>g.addEdge("A", "B");</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Añadir arista con vértices automáticos ⭐</h4>
+        <pre><code>// Crea los vértices si no existen
+Graphs.addEdgeWithVertices(g, "C", "D");</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Añadir arista ponderada con vértices ⭐</h4>
+        <pre><code>Graphs.addEdgeWithVertices(wg, "Madrid", "Barcelona", 621.0);</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Establecer peso de arista</h4>
+        <pre><code>DefaultWeightedEdge e = wg.addEdge("A", "B");
+wg.setEdgeWeight(e, 5.0);</code></pre>
+    </div>
+
+    <h2>3️⃣ Consultar Información</h2>
+
+    <div class="cheatsheet-item">
+        <h4>Obtener todos los vértices</h4>
+        <pre><code>Set&lt;String&gt; vertices = g.vertexSet();
+System.out.println("Vértices: " + vertices);</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Obtener todas las aristas</h4>
+        <pre><code>Set&lt;DefaultEdge&gt; aristas = g.edgeSet();
+System.out.println("Número de aristas: " + aristas.size());</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Verificar existencia de vértice/arista</h4>
+        <pre><code>boolean existe = g.containsVertex("A");
+boolean conectados = g.containsEdge("A", "B");</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Obtener grado de un vértice</h4>
+        <pre><code>int grado = g.degreeOf("A");  // Grafos no dirigidos
+
+// Para grafos dirigidos:
+int entrada = dg.inDegreeOf("A");   // Aristas entrantes
+int salida = dg.outDegreeOf("A");   // Aristas salientes</code></pre>
+    </div>
+
+    <h2>4️⃣ Vecinos</h2>
+
+    <div class="cheatsheet-item">
+        <h4>Obtener vecinos de un vértice ⭐</h4>
+        <pre><code>List&lt;String&gt; vecinos = Graphs.neighborListOf(g, "A");
+// o como Set:
+Set&lt;String&gt; vecinosSet = Graphs.neighborSetOf(g, "A");</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Predecesores y sucesores (grafos dirigidos)</h4>
+        <pre><code>// Vértices que apuntan a A
+List&lt;String&gt; predecesores = Graphs.predecessorListOf(dg, "A");
+
+// Vértices a los que A apunta
+List&lt;String&gt; sucesores = Graphs.successorListOf(dg, "A");</code></pre>
+    </div>
+
+    <h2>5️⃣ Camino Mínimo (Dijkstra)</h2>
+
+    <div class="cheatsheet-item">
+        <h4>Encontrar camino más corto ⭐</h4>
+        <pre><code>DijkstraShortestPath&lt;String, DefaultWeightedEdge&gt; dijkstra = 
+    new DijkstraShortestPath&lt;&gt;(wg);
+
+GraphPath&lt;String, DefaultWeightedEdge&gt; camino = 
+    dijkstra.getPath("origen", "destino");
+
+if (camino != null) {
+    System.out.println("Ruta: " + camino.getVertexList());
+    System.out.println("Coste: " + camino.getWeight());
+}</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Solo obtener el peso del camino</h4>
+        <pre><code>double peso = dijkstra.getPathWeight("origen", "destino");</code></pre>
+    </div>
+
+    <h2>6️⃣ Árbol de Expansión Mínima (Kruskal)</h2>
+
+    <div class="cheatsheet-item">
+        <h4>Calcular MST ⭐</h4>
+        <pre><code>KruskalMinimumSpanningTree&lt;String, DefaultWeightedEdge&gt; kruskal = 
+    new KruskalMinimumSpanningTree&lt;&gt;(wg);
+
+SpanningTree&lt;DefaultWeightedEdge&gt; mst = kruskal.getSpanningTree();
+
+System.out.println("Peso total: " + mst.getWeight());
+System.out.println("Aristas: " + mst.getEdges());</code></pre>
+    </div>
+
+    <h2>7️⃣ Coloreado de Grafos</h2>
+
+    <div class="cheatsheet-item">
+        <h4>Colorear vértices (Greedy) ⭐</h4>
+        <pre><code>GreedyColoring&lt;String, DefaultEdge&gt; coloreo = 
+    new GreedyColoring&lt;&gt;(g);
+
+Coloring&lt;String&gt; resultado = coloreo.getColoring();
+
+System.out.println("Colores necesarios: " + resultado.getNumberColors());
+
+// Obtener color de cada vértice
+Map&lt;String, Integer&gt; colores = resultado.getColors();
+for (String v : g.vertexSet()) {
+    System.out.println(v + " -> color " + colores.get(v));
+}</code></pre>
+    </div>
+
+    <h2>8️⃣ Recorridos</h2>
+
+    <div class="cheatsheet-item">
+        <h4>Recorrido en anchura (BFS)</h4>
+        <pre><code>Iterator&lt;String&gt; bfs = new BreadthFirstIterator&lt;&gt;(g, "inicio");
+while (bfs.hasNext()) {
+    System.out.println(bfs.next());
+}</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Recorrido en profundidad (DFS)</h4>
+        <pre><code>Iterator&lt;String&gt; dfs = new DepthFirstIterator&lt;&gt;(g, "inicio");
+while (dfs.hasNext()) {
+    System.out.println(dfs.next());
+}</code></pre>
+    </div>
+
+    <h2>9️⃣ Conectividad</h2>
+
+    <div class="cheatsheet-item">
+        <h4>Verificar si el grafo es conexo</h4>
+        <pre><code>ConnectivityInspector&lt;String, DefaultEdge&gt; inspector = 
+    new ConnectivityInspector&lt;&gt;(g);
+
+boolean esConexo = inspector.isConnected();
+boolean hayRuta = inspector.pathExists("A", "Z");</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Obtener componentes conexas</h4>
+        <pre><code>Set&lt;Set&lt;String&gt;&gt; componentes = inspector.connectedSets();
+System.out.println("Componentes: " + componentes.size());</code></pre>
+    </div>
+
+    <h2>🔟 Operaciones con Aristas</h2>
+
+    <div class="cheatsheet-item">
+        <h4>Obtener extremos de una arista</h4>
+        <pre><code>DefaultEdge e = g.getEdge("A", "B");
+String origen = g.getEdgeSource(e);
+String destino = g.getEdgeTarget(e);
+
+// O el vértice opuesto:
+String otro = Graphs.getOppositeVertex(g, e, "A");  // -> "B"</code></pre>
+    </div>
+
+    <div class="cheatsheet-item">
+        <h4>Obtener aristas de un vértice</h4>
+        <pre><code>Set&lt;DefaultEdge&gt; aristasDeA = g.edgesOf("A");
+
+// En grafos dirigidos:
+Set&lt;DefaultEdge&gt; entrantes = dg.incomingEdgesOf("A");
+Set&lt;DefaultEdge&gt; salientes = dg.outgoingEdgesOf("A");</code></pre>
+    </div>
+
+    <h2>📋 Ejemplo Completo</h2>
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.alg.spanning.KruskalMinimumSpanningTree;
+
+public class EjemploCompleto {
+    public static void main(String[] args) {
+        // 1. Crear grafo ponderado
+        Graph&lt;String, DefaultWeightedEdge&gt; g = 
+            new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+        
+        // 2. Añadir aristas con vértices
+        Graphs.addEdgeWithVertices(g, "A", "B", 4);
+        Graphs.addEdgeWithVertices(g, "A", "C", 2);
+        Graphs.addEdgeWithVertices(g, "B", "C", 1);
+        Graphs.addEdgeWithVertices(g, "B", "D", 5);
+        Graphs.addEdgeWithVertices(g, "C", "D", 3);
+        
+        // 3. Información básica
+        System.out.println("Vértices: " + g.vertexSet());
+        System.out.println("Aristas: " + g.edgeSet().size());
+        
+        // 4. Vecinos
+        System.out.println("Vecinos de A: " + Graphs.neighborListOf(g, "A"));
+        
+        // 5. Camino mínimo
+        DijkstraShortestPath&lt;String, DefaultWeightedEdge&gt; dijkstra = 
+            new DijkstraShortestPath&lt;&gt;(g);
+        GraphPath&lt;String, DefaultWeightedEdge&gt; camino = 
+            dijkstra.getPath("A", "D");
+        System.out.println("Camino A→D: " + camino.getVertexList());
+        System.out.println("Coste: " + camino.getWeight());
+        
+        // 6. MST
+        KruskalMinimumSpanningTree&lt;String, DefaultWeightedEdge&gt; kruskal = 
+            new KruskalMinimumSpanningTree&lt;&gt;(g);
+        System.out.println("Peso MST: " + kruskal.getSpanningTree().getWeight());
+    }
+}</code></pre>
+
+    <h2>⚡ Tips Rápidos</h2>
+    <div class="tip">
+        <ul>
+            <li>Usa <code>Graphs.addEdgeWithVertices()</code> siempre que puedas - es más seguro</li>
+            <li>Para grafos ponderados usa <code>DefaultWeightedEdge</code> y <code>SimpleWeightedGraph</code></li>
+            <li>Dijkstra solo funciona con pesos no negativos</li>
+            <li>Kruskal solo funciona con grafos no dirigidos</li>
+            <li>El resultado de <code>vertexSet()</code> y <code>edgeSet()</code> son vistas del grafo</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <p>
+            <strong>JGraphT Documentación en Español</strong> — Versión 1.5.0<br>
+            Material didáctico para ADDA — Universidad de Sevilla<br>
+            Autores: Álvaro Rosa y Adrián Jiménez<br>
+            <a href="index.html">← Volver al índice</a>
+        </p>
+    </div>
+</body>
+</html>

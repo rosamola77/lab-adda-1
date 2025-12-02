@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph — JGraphT Documentación en español</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="class-header">
+        <h1>Interface Graph&lt;V, E&gt;</h1>
+        <p>org.jgrapht.Graph — Interfaz raíz para todas las estructuras de grafos</p>
+    </div>
+
+    <div class="navigation">
+        <ul>
+            <li><strong>Navegación:</strong></li>
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="../cheatsheet.html">Cheatsheet</a></li>
+            <li><a href="Graph.html">Graph</a></li>
+            <li><a href="Graphs.html">Graphs</a></li>
+            <li><a href="Algorithms.html">Algoritmos</a></li>
+        </ul>
+    </div>
+
+    <h2>📖 Descripción</h2>
+    <p>
+        <code>Graph&lt;V, E&gt;</code> es la interfaz principal de JGraphT. Define todas las operaciones básicas
+        que se pueden realizar sobre un grafo, independientemente de su tipo (dirigido, no dirigido, ponderado, etc.).
+    </p>
+    <ul>
+        <li><strong>V</strong>: Tipo del vértice (ej: <code>String</code>, <code>Integer</code>, objetos personalizados)</li>
+        <li><strong>E</strong>: Tipo de la arista (ej: <code>DefaultEdge</code>, <code>DefaultWeightedEdge</code>)</li>
+    </ul>
+
+    <div class="tip">
+        <strong>💡 Tip:</strong> La interfaz <code>Graph</code> no se instancia directamente. Usa implementaciones 
+        como <code>SimpleGraph</code>, <code>SimpleDirectedGraph</code>, <code>SimpleWeightedGraph</code>, etc.
+    </div>
+
+    <h2>🔧 Métodos Principales</h2>
+
+    <h3>Operaciones con Vértices</h3>
+
+    <h4>addVertex(V v)</h4>
+    <div class="method-signature">boolean addVertex(V v)</div>
+    <p>Añade un vértice al grafo. Devuelve <code>true</code> si el vértice fue añadido, <code>false</code> si ya existía.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+boolean added = g.addVertex("Madrid");    // true
+boolean again = g.addVertex("Madrid");    // false (ya existe)</code></pre>
+
+    <h4>removeVertex(V v)</h4>
+    <div class="method-signature">boolean removeVertex(V v)</div>
+    <p>Elimina un vértice y todas sus aristas incidentes. Devuelve <code>true</code> si existía.</p>
+    <pre><code>g.removeVertex("Madrid");  // Elimina el vértice y sus conexiones</code></pre>
+
+    <h4>containsVertex(V v)</h4>
+    <div class="method-signature">boolean containsVertex(V v)</div>
+    <p>Comprueba si el vértice existe en el grafo.</p>
+    <pre><code>if (g.containsVertex("Madrid")) {
+    System.out.println("Madrid está en el grafo");
+}</code></pre>
+
+    <h4>vertexSet()</h4>
+    <div class="method-signature">Set&lt;V&gt; vertexSet()</div>
+    <p>Devuelve el conjunto de todos los vértices del grafo.</p>
+    <pre><code>Set&lt;String&gt; vertices = g.vertexSet();
+System.out.println("Número de vértices: " + vertices.size());
+
+// Iterar sobre vértices
+for (String v : g.vertexSet()) {
+    System.out.println("Vértice: " + v);
+}</code></pre>
+
+    <h3>Operaciones con Aristas</h3>
+
+    <h4>addEdge(V source, V target)</h4>
+    <div class="method-signature">E addEdge(V sourceVertex, V targetVertex)</div>
+    <p>Crea una arista entre dos vértices. Ambos vértices deben existir previamente.</p>
+    <pre><code>g.addVertex("Madrid");
+g.addVertex("Barcelona");
+DefaultEdge e = g.addEdge("Madrid", "Barcelona");</code></pre>
+
+    <div class="warning">
+        <strong>⚠️ Importante:</strong> Si los vértices no existen, se lanzará una excepción. 
+        Usa <code>Graphs.addEdgeWithVertices()</code> para añadir arista y vértices en una sola operación.
+    </div>
+
+    <h4>removeEdge(V source, V target)</h4>
+    <div class="method-signature">E removeEdge(V sourceVertex, V targetVertex)</div>
+    <p>Elimina la arista entre dos vértices. Devuelve la arista eliminada o <code>null</code>.</p>
+    <pre><code>DefaultEdge removed = g.removeEdge("Madrid", "Barcelona");</code></pre>
+
+    <h4>removeEdge(E e)</h4>
+    <div class="method-signature">boolean removeEdge(E e)</div>
+    <p>Elimina una arista específica del grafo.</p>
+    <pre><code>DefaultEdge e = g.getEdge("Madrid", "Barcelona");
+g.removeEdge(e);</code></pre>
+
+    <h4>containsEdge(V source, V target)</h4>
+    <div class="method-signature">boolean containsEdge(V sourceVertex, V targetVertex)</div>
+    <p>Comprueba si existe una arista entre dos vértices.</p>
+    <pre><code>if (g.containsEdge("Madrid", "Barcelona")) {
+    System.out.println("Hay conexión directa");
+}</code></pre>
+
+    <h4>getEdge(V source, V target)</h4>
+    <div class="method-signature">E getEdge(V sourceVertex, V targetVertex)</div>
+    <p>Devuelve la arista entre dos vértices, o <code>null</code> si no existe.</p>
+    <pre><code>DefaultEdge e = g.getEdge("Madrid", "Barcelona");
+if (e != null) {
+    System.out.println("Arista encontrada: " + e);
+}</code></pre>
+
+    <h4>edgeSet()</h4>
+    <div class="method-signature">Set&lt;E&gt; edgeSet()</div>
+    <p>Devuelve el conjunto de todas las aristas del grafo.</p>
+    <pre><code>Set&lt;DefaultEdge&gt; aristas = g.edgeSet();
+System.out.println("Número de aristas: " + aristas.size());</code></pre>
+
+    <h4>edgesOf(V v)</h4>
+    <div class="method-signature">Set&lt;E&gt; edgesOf(V vertex)</div>
+    <p>Devuelve todas las aristas conectadas a un vértice.</p>
+    <pre><code>Set&lt;DefaultEdge&gt; aristasDeMadrid = g.edgesOf("Madrid");
+System.out.println("Madrid tiene " + aristasDeMadrid.size() + " conexiones");</code></pre>
+
+    <h3>Información del Grafo</h3>
+
+    <h4>degreeOf(V v)</h4>
+    <div class="method-signature">int degreeOf(V vertex)</div>
+    <p>Devuelve el grado de un vértice (número de aristas incidentes).</p>
+    <pre><code>int grado = g.degreeOf("Madrid");
+System.out.println("Grado de Madrid: " + grado);</code></pre>
+
+    <div class="note">
+        <strong>📝 Nota:</strong> En grafos dirigidos, usa <code>inDegreeOf()</code> y <code>outDegreeOf()</code> 
+        para obtener el grado de entrada y salida respectivamente.
+    </div>
+
+    <h4>inDegreeOf(V v) / outDegreeOf(V v)</h4>
+    <div class="method-signature">int inDegreeOf(V vertex)<br>int outDegreeOf(V vertex)</div>
+    <p>Para grafos dirigidos: grado de entrada (aristas que llegan) y grado de salida (aristas que salen).</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+// ... añadir vértices y aristas ...
+int entradas = dg.inDegreeOf("Madrid");   // Aristas que llegan a Madrid
+int salidas = dg.outDegreeOf("Madrid");   // Aristas que salen de Madrid</code></pre>
+
+    <h4>getEdgeSource(E e) / getEdgeTarget(E e)</h4>
+    <div class="method-signature">V getEdgeSource(E e)<br>V getEdgeTarget(E e)</div>
+    <p>Obtiene los vértices origen y destino de una arista.</p>
+    <pre><code>DefaultEdge e = g.getEdge("Madrid", "Barcelona");
+String origen = g.getEdgeSource(e);   // "Madrid"
+String destino = g.getEdgeTarget(e);  // "Barcelona"</code></pre>
+
+    <h4>getEdgeWeight(E e) / setEdgeWeight(E e, double weight)</h4>
+    <div class="method-signature">double getEdgeWeight(E e)<br>void setEdgeWeight(E e, double weight)</div>
+    <p>Obtiene o establece el peso de una arista (solo en grafos ponderados).</p>
+    <pre><code>Graph&lt;String, DefaultWeightedEdge&gt; wg = 
+    new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+wg.addVertex("Madrid");
+wg.addVertex("Barcelona");
+DefaultWeightedEdge e = wg.addEdge("Madrid", "Barcelona");
+wg.setEdgeWeight(e, 621.0);  // Distancia en km
+double peso = wg.getEdgeWeight(e);  // 621.0</code></pre>
+
+    <h2>💡 Ejemplos Completos</h2>
+
+    <h3>Ejemplo 1: Crear un grafo de ciudades</h3>
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+
+public class EjemploGrafoCiudades {
+    public static void main(String[] args) {
+        // Crear grafo no dirigido
+        Graph&lt;String, DefaultEdge&gt; grafo = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+        
+        // Añadir ciudades
+        grafo.addVertex("Madrid");
+        grafo.addVertex("Barcelona");
+        grafo.addVertex("Valencia");
+        grafo.addVertex("Sevilla");
+        
+        // Añadir conexiones
+        grafo.addEdge("Madrid", "Barcelona");
+        grafo.addEdge("Madrid", "Valencia");
+        grafo.addEdge("Madrid", "Sevilla");
+        grafo.addEdge("Barcelona", "Valencia");
+        
+        // Consultas
+        System.out.println("Ciudades: " + grafo.vertexSet());
+        System.out.println("Conexiones: " + grafo.edgeSet().size());
+        System.out.println("Grado de Madrid: " + grafo.degreeOf("Madrid"));
+        
+        // Vecinos de Madrid
+        for (DefaultEdge e : grafo.edgesOf("Madrid")) {
+            String origen = grafo.getEdgeSource(e);
+            String destino = grafo.getEdgeTarget(e);
+            String vecino = origen.equals("Madrid") ? destino : origen;
+            System.out.println("Madrid conecta con: " + vecino);
+        }
+    }
+}</code></pre>
+
+    <h3>Ejemplo 2: Grafo ponderado con distancias</h3>
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+
+public class EjemploGrafoPonderado {
+    public static void main(String[] args) {
+        Graph&lt;String, DefaultWeightedEdge&gt; grafo = 
+            new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+        
+        grafo.addVertex("Madrid");
+        grafo.addVertex("Barcelona");
+        grafo.addVertex("Valencia");
+        
+        DefaultWeightedEdge e1 = grafo.addEdge("Madrid", "Barcelona");
+        grafo.setEdgeWeight(e1, 621);
+        
+        DefaultWeightedEdge e2 = grafo.addEdge("Madrid", "Valencia");
+        grafo.setEdgeWeight(e2, 352);
+        
+        DefaultWeightedEdge e3 = grafo.addEdge("Barcelona", "Valencia");
+        grafo.setEdgeWeight(e3, 349);
+        
+        // Consultar pesos
+        for (DefaultWeightedEdge e : grafo.edgeSet()) {
+            System.out.println(grafo.getEdgeSource(e) + " - " + 
+                             grafo.getEdgeTarget(e) + ": " + 
+                             grafo.getEdgeWeight(e) + " km");
+        }
+    }
+}</code></pre>
+
+    <h2>🔗 Ver También</h2>
+    <ul>
+        <li><a href="Graphs.html">Graphs</a> — Clase de utilidades</li>
+        <li><a href="Algorithms.html">Algoritmos</a> — Dijkstra, Kruskal, etc.</li>
+        <li><a href="../cheatsheet.html">Cheatsheet</a> — Referencia rápida</li>
+    </ul>
+
+    <div class="footer">
+        <p>
+            <strong>JGraphT Documentación en Español</strong> — Versión 1.5.0<br>
+            Material didáctico para ADDA — Universidad de Sevilla<br>
+            <a href="../index.html">← Volver al índice</a>
+        </p>
+    </div>
+</body>
+</html>

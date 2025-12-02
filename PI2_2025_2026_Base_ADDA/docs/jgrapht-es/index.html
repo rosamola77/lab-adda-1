@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JGraphT — Documentación en español (ADDA - Universidad de Sevilla)</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="class-header">
+        <h1>JGraphT — Documentación en español</h1>
+        <p>Guía didáctica para el uso de JGraphT en el curso de ADDA (versión 1.5.0)</p>
+    </div>
+
+    <div class="navigation">
+        <ul>
+            <li><strong>Navegación:</strong></li>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="cheatsheet.html">Cheatsheet</a></li>
+            <li><a href="classes/Graph.html">Graph</a></li>
+            <li><a href="classes/Graphs.html">Graphs</a></li>
+            <li><a href="classes/Algorithms.html">Algoritmos</a></li>
+        </ul>
+    </div>
+
+    <h2>📖 Introducción</h2>
+    <p>
+        <strong>JGraphT</strong> es una biblioteca Java gratuita y de código abierto que proporciona estructuras de datos 
+        y algoritmos para grafos de todo tipo. Es ampliamente utilizada en aplicaciones académicas e industriales 
+        para resolver problemas relacionados con teoría de grafos.
+    </p>
+    <p>
+        Esta documentación en español está diseñada específicamente para los estudiantes del curso de 
+        <strong>Análisis de Datos y Diseño de Algoritmos (ADDA)</strong> de la Universidad de Sevilla, 
+        con ejemplos prácticos y explicaciones didácticas.
+    </p>
+
+    <div class="note">
+        <strong>📝 Nota:</strong> Esta documentación es material didáctico complementario. Para la documentación 
+        oficial completa en inglés, visita: <a href="https://jgrapht.org/javadoc/" target="_blank">https://jgrapht.org/javadoc/</a>
+    </div>
+
+    <h2>📚 Contenido</h2>
+    
+    <h3>Documentación de Clases</h3>
+    <ul>
+        <li><a href="classes/Graph.html"><strong>Graph</strong></a> — Interfaz principal para operaciones con grafos</li>
+        <li><a href="classes/Graphs.html"><strong>Graphs</strong></a> — Clase de utilidades para operaciones comunes</li>
+        <li><a href="classes/Algorithms.html"><strong>Algoritmos</strong></a> — Dijkstra, Kruskal, GreedyColoring y más</li>
+    </ul>
+
+    <h3>Referencia Rápida</h3>
+    <ul>
+        <li><a href="cheatsheet.html"><strong>Cheatsheet</strong></a> — Comandos y operaciones más frecuentes (~20 ejemplos)</li>
+    </ul>
+
+    <h2>🚀 Inicio Rápido</h2>
+    <p>Ejemplo básico de creación y manipulación de un grafo:</p>
+
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+
+// 1. Crear un grafo simple no dirigido
+Graph&lt;String, DefaultEdge&gt; grafo = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+
+// 2. Añadir vértices
+grafo.addVertex("A");
+grafo.addVertex("B");
+grafo.addVertex("C");
+
+// 3. Añadir aristas
+grafo.addEdge("A", "B");
+grafo.addEdge("B", "C");
+grafo.addEdge("C", "A");
+
+// 4. Consultar información
+System.out.println("Vértices: " + grafo.vertexSet());
+System.out.println("Aristas: " + grafo.edgeSet());
+System.out.println("Grado de A: " + grafo.degreeOf("A"));</code></pre>
+
+    <h2>📦 Tipos de Grafos Disponibles</h2>
+    <table>
+        <tr>
+            <th>Clase</th>
+            <th>Descripción</th>
+            <th>Dirigido</th>
+            <th>Ponderado</th>
+        </tr>
+        <tr>
+            <td><code>SimpleGraph</code></td>
+            <td>Grafo simple sin bucles ni aristas múltiples</td>
+            <td>No</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td><code>SimpleDirectedGraph</code></td>
+            <td>Grafo dirigido simple</td>
+            <td>Sí</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td><code>SimpleWeightedGraph</code></td>
+            <td>Grafo ponderado no dirigido</td>
+            <td>No</td>
+            <td>Sí</td>
+        </tr>
+        <tr>
+            <td><code>SimpleDirectedWeightedGraph</code></td>
+            <td>Grafo dirigido y ponderado</td>
+            <td>Sí</td>
+            <td>Sí</td>
+        </tr>
+        <tr>
+            <td><code>Multigraph</code></td>
+            <td>Permite múltiples aristas entre vértices</td>
+            <td>No</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td><code>DirectedMultigraph</code></td>
+            <td>Multigrafo dirigido</td>
+            <td>Sí</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td><code>Pseudograph</code></td>
+            <td>Permite bucles y aristas múltiples</td>
+            <td>No</td>
+            <td>No</td>
+        </tr>
+    </table>
+
+    <h2>🔗 Enlaces Útiles</h2>
+    <ul>
+        <li><a href="https://jgrapht.org/" target="_blank">Sitio oficial de JGraphT</a></li>
+        <li><a href="https://github.com/jgrapht/jgrapht" target="_blank">Repositorio en GitHub</a></li>
+        <li><a href="https://jgrapht.org/javadoc/" target="_blank">Documentación API oficial (inglés)</a></li>
+    </ul>
+
+    <div class="footer">
+        <p>
+            <strong>JGraphT Documentación en Español</strong> — Versión 1.5.0<br>
+            Material didáctico para ADDA — Universidad de Sevilla<br>
+            Autores: Álvaro Rosa y Adrián Jiménez<br>
+            <em>Basado en la librería JGraphT - <a href="https://github.com/jgrapht/jgrapht" target="_blank">https://github.com/jgrapht/jgrapht</a></em>
+        </p>
+    </div>
+</body>
+</html>
