@@ -101,6 +101,29 @@ El repositorio incluye tanto las herramientas y bibliotecas base utilizadas para
 
 ---
 
+## 📘 Documentación JGraphT en Español
+
+Este repositorio incluye documentación en español para la librería **JGraphT** (versión 1.5.0), disponible en:
+- **HTML**: `PI2_2025_2026_Base_ADDA/docs/jgrapht-es/`
+- **JAR (Javadoc)**: `ParteComun/lib/jgrapht-core-1.5.0-javadoc.jar`
+
+### Adjuntar Javadoc en IntelliJ IDEA
+
+1. `File` → `Project Structure` → `Libraries`
+2. Localiza la librería `jgrapht-core-1.5.0.jar`
+3. Selecciona la librería y pulsa `Attach Files...` o `Attach Documentation`
+4. Selecciona `ParteComun/lib/jgrapht-core-1.5.0-javadoc.jar`
+5. Confirmar. Ahora, al situar el cursor sobre una clase/método de JGraphT y pulsar `Ctrl+Q` (Quick Documentation), se mostrará la documentación en español.
+
+### Adjuntar Javadoc en Eclipse
+
+1. `Project` → `Properties` → `Java Build Path` → `Libraries`
+2. Expande `jgrapht-core-1.5.0.jar` y pulsa `Javadoc location...`
+3. Selecciona `Javadoc in archive...` y elige `ParteComun/lib/jgrapht-core-1.5.0-javadoc.jar`
+4. Aceptar. Eclipse mostrará la documentación al solicitar Javadoc de una clase/método.
+
+---
+
 ## 📄 Licencia
 
 Este proyecto está licenciado bajo la **Licencia Apache 2.0** - consulta el archivo [LICENSE](LICENSE) para más detalles.
