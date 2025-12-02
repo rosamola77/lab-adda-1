@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmos — JGraphT Documentación en español</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="class-header">
+        <h1>Algoritmos de JGraphT</h1>
+        <p>Dijkstra, Kruskal, GreedyColoring y otros algoritmos fundamentales</p>
+    </div>
+
+    <div class="navigation">
+        <ul>
+            <li><strong>Navegación:</strong></li>
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="../cheatsheet.html">Cheatsheet</a></li>
+            <li><a href="Graph.html">Graph</a></li>
+            <li><a href="Graphs.html">Graphs</a></li>
+            <li><a href="Algorithms.html">Algoritmos</a></li>
+        </ul>
+    </div>
+
+    <h2>📖 Descripción General</h2>
+    <p>
+        JGraphT incluye implementaciones eficientes de los algoritmos más importantes de teoría de grafos.
+        Esta página documenta los algoritmos más utilizados en el curso de ADDA.
+    </p>
+
+    <h2>🛤️ Caminos Mínimos</h2>
+
+    <h3>DijkstraShortestPath</h3>
+    <p><code>org.jgrapht.alg.shortestpath.DijkstraShortestPath</code></p>
+    <p>
+        Implementación del algoritmo de Dijkstra para encontrar el camino más corto entre dos vértices
+        en un grafo ponderado con pesos no negativos.
+    </p>
+
+    <div class="method-signature">DijkstraShortestPath&lt;V, E&gt;(Graph&lt;V, E&gt; graph)</div>
+
+    <h4>Métodos principales:</h4>
+    <ul>
+        <li><code>getPath(V source, V sink)</code> — Devuelve el camino más corto entre origen y destino</li>
+        <li><code>getPathWeight(V source, V sink)</code> — Devuelve solo el peso total del camino</li>
+        <li><code>getPaths(V source)</code> — Devuelve árbol de caminos desde un origen</li>
+    </ul>
+
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+
+public class EjemploDijkstra {
+    public static void main(String[] args) {
+        // Crear grafo ponderado
+        Graph&lt;String, DefaultWeightedEdge&gt; grafo = 
+            new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+        
+        // Añadir ciudades y distancias
+        Graphs.addEdgeWithVertices(grafo, "Madrid", "Barcelona", 621);
+        Graphs.addEdgeWithVertices(grafo, "Madrid", "Valencia", 352);
+        Graphs.addEdgeWithVertices(grafo, "Barcelona", "Valencia", 349);
+        Graphs.addEdgeWithVertices(grafo, "Valencia", "Sevilla", 654);
+        Graphs.addEdgeWithVertices(grafo, "Madrid", "Sevilla", 538);
+        
+        // Crear instancia de Dijkstra
+        DijkstraShortestPath&lt;String, DefaultWeightedEdge&gt; dijkstra = 
+            new DijkstraShortestPath&lt;&gt;(grafo);
+        
+        // Obtener camino más corto Barcelona → Sevilla
+        GraphPath&lt;String, DefaultWeightedEdge&gt; camino = 
+            dijkstra.getPath("Barcelona", "Sevilla");
+        
+        if (camino != null) {
+            System.out.println("Camino: " + camino.getVertexList());
+            System.out.println("Distancia total: " + camino.getWeight() + " km");
+            System.out.println("Número de aristas: " + camino.getLength());
+        }
+    }
+}</code></pre>
+
+    <div class="note">
+        <strong>📝 Nota:</strong> El objeto <code>GraphPath</code> contiene:
+        <ul>
+            <li><code>getVertexList()</code> — Lista ordenada de vértices del camino</li>
+            <li><code>getEdgeList()</code> — Lista de aristas del camino</li>
+            <li><code>getWeight()</code> — Peso total del camino</li>
+            <li><code>getLength()</code> — Número de aristas</li>
+        </ul>
+    </div>
+
+    <h3>BellmanFordShortestPath</h3>
+    <p><code>org.jgrapht.alg.shortestpath.BellmanFordShortestPath</code></p>
+    <p>
+        Alternativa a Dijkstra que permite pesos negativos (pero no ciclos negativos).
+        Más lento que Dijkstra: O(V·E) vs O((V+E)·log V).
+    </p>
+
+    <pre><code>import org.jgrapht.alg.shortestpath.BellmanFordShortestPath;
+
+BellmanFordShortestPath&lt;String, DefaultWeightedEdge&gt; bellmanFord = 
+    new BellmanFordShortestPath&lt;&gt;(grafo);
+GraphPath&lt;String, DefaultWeightedEdge&gt; camino = 
+    bellmanFord.getPath("A", "Z");</code></pre>
+
+    <h3>FloydWarshallShortestPaths</h3>
+    <p><code>org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths</code></p>
+    <p>
+        Calcula los caminos más cortos entre <strong>todos los pares</strong> de vértices.
+        Útil cuando necesitas consultar múltiples caminos.
+    </p>
+
+    <pre><code>import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
+
+FloydWarshallShortestPaths&lt;String, DefaultWeightedEdge&gt; floyd = 
+    new FloydWarshallShortestPaths&lt;&gt;(grafo);
+
+// Consultar cualquier par de vértices
+double distancia = floyd.getPathWeight("Madrid", "Barcelona");
+GraphPath&lt;String, DefaultWeightedEdge&gt; camino = floyd.getPath("Madrid", "Barcelona");</code></pre>
+
+    <h2>🌲 Árbol de Expansión Mínima (MST)</h2>
+
+    <h3>KruskalMinimumSpanningTree</h3>
+    <p><code>org.jgrapht.alg.spanning.KruskalMinimumSpanningTree</code></p>
+    <p>
+        Implementación del algoritmo de Kruskal para encontrar el árbol de expansión mínima
+        de un grafo no dirigido ponderado.
+    </p>
+
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.alg.spanning.KruskalMinimumSpanningTree;
+
+public class EjemploKruskal {
+    public static void main(String[] args) {
+        Graph&lt;String, DefaultWeightedEdge&gt; grafo = 
+            new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+        
+        Graphs.addEdgeWithVertices(grafo, "A", "B", 4);
+        Graphs.addEdgeWithVertices(grafo, "A", "C", 2);
+        Graphs.addEdgeWithVertices(grafo, "B", "C", 1);
+        Graphs.addEdgeWithVertices(grafo, "B", "D", 5);
+        Graphs.addEdgeWithVertices(grafo, "C", "D", 3);
+        
+        // Calcular MST
+        KruskalMinimumSpanningTree&lt;String, DefaultWeightedEdge&gt; kruskal = 
+            new KruskalMinimumSpanningTree&lt;&gt;(grafo);
+        
+        SpanningTree&lt;DefaultWeightedEdge&gt; mst = kruskal.getSpanningTree();
+        
+        System.out.println("Peso total del MST: " + mst.getWeight());
+        System.out.println("Aristas del MST:");
+        for (DefaultWeightedEdge e : mst.getEdges()) {
+            System.out.println("  " + grafo.getEdgeSource(e) + " - " + 
+                             grafo.getEdgeTarget(e) + " (peso: " + 
+                             grafo.getEdgeWeight(e) + ")");
+        }
+    }
+}</code></pre>
+
+    <h3>PrimMinimumSpanningTree</h3>
+    <p><code>org.jgrapht.alg.spanning.PrimMinimumSpanningTree</code></p>
+    <p>
+        Alternativa a Kruskal usando el algoritmo de Prim. Mismo resultado, diferente estrategia.
+    </p>
+
+    <pre><code>import org.jgrapht.alg.spanning.PrimMinimumSpanningTree;
+
+PrimMinimumSpanningTree&lt;String, DefaultWeightedEdge&gt; prim = 
+    new PrimMinimumSpanningTree&lt;&gt;(grafo);
+SpanningTree&lt;DefaultWeightedEdge&gt; mst = prim.getSpanningTree();</code></pre>
+
+    <h2>🎨 Coloreado de Grafos</h2>
+
+    <h3>GreedyColoring</h3>
+    <p><code>org.jgrapht.alg.color.GreedyColoring</code></p>
+    <p>
+        Asigna colores a los vértices de forma que ningún par de vértices adyacentes
+        tenga el mismo color. Usa un algoritmo voraz (greedy).
+    </p>
+
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.alg.color.GreedyColoring;
+import org.jgrapht.alg.interfaces.VertexColoringAlgorithm.Coloring;
+
+public class EjemploColoreado {
+    public static void main(String[] args) {
+        Graph&lt;String, DefaultEdge&gt; grafo = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+        
+        // Crear un grafo (pentágono)
+        Graphs.addEdgeWithVertices(grafo, "A", "B");
+        Graphs.addEdgeWithVertices(grafo, "B", "C");
+        Graphs.addEdgeWithVertices(grafo, "C", "D");
+        Graphs.addEdgeWithVertices(grafo, "D", "E");
+        Graphs.addEdgeWithVertices(grafo, "E", "A");
+        
+        // Aplicar coloreado
+        GreedyColoring&lt;String, DefaultEdge&gt; coloreo = 
+            new GreedyColoring&lt;&gt;(grafo);
+        Coloring&lt;String&gt; resultado = coloreo.getColoring();
+        
+        System.out.println("Número cromático: " + resultado.getNumberColors());
+        System.out.println("Colores asignados:");
+        for (String vertice : grafo.vertexSet()) {
+            System.out.println("  " + vertice + ": color " + 
+                             resultado.getColors().get(vertice));
+        }
+    }
+}</code></pre>
+
+    <div class="tip">
+        <strong>💡 Tip:</strong> El número cromático es el mínimo número de colores necesarios.
+        El algoritmo greedy no siempre encuentra el óptimo, pero es eficiente.
+    </div>
+
+    <h2>🔄 Recorridos (BFS y DFS)</h2>
+
+    <h3>BreadthFirstIterator</h3>
+    <p><code>org.jgrapht.traverse.BreadthFirstIterator</code></p>
+    <p>Recorre el grafo en anchura (BFS) desde un vértice inicial.</p>
+
+    <pre><code>import org.jgrapht.traverse.BreadthFirstIterator;
+import java.util.Iterator;
+
+Iterator&lt;String&gt; bfs = new BreadthFirstIterator&lt;&gt;(grafo, "A");
+System.out.println("Recorrido BFS desde A:");
+while (bfs.hasNext()) {
+    String vertice = bfs.next();
+    System.out.println("  Visitando: " + vertice);
+}</code></pre>
+
+    <h3>DepthFirstIterator</h3>
+    <p><code>org.jgrapht.traverse.DepthFirstIterator</code></p>
+    <p>Recorre el grafo en profundidad (DFS) desde un vértice inicial.</p>
+
+    <pre><code>import org.jgrapht.traverse.DepthFirstIterator;
+import java.util.Iterator;
+
+Iterator&lt;String&gt; dfs = new DepthFirstIterator&lt;&gt;(grafo, "A");
+System.out.println("Recorrido DFS desde A:");
+while (dfs.hasNext()) {
+    String vertice = dfs.next();
+    System.out.println("  Visitando: " + vertice);
+}</code></pre>
+
+    <h2>🔗 Conectividad</h2>
+
+    <h3>ConnectivityInspector</h3>
+    <p><code>org.jgrapht.alg.connectivity.ConnectivityInspector</code></p>
+    <p>Analiza la conectividad del grafo: componentes conexas, caminos existentes, etc.</p>
+
+    <pre><code>import org.jgrapht.alg.connectivity.ConnectivityInspector;
+
+ConnectivityInspector&lt;String, DefaultEdge&gt; inspector = 
+    new ConnectivityInspector&lt;&gt;(grafo);
+
+// ¿El grafo es conexo?
+boolean esConexo = inspector.isConnected();
+System.out.println("¿Grafo conexo? " + esConexo);
+
+// ¿Existe camino entre dos vértices?
+boolean hayRuta = inspector.pathExists("A", "Z");
+
+// Obtener componentes conexas
+Set&lt;Set&lt;String&gt;&gt; componentes = inspector.connectedSets();
+System.out.println("Número de componentes: " + componentes.size());</code></pre>
+
+    <h2>🔁 Detección de Ciclos</h2>
+
+    <h3>CycleDetector</h3>
+    <p><code>org.jgrapht.alg.cycle.CycleDetector</code></p>
+    <p>Detecta ciclos en grafos dirigidos.</p>
+
+    <pre><code>import org.jgrapht.alg.cycle.CycleDetector;
+
+Graph&lt;String, DefaultEdge&gt; grafoDirigido = 
+    new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+// ... añadir vértices y aristas ...
+
+CycleDetector&lt;String, DefaultEdge&gt; detector = 
+    new CycleDetector&lt;&gt;(grafoDirigido);
+
+boolean tieneCiclos = detector.detectCycles();
+System.out.println("¿Tiene ciclos? " + tieneCiclos);
+
+// Vértices que participan en ciclos
+Set&lt;String&gt; verticesEnCiclos = detector.findCycles();
+System.out.println("Vértices en ciclos: " + verticesEnCiclos);</code></pre>
+
+    <h2>✂️ Corte Mínimo</h2>
+
+    <h3>StoerWagnerMinimumCut</h3>
+    <p><code>org.jgrapht.alg.StoerWagnerMinimumCut</code></p>
+    <p>Encuentra el corte mínimo de un grafo no dirigido ponderado usando el algoritmo de Stoer-Wagner.</p>
+
+    <pre><code>import org.jgrapht.alg.StoerWagnerMinimumCut;
+
+Graph&lt;String, DefaultWeightedEdge&gt; grafo = 
+    new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+// ... construir grafo ...
+
+StoerWagnerMinimumCut&lt;String, DefaultWeightedEdge&gt; minCut = 
+    new StoerWagnerMinimumCut&lt;&gt;(grafo);
+
+double pesoCorteMínimo = minCut.minCutWeight();
+Set&lt;String&gt; ladoDelCorte = minCut.minCut();
+System.out.println("Peso del corte mínimo: " + pesoCorteMínimo);
+System.out.println("Vértices de un lado del corte: " + ladoDelCorte);</code></pre>
+
+    <h2>📈 Flujo Máximo</h2>
+
+    <h3>EdmondsKarpMFImpl</h3>
+    <p><code>org.jgrapht.alg.flow.EdmondsKarpMFImpl</code></p>
+    <p>Implementación del algoritmo de Edmonds-Karp para calcular el flujo máximo.</p>
+
+    <pre><code>import org.jgrapht.alg.flow.EdmondsKarpMFImpl;
+
+Graph&lt;String, DefaultWeightedEdge&gt; red = 
+    new SimpleDirectedWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+// ... construir red de flujo ...
+
+EdmondsKarpMFImpl&lt;String, DefaultWeightedEdge&gt; flujoMax = 
+    new EdmondsKarpMFImpl&lt;&gt;(red);
+
+double flujoMaximo = flujoMax.calculateMaximumFlow("fuente", "sumidero");
+System.out.println("Flujo máximo: " + flujoMaximo);</code></pre>
+
+    <h2>🔍 Cliques</h2>
+
+    <h3>BronKerboschCliqueFinder</h3>
+    <p><code>org.jgrapht.alg.clique.BronKerboschCliqueFinder</code></p>
+    <p>Encuentra todos los cliques máximales de un grafo.</p>
+
+    <pre><code>import org.jgrapht.alg.clique.BronKerboschCliqueFinder;
+
+Graph&lt;String, DefaultEdge&gt; grafo = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+// ... construir grafo ...
+
+BronKerboschCliqueFinder&lt;String, DefaultEdge&gt; cliqueFinder = 
+    new BronKerboschCliqueFinder&lt;&gt;(grafo);
+
+// Obtener todos los cliques máximales
+Iterator&lt;Set&lt;String&gt;&gt; cliques = cliqueFinder.iterator();
+while (cliques.hasNext()) {
+    Set&lt;String&gt; clique = cliques.next();
+    System.out.println("Clique: " + clique);
+}</code></pre>
+
+    <h2>🎯 Emparejamiento (Matching)</h2>
+
+    <h3>HopcroftKarpMaximumCardinalityBipartiteMatching</h3>
+    <p><code>org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching</code></p>
+    <p>Encuentra el emparejamiento máximo en un grafo bipartito.</p>
+
+    <pre><code>import org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching;
+import org.jgrapht.alg.interfaces.MatchingAlgorithm.Matching;
+
+Graph&lt;String, DefaultEdge&gt; bipartito = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+// ... construir grafo bipartito ...
+
+Set&lt;String&gt; particion1 = new HashSet&lt;&gt;(Arrays.asList("A1", "A2", "A3"));
+Set&lt;String&gt; particion2 = new HashSet&lt;&gt;(Arrays.asList("B1", "B2", "B3"));
+
+HopcroftKarpMaximumCardinalityBipartiteMatching&lt;String, DefaultEdge&gt; matching = 
+    new HopcroftKarpMaximumCardinalityBipartiteMatching&lt;&gt;(bipartito, particion1, particion2);
+
+Matching&lt;String, DefaultEdge&gt; resultado = matching.getMatching();
+System.out.println("Aristas del emparejamiento: " + resultado.getEdges());
+System.out.println("Tamaño del emparejamiento: " + resultado.getEdges().size());</code></pre>
+
+    <h2>🔀 Clausura Transitiva</h2>
+
+    <h3>TransitiveClosure</h3>
+    <p><code>org.jgrapht.alg.TransitiveClosure</code></p>
+    <p>Calcula la clausura transitiva de un grafo dirigido.</p>
+
+    <pre><code>import org.jgrapht.alg.TransitiveClosure;
+
+Graph&lt;String, DefaultEdge&gt; dag = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(dag, "A", "B");
+Graphs.addEdgeWithVertices(dag, "B", "C");
+
+// Calcular clausura transitiva (modifica el grafo)
+TransitiveClosure.INSTANCE.closeSimpleDirectedGraph(dag);
+
+// Ahora existe arista directa A → C
+boolean existeACDirecto = dag.containsEdge("A", "C");  // true</code></pre>
+
+    <h2>📊 Orden Topológico</h2>
+
+    <h3>TopologicalOrderIterator</h3>
+    <p><code>org.jgrapht.traverse.TopologicalOrderIterator</code></p>
+    <p>Recorre un grafo dirigido acíclico (DAG) en orden topológico.</p>
+
+    <pre><code>import org.jgrapht.traverse.TopologicalOrderIterator;
+
+Graph&lt;String, DefaultEdge&gt; dag = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(dag, "Compilar", "Ejecutar");
+Graphs.addEdgeWithVertices(dag, "Diseñar", "Compilar");
+Graphs.addEdgeWithVertices(dag, "Diseñar", "Documentar");
+Graphs.addEdgeWithVertices(dag, "Ejecutar", "Desplegar");
+Graphs.addEdgeWithVertices(dag, "Documentar", "Desplegar");
+
+TopologicalOrderIterator&lt;String, DefaultEdge&gt; topoIterator = 
+    new TopologicalOrderIterator&lt;&gt;(dag);
+
+System.out.println("Orden de ejecución:");
+while (topoIterator.hasNext()) {
+    System.out.println("  " + topoIterator.next());
+}</code></pre>
+
+    <h2>📦 Resumen de Imports</h2>
+    <pre><code>// Grafos y estructuras básicas
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
+
+// Caminos mínimos
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.alg.shortestpath.BellmanFordShortestPath;
+import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
+
+// Árbol de expansión mínima
+import org.jgrapht.alg.spanning.KruskalMinimumSpanningTree;
+import org.jgrapht.alg.spanning.PrimMinimumSpanningTree;
+
+// Coloreado
+import org.jgrapht.alg.color.GreedyColoring;
+
+// Recorridos
+import org.jgrapht.traverse.BreadthFirstIterator;
+import org.jgrapht.traverse.DepthFirstIterator;
+import org.jgrapht.traverse.TopologicalOrderIterator;
+
+// Conectividad y ciclos
+import org.jgrapht.alg.connectivity.ConnectivityInspector;
+import org.jgrapht.alg.cycle.CycleDetector;
+
+// Flujo y corte
+import org.jgrapht.alg.StoerWagnerMinimumCut;
+import org.jgrapht.alg.flow.EdmondsKarpMFImpl;
+
+// Cliques y emparejamiento
+import org.jgrapht.alg.clique.BronKerboschCliqueFinder;
+import org.jgrapht.alg.matching.HopcroftKarpMaximumCardinalityBipartiteMatching;
+
+// Clausura transitiva
+import org.jgrapht.alg.TransitiveClosure;</code></pre>
+
+    <h2>🔗 Ver También</h2>
+    <ul>
+        <li><a href="Graph.html">Graph</a> — Operaciones básicas con grafos</li>
+        <li><a href="Graphs.html">Graphs</a> — Utilidades</li>
+        <li><a href="../cheatsheet.html">Cheatsheet</a> — Referencia rápida</li>
+    </ul>
+
+    <div class="footer">
+        <p>
+            <strong>JGraphT Documentación en Español</strong> — Versión 1.5.0<br>
+            Material didáctico para ADDA — Universidad de Sevilla<br>
+            <a href="../index.html">← Volver al índice</a>
+        </p>
+    </div>
+</body>
+</html>

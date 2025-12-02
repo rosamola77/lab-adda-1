@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphs — JGraphT Documentación en español</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+    <div class="class-header">
+        <h1>Class Graphs</h1>
+        <p>org.jgrapht.Graphs — Clase de utilidades para operaciones comunes con grafos</p>
+    </div>
+
+    <div class="navigation">
+        <ul>
+            <li><strong>Navegación:</strong></li>
+            <li><a href="../../index.html">Inicio</a></li>
+            <li><a href="../../cheatsheet.html">Cheatsheet</a></li>
+            <li><a href="Graph.html">Graph</a></li>
+            <li><a href="Graphs.html">Graphs</a></li>
+            <li><a href="../../classes/Algorithms.html">Algoritmos</a></li>
+        </ul>
+    </div>
+
+    <h2>📖 Descripción</h2>
+    <p>
+        <code>Graphs</code> es una clase de utilidades que proporciona métodos estáticos para realizar 
+        operaciones comunes sobre grafos de forma más cómoda. Contiene funciones auxiliares muy útiles 
+        que simplifican tareas frecuentes.
+    </p>
+
+    <div class="tip">
+        <strong>💡 Tip:</strong> Todos los métodos de esta clase son <code>static</code>, por lo que 
+        se llaman directamente: <code>Graphs.metodo(...)</code>
+    </div>
+
+    <h2>🔧 Métodos Más Útiles</h2>
+
+    <h3>addEdgeWithVertices</h3>
+    <div class="method-signature">static &lt;V, E&gt; E addEdgeWithVertices(Graph&lt;V, E&gt; g, V sourceVertex, V targetVertex)</div>
+    <p>
+        Añade una arista entre dos vértices, <strong>creando los vértices automáticamente</strong> si no existen.
+        Este es probablemente el método más útil de la clase.
+    </p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+
+// Sin Graphs: necesitamos 3 líneas
+g.addVertex("A");
+g.addVertex("B");
+g.addEdge("A", "B");
+
+// Con Graphs: todo en 1 línea
+Graphs.addEdgeWithVertices(g, "C", "D");  // Crea C, D y la arista</code></pre>
+
+    <div class="note">
+        <strong>📝 Nota:</strong> Si los vértices ya existen, simplemente crea la arista. 
+        Nunca falla por vértices inexistentes.
+    </div>
+
+    <h3>addEdgeWithVertices (con peso)</h3>
+    <div class="method-signature">static &lt;V, E&gt; E addEdgeWithVertices(Graph&lt;V, E&gt; g, V source, V target, double weight)</div>
+    <p>Versión para grafos ponderados: crea vértices, arista y asigna el peso en una sola operación.</p>
+    <pre><code>Graph&lt;String, DefaultWeightedEdge&gt; g = 
+    new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
+
+// Crea Madrid, Barcelona, la arista y le asigna peso 621
+Graphs.addEdgeWithVertices(g, "Madrid", "Barcelona", 621.0);</code></pre>
+
+    <h3>neighborListOf</h3>
+    <div class="method-signature">static &lt;V, E&gt; List&lt;V&gt; neighborListOf(Graph&lt;V, E&gt; g, V vertex)</div>
+    <p>Devuelve una lista con todos los vecinos de un vértice.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(g, "Madrid", "Barcelona");
+Graphs.addEdgeWithVertices(g, "Madrid", "Valencia");
+Graphs.addEdgeWithVertices(g, "Madrid", "Sevilla");
+
+List&lt;String&gt; vecinosMadrid = Graphs.neighborListOf(g, "Madrid");
+// Resultado: [Barcelona, Valencia, Sevilla]
+
+for (String vecino : vecinosMadrid) {
+    System.out.println("Vecino de Madrid: " + vecino);
+}</code></pre>
+
+    <h3>neighborSetOf</h3>
+    <div class="method-signature">static &lt;V, E&gt; Set&lt;V&gt; neighborSetOf(Graph&lt;V, E&gt; g, V vertex)</div>
+    <p>Similar a <code>neighborListOf</code> pero devuelve un <code>Set</code> (sin duplicados).</p>
+    <pre><code>Set&lt;String&gt; vecinos = Graphs.neighborSetOf(g, "Madrid");</code></pre>
+
+    <h3>predecessorListOf (grafos dirigidos)</h3>
+    <div class="method-signature">static &lt;V, E&gt; List&lt;V&gt; predecessorListOf(Graph&lt;V, E&gt; g, V vertex)</div>
+    <p>En un grafo dirigido, devuelve los vértices que tienen aristas <strong>hacia</strong> el vértice dado.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(dg, "A", "C");  // A → C
+Graphs.addEdgeWithVertices(dg, "B", "C");  // B → C
+
+List&lt;String&gt; predecesores = Graphs.predecessorListOf(dg, "C");
+// Resultado: [A, B]  (vértices que apuntan a C)</code></pre>
+
+    <h3>successorListOf (grafos dirigidos)</h3>
+    <div class="method-signature">static &lt;V, E&gt; List&lt;V&gt; successorListOf(Graph&lt;V, E&gt; g, V vertex)</div>
+    <p>En un grafo dirigido, devuelve los vértices a los que apunta el vértice dado.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(dg, "A", "B");  // A → B
+Graphs.addEdgeWithVertices(dg, "A", "C");  // A → C
+
+List&lt;String&gt; sucesores = Graphs.successorListOf(dg, "A");
+// Resultado: [B, C]  (vértices a los que A apunta)</code></pre>
+
+    <h3>getOppositeVertex</h3>
+    <div class="method-signature">static &lt;V, E&gt; V getOppositeVertex(Graph&lt;V, E&gt; g, E e, V v)</div>
+    <p>Dada una arista y uno de sus vértices, devuelve el otro vértice de la arista.</p>
+    <pre><code>DefaultEdge e = g.getEdge("Madrid", "Barcelona");
+String otroExtremo = Graphs.getOppositeVertex(g, e, "Madrid");
+// Resultado: "Barcelona"</code></pre>
+
+    <h3>vertexHasSuccessors / vertexHasPredecessors</h3>
+    <div class="method-signature">static &lt;V, E&gt; boolean vertexHasSuccessors(Graph&lt;V, E&gt; g, V v)<br>static &lt;V, E&gt; boolean vertexHasPredecessors(Graph&lt;V, E&gt; g, V v)</div>
+    <p>Comprueba si un vértice tiene sucesores o predecesores (útil en grafos dirigidos).</p>
+    <pre><code>if (Graphs.vertexHasSuccessors(dg, "A")) {
+    System.out.println("A tiene aristas salientes");
+}
+
+if (!Graphs.vertexHasPredecessors(dg, "A")) {
+    System.out.println("A es un vértice fuente (sin aristas entrantes)");
+}</code></pre>
+
+    <h3>addAllVertices</h3>
+    <div class="method-signature">static &lt;V, E&gt; boolean addAllVertices(Graph&lt;V, E&gt; destination, Collection&lt;? extends V&gt; vertices)</div>
+    <p>Añade múltiples vértices de una colección al grafo.</p>
+    <pre><code>List&lt;String&gt; ciudades = Arrays.asList("Madrid", "Barcelona", "Valencia", "Sevilla");
+Graphs.addAllVertices(g, ciudades);  // Añade las 4 ciudades</code></pre>
+
+    <h3>addGraph</h3>
+    <div class="method-signature">static &lt;V, E&gt; boolean addGraph(Graph&lt;? super V, ? super E&gt; destination, Graph&lt;V, E&gt; source)</div>
+    <p>Copia todos los vértices y aristas de un grafo a otro.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; original = ...;
+Graph&lt;String, DefaultEdge&gt; copia = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addGraph(copia, original);  // copia = original</code></pre>
+
+    <h3>addGraphReversed</h3>
+    <div class="method-signature">static &lt;V, E&gt; void addGraphReversed(Graph&lt;? super V, ? super E&gt; destination, Graph&lt;V, E&gt; source)</div>
+    <p>Copia un grafo invirtiendo la dirección de todas las aristas. Útil para grafos dirigidos.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; original = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(original, "A", "B");  // A → B
+
+Graph&lt;String, DefaultEdge&gt; invertido = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addGraphReversed(invertido, original);  // Ahora tiene B → A</code></pre>
+
+    <h3>addAllEdges</h3>
+    <div class="method-signature">static &lt;V, E&gt; boolean addAllEdges(Graph&lt;? super V, ? super E&gt; dest, Graph&lt;V, E&gt; source, Collection&lt;? extends E&gt; edges)</div>
+    <p>Copia un conjunto de aristas de un grafo a otro.</p>
+    <pre><code>Set&lt;DefaultEdge&gt; aristasSeleccionadas = ...;
+Graphs.addAllEdges(destino, origen, aristasSeleccionadas);</code></pre>
+
+    <h3>addOutgoingEdges / addIncomingEdges</h3>
+    <div class="method-signature">static &lt;V, E&gt; void addOutgoingEdges(Graph&lt;V, E&gt; g, V source, Iterable&lt;V&gt; targets)<br>static &lt;V, E&gt; void addIncomingEdges(Graph&lt;V, E&gt; g, V target, Iterable&lt;V&gt; sources)</div>
+    <p>Añade múltiples aristas salientes o entrantes a un vértice de una vez.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+List&lt;String&gt; destinos = Arrays.asList("B", "C", "D");
+
+// Crea aristas A→B, A→C, A→D
+Graphs.addOutgoingEdges(dg, "A", destinos);
+
+// Crea aristas B→Z, C→Z, D→Z
+List&lt;String&gt; origenes = Arrays.asList("B", "C", "D");
+Graphs.addIncomingEdges(dg, "Z", origenes);</code></pre>
+
+    <h3>testIncidence</h3>
+    <div class="method-signature">static &lt;V, E&gt; boolean testIncidence(Graph&lt;V, E&gt; g, E e, V v)</div>
+    <p>Comprueba si una arista es incidente a un vértice (es decir, si el vértice es uno de los extremos).</p>
+    <pre><code>DefaultEdge e = g.getEdge("A", "B");
+boolean esIncidente = Graphs.testIncidence(g, e, "A");  // true
+boolean noIncidente = Graphs.testIncidence(g, e, "C");  // false</code></pre>
+
+    <h3>undirectedGraph</h3>
+    <div class="method-signature">static &lt;V, E&gt; Graph&lt;V, E&gt; undirectedGraph(Graph&lt;V, E&gt; g)</div>
+    <p>Devuelve una vista no dirigida de un grafo dirigido. Las modificaciones en la vista afectan al original.</p>
+    <pre><code>Graph&lt;String, DefaultEdge&gt; dirigido = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+// ... construir grafo dirigido ...
+
+Graph&lt;String, DefaultEdge&gt; vistaNoDirigida = Graphs.undirectedGraph(dirigido);
+// Ahora se puede recorrer ignorando la dirección de las aristas</code></pre>
+
+    <h3>removeVertexAndPreserveConnectivity</h3>
+    <div class="method-signature">static &lt;V, E&gt; boolean removeVertexAndPreserveConnectivity(Graph&lt;V, E&gt; g, V vertex)</div>
+    <p>Elimina un vértice pero conecta sus predecesores con sus sucesores, preservando la conectividad del grafo.</p>
+    <pre><code>// Grafo: A → B → C
+Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+Graphs.addEdgeWithVertices(dg, "A", "B");
+Graphs.addEdgeWithVertices(dg, "B", "C");
+
+// Eliminar B conectando A directamente con C
+Graphs.removeVertexAndPreserveConnectivity(dg, "B");
+// Resultado: A → C</code></pre>
+
+    <h2>💡 Ejemplos Completos</h2>
+
+    <h3>Ejemplo 1: Construcción rápida de un grafo</h3>
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+
+public class EjemploConstruccionRapida {
+    public static void main(String[] args) {
+        Graph&lt;String, DefaultEdge&gt; grafo = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+        
+        // Forma rápida: una línea por arista
+        Graphs.addEdgeWithVertices(grafo, "A", "B");
+        Graphs.addEdgeWithVertices(grafo, "B", "C");
+        Graphs.addEdgeWithVertices(grafo, "C", "D");
+        Graphs.addEdgeWithVertices(grafo, "D", "A");
+        Graphs.addEdgeWithVertices(grafo, "A", "C");
+        
+        System.out.println("Vértices: " + grafo.vertexSet());
+        System.out.println("Aristas: " + grafo.edgeSet().size());
+    }
+}</code></pre>
+
+    <h3>Ejemplo 2: Obtener vecinos de un vértice</h3>
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import java.util.*;
+
+public class EjemploVecinos {
+    public static void main(String[] args) {
+        Graph&lt;String, DefaultEdge&gt; red = new SimpleGraph&lt;&gt;(DefaultEdge.class);
+        
+        Graphs.addEdgeWithVertices(red, "Router", "PC1");
+        Graphs.addEdgeWithVertices(red, "Router", "PC2");
+        Graphs.addEdgeWithVertices(red, "Router", "PC3");
+        Graphs.addEdgeWithVertices(red, "Router", "Servidor");
+        
+        // Obtener todos los dispositivos conectados al Router
+        List&lt;String&gt; conectados = Graphs.neighborListOf(red, "Router");
+        
+        System.out.println("Dispositivos conectados al Router:");
+        for (String dispositivo : conectados) {
+            System.out.println("  - " + dispositivo);
+        }
+    }
+}</code></pre>
+
+    <h3>Ejemplo 3: Grafo dirigido con predecesores y sucesores</h3>
+    <pre><code>import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import java.util.*;
+
+public class EjemploGrafoDirigido {
+    public static void main(String[] args) {
+        // Grafo de dependencias de tareas
+        Graph&lt;String, DefaultEdge&gt; dependencias = 
+            new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
+        
+        // Tarea B depende de A: A → B
+        Graphs.addEdgeWithVertices(dependencias, "Diseño", "Desarrollo");
+        Graphs.addEdgeWithVertices(dependencias, "Desarrollo", "Testing");
+        Graphs.addEdgeWithVertices(dependencias, "Diseño", "Documentación");
+        Graphs.addEdgeWithVertices(dependencias, "Testing", "Despliegue");
+        Graphs.addEdgeWithVertices(dependencias, "Documentación", "Despliegue");
+        
+        // ¿Qué tareas dependen de Diseño? (sucesores)
+        List&lt;String&gt; dependientesDeDiseño = 
+            Graphs.successorListOf(dependencias, "Diseño");
+        System.out.println("Tareas que dependen de Diseño: " + dependientesDeDiseño);
+        
+        // ¿De qué tareas depende Despliegue? (predecesores)
+        List&lt;String&gt; requisitosDespliegue = 
+            Graphs.predecessorListOf(dependencias, "Despliegue");
+        System.out.println("Requisitos de Despliegue: " + requisitosDespliegue);
+    }
+}</code></pre>
+
+    <h2>🔗 Ver También</h2>
+    <ul>
+        <li><a href="Graph.html">Graph</a> — Interfaz principal</li>
+        <li><a href="../../classes/Algorithms.html">Algoritmos</a> — Dijkstra, Kruskal, etc.</li>
+        <li><a href="../../cheatsheet.html">Cheatsheet</a> — Referencia rápida</li>
+    </ul>
+
+    <div class="footer">
+        <p>
+            <strong>JGraphT Documentación en Español</strong> — Versión 1.5.0<br>
+            Material didáctico para ADDA — Universidad de Sevilla<br>
+            <a href="../../index.html">← Volver al índice</a>
+        </p>
+    </div>
+</body>
+</html>
