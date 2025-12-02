@@ -1,56 +1,22 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>KruskalMinimumSpanningTree (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht.alg.spanning</a></div>
-<h1 title="Class KruskalMinimumSpanningTree" class="title">Class KruskalMinimumSpanningTree&lt;V,E&gt;</h1>
-</div>
-<section class="description">
-<dl>
-<dt>Type Parameters:</dt>
-<dd><code>V</code> - el tipo del vértice</dd>
-<dd><code>E</code> - el tipo de la arista</dd>
-</dl>
-<hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">KruskalMinimumSpanningTree&lt;V,E&gt;</span></div>
-<div class="block">
-<p><strong>KruskalMinimumSpanningTree</strong> implementa el algoritmo de Kruskal para encontrar el 
-árbol de expansión mínima (MST) de un grafo no dirigido ponderado.</p>
-
-<h3>Métodos Principales</h3>
-<ul>
-<li><strong>getSpanningTree()</strong> - Devuelve el MST como un SpanningTree</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-Graph&lt;String, DefaultWeightedEdge&gt; grafo = 
-    new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
-
-Graphs.addEdgeWithVertices(grafo, "A", "B", 4);
-Graphs.addEdgeWithVertices(grafo, "A", "C", 2);
-Graphs.addEdgeWithVertices(grafo, "B", "C", 1);
-Graphs.addEdgeWithVertices(grafo, "B", "D", 5);
-Graphs.addEdgeWithVertices(grafo, "C", "D", 3);
-
-// Calcular MST
-KruskalMinimumSpanningTree&lt;String, DefaultWeightedEdge&gt; kruskal = 
-    new KruskalMinimumSpanningTree&lt;&gt;(grafo);
-
-SpanningTree&lt;DefaultWeightedEdge&gt; mst = kruskal.getSpanningTree();
-
-System.out.println("Peso total del MST: " + mst.getWeight());
-System.out.println("Aristas del MST: " + mst.getEdges());
-</pre>
-
-<p>Ver también: PrimMinimumSpanningTree (alternativa con mismo resultado)</p>
-</div>
-</section>
-</main>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>KruskalMinimumSpanningTree (JGraphT 1.5.0)</TITLE></HEAD>
+<BODY BGCOLOR="white">
+<H2><FONT SIZE="-1">org.jgrapht.alg.spanning</FONT><BR>Class KruskalMinimumSpanningTree&lt;V,E&gt;</H2>
+<HR>
+<DL>
+<DT><PRE>public class <B>KruskalMinimumSpanningTree&lt;V,E&gt;</B></PRE>
+<DD>Algoritmo de Kruskal para árbol de expansión mínima (MST).
+<P>
+<B>Métodos:</B>
+<UL>
+<LI>getSpanningTree() - Devuelve el MST</LI>
+</UL>
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>KruskalMinimumSpanningTree&lt;String, DefaultWeightedEdge&gt; kruskal = new KruskalMinimumSpanningTree&lt;&gt;(grafo);</CODE><BR>
+<CODE>SpanningTree&lt;DefaultWeightedEdge&gt; mst = kruskal.getSpanningTree();</CODE>
+</DL>
+<HR>
+</BODY>
+</HTML>

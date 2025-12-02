@@ -1,62 +1,23 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>DijkstraShortestPath (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht.alg.shortestpath</a></div>
-<h1 title="Class DijkstraShortestPath" class="title">Class DijkstraShortestPath&lt;V,E&gt;</h1>
-</div>
-<section class="description">
-<dl>
-<dt>Type Parameters:</dt>
-<dd><code>V</code> - el tipo del vértice</dd>
-<dd><code>E</code> - el tipo de la arista</dd>
-</dl>
-<hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DijkstraShortestPath&lt;V,E&gt;</span></div>
-<div class="block">
-<p><strong>DijkstraShortestPath</strong> implementa el algoritmo de Dijkstra para encontrar el camino más corto 
-entre dos vértices en un grafo ponderado con pesos no negativos.</p>
-
-<h3>Métodos Principales</h3>
-<ul>
-<li><strong>getPath(source, sink)</strong> - Devuelve el camino más corto entre origen y destino</li>
-<li><strong>getPathWeight(source, sink)</strong> - Devuelve solo el peso total del camino</li>
-<li><strong>getPaths(source)</strong> - Devuelve árbol de caminos desde un origen</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-Graph&lt;String, DefaultWeightedEdge&gt; grafo = 
-    new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
-
-Graphs.addEdgeWithVertices(grafo, "Madrid", "Barcelona", 621);
-Graphs.addEdgeWithVertices(grafo, "Madrid", "Valencia", 352);
-Graphs.addEdgeWithVertices(grafo, "Barcelona", "Valencia", 349);
-
-// Crear instancia de Dijkstra
-DijkstraShortestPath&lt;String, DefaultWeightedEdge&gt; dijkstra = 
-    new DijkstraShortestPath&lt;&gt;(grafo);
-
-// Obtener camino más corto
-GraphPath&lt;String, DefaultWeightedEdge&gt; camino = 
-    dijkstra.getPath("Madrid", "Barcelona");
-
-if (camino != null) {
-    System.out.println("Ruta: " + camino.getVertexList());
-    System.out.println("Distancia: " + camino.getWeight());
-}
-</pre>
-
-<p>⚠️ <strong>Importante:</strong> Solo funciona con pesos no negativos. Para pesos negativos usar BellmanFordShortestPath.</p>
-
-<p>Ver también: BellmanFordShortestPath, FloydWarshallShortestPaths, GraphPath</p>
-</div>
-</section>
-</main>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>DijkstraShortestPath (JGraphT 1.5.0)</TITLE></HEAD>
+<BODY BGCOLOR="white">
+<H2><FONT SIZE="-1">org.jgrapht.alg.shortestpath</FONT><BR>Class DijkstraShortestPath&lt;V,E&gt;</H2>
+<HR>
+<DL>
+<DT><PRE>public class <B>DijkstraShortestPath&lt;V,E&gt;</B></PRE>
+<DD>Algoritmo de Dijkstra para camino más corto (pesos no negativos).
+<P>
+<B>Métodos:</B>
+<UL>
+<LI>getPath(source, sink) - Devuelve el camino más corto</LI>
+<LI>getPathWeight(source, sink) - Devuelve el peso del camino</LI>
+</UL>
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>DijkstraShortestPath&lt;String, DefaultWeightedEdge&gt; dijkstra = new DijkstraShortestPath&lt;&gt;(grafo);</CODE><BR>
+<CODE>GraphPath&lt;String, DefaultWeightedEdge&gt; camino = dijkstra.getPath("A", "Z");</CODE>
+</DL>
+<HR>
+</BODY>
+</HTML>

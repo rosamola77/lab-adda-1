@@ -1,57 +1,22 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>GreedyColoring (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht.alg.color</a></div>
-<h1 title="Class GreedyColoring" class="title">Class GreedyColoring&lt;V,E&gt;</h1>
-</div>
-<section class="description">
-<dl>
-<dt>Type Parameters:</dt>
-<dd><code>V</code> - el tipo del vértice</dd>
-<dd><code>E</code> - el tipo de la arista</dd>
-</dl>
-<hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GreedyColoring&lt;V,E&gt;</span></div>
-<div class="block">
-<p><strong>GreedyColoring</strong> asigna colores a los vértices de forma que ningún par de 
-vértices adyacentes tenga el mismo color. Usa un algoritmo voraz (greedy).</p>
-
-<h3>Métodos Principales</h3>
-<ul>
-<li><strong>getColoring()</strong> - Devuelve el coloreado como un objeto Coloring</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-Graph&lt;String, DefaultEdge&gt; grafo = new SimpleGraph&lt;&gt;(DefaultEdge.class);
-
-// Crear un pentágono
-Graphs.addEdgeWithVertices(grafo, "A", "B");
-Graphs.addEdgeWithVertices(grafo, "B", "C");
-Graphs.addEdgeWithVertices(grafo, "C", "D");
-Graphs.addEdgeWithVertices(grafo, "D", "E");
-Graphs.addEdgeWithVertices(grafo, "E", "A");
-
-// Aplicar coloreado
-GreedyColoring&lt;String, DefaultEdge&gt; coloreo = new GreedyColoring&lt;&gt;(grafo);
-Coloring&lt;String&gt; resultado = coloreo.getColoring();
-
-System.out.println("Colores necesarios: " + resultado.getNumberColors());
-Map&lt;String, Integer&gt; colores = resultado.getColors();
-for (String v : grafo.vertexSet()) {
-    System.out.println(v + " → color " + colores.get(v));
-}
-</pre>
-
-<p>💡 <strong>Tip:</strong> El algoritmo greedy no siempre encuentra el número cromático óptimo, pero es eficiente.</p>
-</div>
-</section>
-</main>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>GreedyColoring (JGraphT 1.5.0)</TITLE></HEAD>
+<BODY BGCOLOR="white">
+<H2><FONT SIZE="-1">org.jgrapht.alg.color</FONT><BR>Class GreedyColoring&lt;V,E&gt;</H2>
+<HR>
+<DL>
+<DT><PRE>public class <B>GreedyColoring&lt;V,E&gt;</B></PRE>
+<DD>Algoritmo voraz para coloreado de grafos.
+<P>
+<B>Métodos:</B>
+<UL>
+<LI>getColoring() - Devuelve el coloreado</LI>
+</UL>
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>GreedyColoring&lt;String, DefaultEdge&gt; coloreo = new GreedyColoring&lt;&gt;(grafo);</CODE><BR>
+<CODE>Coloring&lt;String&gt; resultado = coloreo.getColoring();</CODE>
+</DL>
+<HR>
+</BODY>
+</HTML>

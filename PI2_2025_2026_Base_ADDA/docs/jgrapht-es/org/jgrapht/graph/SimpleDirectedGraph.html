@@ -1,55 +1,18 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>SimpleDirectedGraph (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht.graph</a></div>
-<h1 title="Class SimpleDirectedGraph" class="title">Class SimpleDirectedGraph&lt;V,E&gt;</h1>
-</div>
-<section class="description">
-<dl>
-<dt>Type Parameters:</dt>
-<dd><code>V</code> - el tipo del vértice</dd>
-<dd><code>E</code> - el tipo de la arista</dd>
-</dl>
-<hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SimpleDirectedGraph&lt;V,E&gt;</span>
-<span class="extends-implements">extends AbstractBaseGraph&lt;V,E&gt;</span></div>
-<div class="block">
-<p><strong>SimpleDirectedGraph</strong> es un grafo simple dirigido sin bucles ni aristas múltiples.</p>
-
-<p>Características:</p>
-<ul>
-<li>Dirigido: las aristas tienen dirección (origen → destino)</li>
-<li>Sin bucles: un vértice no puede conectarse consigo mismo</li>
-<li>Sin aristas múltiples: solo puede haber una arista en cada dirección entre dos vértices</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-// Crear grafo dirigido
-Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);
-
-// Añadir aristas dirigidas
-Graphs.addEdgeWithVertices(dg, "A", "B");  // A → B
-Graphs.addEdgeWithVertices(dg, "B", "C");  // B → C
-
-// Consultar grados
-int entrada = dg.inDegreeOf("B");   // 1 (arista desde A)
-int salida = dg.outDegreeOf("B");   // 1 (arista hacia C)
-
-// Sucesores y predecesores
-List&lt;String&gt; sucesores = Graphs.successorListOf(dg, "A");     // [B]
-List&lt;String&gt; predecesores = Graphs.predecessorListOf(dg, "C"); // [B]
-</pre>
-
-<p>Ver también: SimpleGraph, SimpleDirectedWeightedGraph, Graph</p>
-</div>
-</section>
-</main>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>SimpleDirectedGraph (JGraphT 1.5.0)</TITLE></HEAD>
+<BODY BGCOLOR="white">
+<H2><FONT SIZE="-1">org.jgrapht.graph</FONT><BR>Class SimpleDirectedGraph&lt;V,E&gt;</H2>
+<HR>
+<DL>
+<DT><PRE>public class <B>SimpleDirectedGraph&lt;V,E&gt;</B> extends AbstractBaseGraph&lt;V,E&gt;</PRE>
+<DD>Grafo simple dirigido sin bucles ni aristas múltiples.
+<P>
+<B>Características:</B> Dirigido (aristas con dirección), sin bucles, sin aristas múltiples.
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>Graph&lt;String, DefaultEdge&gt; dg = new SimpleDirectedGraph&lt;&gt;(DefaultEdge.class);</CODE>
+</DL>
+<HR>
+</BODY>
+</HTML>

@@ -1,44 +1,18 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>DefaultEdge (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht.graph</a></div>
-<h1 title="Class DefaultEdge" class="title">Class DefaultEdge</h1>
-</div>
-<section class="description">
-<hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DefaultEdge</span>
-<span class="extends-implements">extends Object</span></div>
-<div class="block">
-<p><strong>DefaultEdge</strong> es la implementación por defecto de una arista sin peso.</p>
-
-<p>Uso típico:</p>
-<ul>
-<li>Para grafos no ponderados (SimpleGraph, SimpleDirectedGraph)</li>
-<li>Cuando no necesitas almacenar información adicional en las aristas</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-// Crear grafo con DefaultEdge
-Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);
-g.addVertex("A");
-g.addVertex("B");
-DefaultEdge e = g.addEdge("A", "B");
-
-// Obtener extremos de la arista
-String origen = g.getEdgeSource(e);   // "A"
-String destino = g.getEdgeTarget(e);  // "B"
-</pre>
-
-<p>Ver también: DefaultWeightedEdge (para grafos ponderados)</p>
-</div>
-</section>
-</main>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>DefaultEdge (JGraphT 1.5.0)</TITLE></HEAD>
+<BODY BGCOLOR="white">
+<H2><FONT SIZE="-1">org.jgrapht.graph</FONT><BR>Class DefaultEdge</H2>
+<HR>
+<DL>
+<DT><PRE>public class <B>DefaultEdge</B></PRE>
+<DD>Implementación por defecto de una arista sin peso.
+<P>
+<B>Uso:</B> Para grafos no ponderados (SimpleGraph, SimpleDirectedGraph).
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);</CODE>
+</DL>
+<HR>
+</BODY>
+</HTML>

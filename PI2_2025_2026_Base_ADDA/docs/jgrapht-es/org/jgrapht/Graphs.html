@@ -1,57 +1,36 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>Graphs (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
-<!-- ======== START OF CLASS DATA ======== -->
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht</a></div>
-<h1 title="Class Graphs" class="title">Class Graphs</h1>
-</div>
-<section class="description">
-<hr>
-<div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">Graphs</span></div>
-<div class="block">
-<p><strong>Graphs</strong> es una clase de utilidades que proporciona métodos estáticos para realizar 
-operaciones comunes sobre grafos de forma más cómoda.</p>
-
-<p><strong>💡 Tip:</strong> Todos los métodos de esta clase son static, por lo que 
-se llaman directamente: Graphs.metodo(...)</p>
-
-<h3>Métodos Más Útiles</h3>
-<ul>
-<li><strong>addEdgeWithVertices(g, source, target)</strong> - Añade una arista creando los vértices automáticamente si no existen. ¡El método más útil!</li>
-<li><strong>addEdgeWithVertices(g, source, target, weight)</strong> - Versión para grafos ponderados.</li>
-<li><strong>neighborListOf(g, vertex)</strong> - Devuelve una lista con todos los vecinos de un vértice.</li>
-<li><strong>neighborSetOf(g, vertex)</strong> - Similar pero devuelve un Set.</li>
-<li><strong>predecessorListOf(g, vertex)</strong> - En grafos dirigidos, vértices que apuntan al dado.</li>
-<li><strong>successorListOf(g, vertex)</strong> - En grafos dirigidos, vértices a los que apunta el dado.</li>
-<li><strong>getOppositeVertex(g, e, v)</strong> - Dado una arista y un vértice, devuelve el otro extremo.</li>
-<li><strong>addAllVertices(g, vertices)</strong> - Añade múltiples vértices de una colección.</li>
-<li><strong>addGraph(dest, source)</strong> - Copia todos los vértices y aristas de un grafo a otro.</li>
-<li><strong>addGraphReversed(dest, source)</strong> - Copia invirtiendo dirección de aristas.</li>
-<li><strong>testIncidence(g, e, v)</strong> - Comprueba si una arista es incidente a un vértice.</li>
-<li><strong>undirectedGraph(g)</strong> - Devuelve una vista no dirigida de un grafo dirigido.</li>
-<li><strong>removeVertexAndPreserveConnectivity(g, v)</strong> - Elimina vértice conectando predecesores con sucesores.</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);
-
-// Forma rápida: una línea por arista (crea vértices automáticamente)
-Graphs.addEdgeWithVertices(g, "A", "B");
-Graphs.addEdgeWithVertices(g, "B", "C");
-
-// Obtener vecinos
-List&lt;String&gt; vecinos = Graphs.neighborListOf(g, "B");
-// Resultado: [A, C]
-</pre>
-</div>
-</section>
-</main>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>Graphs (JGraphT 1.5.0)</TITLE>
+</HEAD>
+<BODY BGCOLOR="white">
+<H2>
+<FONT SIZE="-1">org.jgrapht</FONT>
+<BR>
+Class Graphs</H2>
+<HR>
+<DL>
+<DT><PRE>public final class <B>Graphs</B></PRE>
+<DD>Clase de utilidades con métodos estáticos para operaciones comunes sobre grafos.
+<P>
+<B>Métodos más útiles:</B>
+<UL>
+<LI>addEdgeWithVertices(g, source, target) - Añade arista creando vértices automáticamente</LI>
+<LI>addEdgeWithVertices(g, source, target, weight) - Versión con peso</LI>
+<LI>neighborListOf(g, vertex) - Lista de vecinos de un vértice</LI>
+<LI>neighborSetOf(g, vertex) - Set de vecinos</LI>
+<LI>predecessorListOf(g, vertex) - Predecesores (grafos dirigidos)</LI>
+<LI>successorListOf(g, vertex) - Sucesores (grafos dirigidos)</LI>
+<LI>getOppositeVertex(g, e, v) - Otro extremo de una arista</LI>
+<LI>addAllVertices(g, vertices) - Añade múltiples vértices</LI>
+<LI>addGraph(dest, source) - Copia un grafo a otro</LI>
+</UL>
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>Graphs.addEdgeWithVertices(g, "A", "B");</CODE><BR>
+<CODE>List&lt;String&gt; vecinos = Graphs.neighborListOf(g, "A");</CODE>
+<P>
+</DL>
+<HR>
+</BODY>
+</HTML>

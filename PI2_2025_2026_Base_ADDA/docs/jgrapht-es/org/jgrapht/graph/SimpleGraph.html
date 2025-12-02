@@ -1,55 +1,18 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>SimpleGraph (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht.graph</a></div>
-<h1 title="Class SimpleGraph" class="title">Class SimpleGraph&lt;V,E&gt;</h1>
-</div>
-<section class="description">
-<dl>
-<dt>Type Parameters:</dt>
-<dd><code>V</code> - el tipo del vértice</dd>
-<dd><code>E</code> - el tipo de la arista</dd>
-</dl>
-<hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SimpleGraph&lt;V,E&gt;</span>
-<span class="extends-implements">extends AbstractBaseGraph&lt;V,E&gt;</span></div>
-<div class="block">
-<p><strong>SimpleGraph</strong> es un grafo simple no dirigido sin bucles ni aristas múltiples.</p>
-
-<p>Características:</p>
-<ul>
-<li>No dirigido: las aristas no tienen dirección</li>
-<li>Sin bucles: un vértice no puede conectarse consigo mismo</li>
-<li>Sin aristas múltiples: solo puede haber una arista entre dos vértices</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-// Crear grafo simple
-Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);
-
-// Añadir vértices
-g.addVertex("A");
-g.addVertex("B");
-g.addVertex("C");
-
-// Añadir aristas
-g.addEdge("A", "B");
-g.addEdge("B", "C");
-
-// O usar Graphs.addEdgeWithVertices para crear vértices automáticamente
-Graphs.addEdgeWithVertices(g, "C", "D");
-</pre>
-
-<p>Ver también: SimpleDirectedGraph, SimpleWeightedGraph, Graph</p>
-</div>
-</section>
-</main>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>SimpleGraph (JGraphT 1.5.0)</TITLE></HEAD>
+<BODY BGCOLOR="white">
+<H2><FONT SIZE="-1">org.jgrapht.graph</FONT><BR>Class SimpleGraph&lt;V,E&gt;</H2>
+<HR>
+<DL>
+<DT><PRE>public class <B>SimpleGraph&lt;V,E&gt;</B> extends AbstractBaseGraph&lt;V,E&gt;</PRE>
+<DD>Grafo simple no dirigido sin bucles ni aristas múltiples.
+<P>
+<B>Características:</B> No dirigido, sin bucles, sin aristas múltiples.
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);</CODE>
+</DL>
+<HR>
+</BODY>
+</HTML>

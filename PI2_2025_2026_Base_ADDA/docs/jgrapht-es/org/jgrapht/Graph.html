@@ -1,81 +1,56 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>Graph (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>Graph (JGraphT 1.5.0)</TITLE>
+</HEAD>
+<BODY BGCOLOR="white">
 <!-- ======== START OF CLASS DATA ======== -->
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht</a></div>
-<h1 title="Interface Graph" class="title">Interface Graph&lt;V,E&gt;</h1>
-</div>
-<section class="description">
-<dl>
-<dt>Type Parameters:</dt>
-<dd><code>V</code> - el tipo del vértice</dd>
-<dd><code>E</code> - el tipo de la arista</dd>
-</dl>
-<hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Graph&lt;V,E&gt;</span></div>
-<div class="block">
-<p><strong>Graph&lt;V, E&gt;</strong> es la interfaz principal de JGraphT. Define todas las operaciones básicas
-que se pueden realizar sobre un grafo, independientemente de su tipo (dirigido, no dirigido, ponderado, etc.).</p>
-
-<p><strong>Parámetros de tipo:</strong></p>
-<ul>
-<li><strong>V</strong>: Tipo del vértice (ej: String, Integer, objetos personalizados)</li>
-<li><strong>E</strong>: Tipo de la arista (ej: DefaultEdge, DefaultWeightedEdge)</li>
-</ul>
-
-<p><strong>💡 Tip:</strong> La interfaz Graph no se instancia directamente. Usa implementaciones 
-como SimpleGraph, SimpleDirectedGraph, SimpleWeightedGraph, etc.</p>
-
-<h3>Operaciones con Vértices</h3>
-<ul>
-<li><strong>addVertex(V v)</strong> - Añade un vértice al grafo. Devuelve true si el vértice fue añadido.</li>
-<li><strong>removeVertex(V v)</strong> - Elimina un vértice y todas sus aristas incidentes.</li>
-<li><strong>containsVertex(V v)</strong> - Comprueba si el vértice existe en el grafo.</li>
-<li><strong>vertexSet()</strong> - Devuelve el conjunto de todos los vértices del grafo.</li>
-</ul>
-
-<h3>Operaciones con Aristas</h3>
-<ul>
-<li><strong>addEdge(V source, V target)</strong> - Crea una arista entre dos vértices.</li>
-<li><strong>removeEdge(V source, V target)</strong> - Elimina la arista entre dos vértices.</li>
-<li><strong>containsEdge(V source, V target)</strong> - Comprueba si existe una arista entre dos vértices.</li>
-<li><strong>getEdge(V source, V target)</strong> - Devuelve la arista entre dos vértices.</li>
-<li><strong>edgeSet()</strong> - Devuelve el conjunto de todas las aristas del grafo.</li>
-<li><strong>edgesOf(V v)</strong> - Devuelve todas las aristas conectadas a un vértice.</li>
-<li><strong>getAllEdges(V source, V target)</strong> - Devuelve todas las aristas entre dos vértices.</li>
-<li><strong>incomingEdgesOf(V v)</strong> - Para grafos dirigidos: aristas entrantes.</li>
-<li><strong>outgoingEdgesOf(V v)</strong> - Para grafos dirigidos: aristas salientes.</li>
-</ul>
-
-<h3>Información del Grafo</h3>
-<ul>
-<li><strong>degreeOf(V v)</strong> - Devuelve el grado de un vértice.</li>
-<li><strong>inDegreeOf(V v)</strong> - Grado de entrada (grafos dirigidos).</li>
-<li><strong>outDegreeOf(V v)</strong> - Grado de salida (grafos dirigidos).</li>
-<li><strong>getEdgeSource(E e)</strong> - Obtiene el vértice origen de una arista.</li>
-<li><strong>getEdgeTarget(E e)</strong> - Obtiene el vértice destino de una arista.</li>
-<li><strong>getEdgeWeight(E e)</strong> - Obtiene el peso de una arista.</li>
-<li><strong>setEdgeWeight(E e, double weight)</strong> - Establece el peso de una arista.</li>
-<li><strong>getType()</strong> - Devuelve información sobre el tipo del grafo.</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);
-g.addVertex("Madrid");
-g.addVertex("Barcelona");
-g.addEdge("Madrid", "Barcelona");
-System.out.println("Vértices: " + g.vertexSet());
-System.out.println("Grado de Madrid: " + g.degreeOf("Madrid"));
-</pre>
-</div>
-</section>
-</main>
-</body>
-</html>
+<H2>
+<FONT SIZE="-1">org.jgrapht</FONT>
+<BR>
+Interface Graph&lt;V,E&gt;</H2>
+<HR>
+<DL>
+<DT><PRE>public interface <B>Graph&lt;V,E&gt;</B></PRE>
+<DD>Interfaz principal de JGraphT. Define todas las operaciones básicas para grafos.
+<P>
+<B>Parámetros de tipo:</B>
+<UL>
+<LI><B>V</B> - Tipo del vértice (String, Integer, objetos personalizados)</LI>
+<LI><B>E</B> - Tipo de la arista (DefaultEdge, DefaultWeightedEdge)</LI>
+</UL>
+<P>
+<B>Operaciones con Vértices:</B>
+<UL>
+<LI>addVertex(V v) - Añade un vértice al grafo</LI>
+<LI>removeVertex(V v) - Elimina un vértice y sus aristas</LI>
+<LI>containsVertex(V v) - Comprueba si existe el vértice</LI>
+<LI>vertexSet() - Devuelve todos los vértices</LI>
+</UL>
+<P>
+<B>Operaciones con Aristas:</B>
+<UL>
+<LI>addEdge(V source, V target) - Crea una arista</LI>
+<LI>removeEdge(V source, V target) - Elimina una arista</LI>
+<LI>containsEdge(V source, V target) - Comprueba si existe</LI>
+<LI>getEdge(V source, V target) - Obtiene la arista</LI>
+<LI>edgeSet() - Devuelve todas las aristas</LI>
+<LI>edgesOf(V v) - Aristas conectadas a un vértice</LI>
+</UL>
+<P>
+<B>Información del Grafo:</B>
+<UL>
+<LI>degreeOf(V v) - Grado de un vértice</LI>
+<LI>inDegreeOf(V v) / outDegreeOf(V v) - Grados dirigidos</LI>
+<LI>getEdgeSource(E e) / getEdgeTarget(E e) - Extremos de arista</LI>
+<LI>getEdgeWeight(E e) / setEdgeWeight(E e, double) - Peso</LI>
+</UL>
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>Graph&lt;String, DefaultEdge&gt; g = new SimpleGraph&lt;&gt;(DefaultEdge.class);</CODE><BR>
+<CODE>g.addVertex("A"); g.addVertex("B"); g.addEdge("A", "B");</CODE>
+<P>
+</DL>
+<HR>
+</BODY>
+</HTML>

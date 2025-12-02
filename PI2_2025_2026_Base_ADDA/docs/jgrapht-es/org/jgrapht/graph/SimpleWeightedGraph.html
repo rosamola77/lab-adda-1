@@ -1,55 +1,19 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>SimpleWeightedGraph (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht.graph</a></div>
-<h1 title="Class SimpleWeightedGraph" class="title">Class SimpleWeightedGraph&lt;V,E&gt;</h1>
-</div>
-<section class="description">
-<dl>
-<dt>Type Parameters:</dt>
-<dd><code>V</code> - el tipo del vértice</dd>
-<dd><code>E</code> - el tipo de la arista</dd>
-</dl>
-<hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SimpleWeightedGraph&lt;V,E&gt;</span>
-<span class="extends-implements">extends SimpleGraph&lt;V,E&gt;</span></div>
-<div class="block">
-<p><strong>SimpleWeightedGraph</strong> es un grafo simple no dirigido ponderado.</p>
-
-<p>Características:</p>
-<ul>
-<li>No dirigido: las aristas no tienen dirección</li>
-<li>Ponderado: las aristas tienen un peso asociado (double)</li>
-<li>Sin bucles ni aristas múltiples</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-// Crear grafo ponderado
-Graph&lt;String, DefaultWeightedEdge&gt; wg = 
-    new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
-
-// Añadir aristas con peso
-Graphs.addEdgeWithVertices(wg, "Madrid", "Barcelona", 621.0);
-Graphs.addEdgeWithVertices(wg, "Madrid", "Valencia", 352.0);
-
-// Consultar peso
-DefaultWeightedEdge e = wg.getEdge("Madrid", "Barcelona");
-double distancia = wg.getEdgeWeight(e);  // 621.0
-
-// Modificar peso
-wg.setEdgeWeight(e, 625.0);
-</pre>
-
-<p>Ver también: SimpleGraph, SimpleDirectedWeightedGraph, DefaultWeightedEdge</p>
-</div>
-</section>
-</main>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>SimpleWeightedGraph (JGraphT 1.5.0)</TITLE></HEAD>
+<BODY BGCOLOR="white">
+<H2><FONT SIZE="-1">org.jgrapht.graph</FONT><BR>Class SimpleWeightedGraph&lt;V,E&gt;</H2>
+<HR>
+<DL>
+<DT><PRE>public class <B>SimpleWeightedGraph&lt;V,E&gt;</B> extends SimpleGraph&lt;V,E&gt;</PRE>
+<DD>Grafo simple no dirigido ponderado (aristas con peso).
+<P>
+<B>Características:</B> No dirigido, ponderado (peso double en aristas).
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>Graph&lt;String, DefaultWeightedEdge&gt; wg = new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);</CODE><BR>
+<CODE>Graphs.addEdgeWithVertices(wg, "A", "B", 5.0);</CODE>
+</DL>
+<HR>
+</BODY>
+</HTML>

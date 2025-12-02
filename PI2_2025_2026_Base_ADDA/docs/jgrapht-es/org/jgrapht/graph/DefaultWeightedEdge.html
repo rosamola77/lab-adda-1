@@ -1,49 +1,19 @@
-<!DOCTYPE HTML>
-<html lang="es">
-<head>
-<title>DefaultWeightedEdge (JGraphT 1.5.0 - Documentación en español)</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-</head>
-<body>
-<main role="main">
-<div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.jgrapht.graph</a></div>
-<h1 title="Class DefaultWeightedEdge" class="title">Class DefaultWeightedEdge</h1>
-</div>
-<section class="description">
-<hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DefaultWeightedEdge</span>
-<span class="extends-implements">extends DefaultEdge</span></div>
-<div class="block">
-<p><strong>DefaultWeightedEdge</strong> es la implementación por defecto de una arista con peso.</p>
-
-<p>Uso típico:</p>
-<ul>
-<li>Para grafos ponderados (SimpleWeightedGraph, SimpleDirectedWeightedGraph)</li>
-<li>Almacena un peso de tipo double para cada arista</li>
-</ul>
-
-<h3>Ejemplo de Uso</h3>
-<pre>
-// Crear grafo ponderado con DefaultWeightedEdge
-Graph&lt;String, DefaultWeightedEdge&gt; wg = 
-    new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);
-
-wg.addVertex("Madrid");
-wg.addVertex("Barcelona");
-DefaultWeightedEdge e = wg.addEdge("Madrid", "Barcelona");
-wg.setEdgeWeight(e, 621.0);  // Distancia en km
-
-// Consultar peso
-double peso = wg.getEdgeWeight(e);  // 621.0
-
-// O usando Graphs para crear todo de una vez:
-Graphs.addEdgeWithVertices(wg, "Madrid", "Valencia", 352.0);
-</pre>
-
-<p>Ver también: DefaultEdge (para grafos sin peso), SimpleWeightedGraph</p>
-</div>
-</section>
-</main>
-</body>
-</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>DefaultWeightedEdge (JGraphT 1.5.0)</TITLE></HEAD>
+<BODY BGCOLOR="white">
+<H2><FONT SIZE="-1">org.jgrapht.graph</FONT><BR>Class DefaultWeightedEdge</H2>
+<HR>
+<DL>
+<DT><PRE>public class <B>DefaultWeightedEdge</B> extends DefaultEdge</PRE>
+<DD>Implementación por defecto de una arista con peso (double).
+<P>
+<B>Uso:</B> Para grafos ponderados (SimpleWeightedGraph).
+<P>
+<B>Ejemplo:</B><BR>
+<CODE>Graph&lt;String, DefaultWeightedEdge&gt; wg = new SimpleWeightedGraph&lt;&gt;(DefaultWeightedEdge.class);</CODE><BR>
+<CODE>wg.setEdgeWeight(e, 5.0);</CODE>
+</DL>
+<HR>
+</BODY>
+</HTML>
