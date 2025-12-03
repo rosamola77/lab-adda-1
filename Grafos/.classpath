@@ -18,6 +18,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/jgrapht-core-1.5.0.jar">
 		<attributes>
+			<attribute name="javadoc_location" value="https://jgrapht.org/javadoc-1.5.0/"/>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
