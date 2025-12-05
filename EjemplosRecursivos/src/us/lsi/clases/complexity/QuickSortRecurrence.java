@@ -28,7 +28,7 @@ public class QuickSortRecurrence {
 	 * @param n
 	 * @param file
 	 * @param p
-	 * @return
+	 * @return Valor de f(n)
 	 */
 	public static Long quickShortRecurrence(Long n,String file,Predicate<Map.Entry<Long,Long>> p) {
 		Map<Long,Long> mem = new HashMap<>();

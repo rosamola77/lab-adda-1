@@ -28,7 +28,7 @@ public class Recurrence {
 	 * @param n
 	 * @param file
 	 * @param p
-	 * @return
+	 * @return Valor de f(n)
 	 */
 	public static Integer recurrence(Long n,String file,Predicate<Map.Entry<Long,Integer>> p) {
 		Map<Long,Integer> mem = new HashMap<>();
