@@ -4,6 +4,7 @@ import java.util.stream.IntStream;
 
 import us.lsi.tiposrecursivos.BinaryTree;
 import us.lsi.tiposrecursivos.Tree;
+import utilidades.Tupla;
 import us.lsi.tiposrecursivos.BEmpty;
 import us.lsi.tiposrecursivos.BTree;
 import us.lsi.tiposrecursivos.BLeaf;
@@ -34,21 +35,6 @@ import us.lsi.tiposrecursivos.TNary;
  * @see us.lsi.tiposrecursivos.Tree
  */
 public class Ejercicio2 {
-	
-	/**
-	 * Tupla auxiliar que contiene:
-	 * <ul>
-	 *   <li>{@code valido} - bandera booleana que indica si la propiedad se cumple en el subárbol.</li>
-	 *   <li>{@code nv} - número total de vocales en el subárbol (o {@code null} si no aplica).</li>
-	 * </ul>
-	 *
-	 * <p>Se utiliza como contenedor intermedio en las llamadas recursivas para
-	 * propagar el estado y la cuenta de vocales.</p>
-	 *
-	 * @implNote Registro privado usado internamente por los métodos recursivos.
-	 */
-	record Tupla(Boolean valido, Long nv) {
-	}
 	
 	/**
 	 * Cuenta el número de vocales en la cadena dada.
@@ -91,7 +77,7 @@ public class Ejercicio2 {
 	 */
 	public static Boolean solucion_recursiva(BinaryTree<String> tree) {
 		if (tree == null) throw new NullPointerException("El árbol no puede ser null");
-		return solucion_binaryAux(tree).valido();
+		return solucion_binaryAux(tree).e1();
 	}
 	
 	/**
@@ -115,27 +101,27 @@ public class Ejercicio2 {
 	 * long nv = t.nv();
 	 * }
 	 */
-	private static Tupla solucion_binaryAux(BinaryTree<String> tree) {
+	private static Tupla<Boolean, Long> solucion_binaryAux(BinaryTree<String> tree) {
 		if (tree == null) throw new NullPointerException("El subárbol no puede ser null");
 		return switch (tree) {
 		
 		// Caso 1: Nodo vacío (Caso Base)
-		case BEmpty() -> new Tupla(true, 0L);
+		case BEmpty() -> new Tupla<Boolean, Long>(true, 0L);
 		
 		// Caso 2: Hoja (Nodo sin hijos) (Caso Base)
-		case BLeaf(var lb) -> new Tupla(true, vocales(lb));
+		case BLeaf(var lb) -> new Tupla<Boolean, Long>(true, vocales(lb));
 		
 		// Caso 3: Nodo Interno (Tiene 2 hijos) (Caso Recursivo)
 		case BTree(var lb, var lt, var rt) -> {
 			var t1 = solucion_binaryAux(lt);
-			if (t1.valido().equals(true)) {
+			if (t1.e1().equals(true)) {
 				var t2 = solucion_binaryAux(rt);
 				// Para el nodo padre, si ambos hijos son válidos y tienen el mismo nv,
 				// entonces el subárbol es válido y su nv total es la suma de los dos hijos más las vocales del label.
-				yield new Tupla(t2.valido() && t1.nv().equals(t2.nv()), t1.nv() + t2.nv() + vocales(lb));
+				yield new Tupla<Boolean, Long>(t2.e1() && t1.e2().equals(t2.e2()), t1.e2() + t2.e2() + vocales(lb));
 			} else {
 				// Si el subárbol izquierdo no cumple, el resultado es inválido.
-				yield new Tupla(false, null);
+				yield new Tupla<Boolean, Long>(false, null);
 			}
 		}
 		
@@ -159,7 +145,7 @@ public class Ejercicio2 {
 	 */
 	public static Boolean solucion_recursiva(Tree<String> tree) {
 		if (tree == null) throw new NullPointerException("El árbol no puede ser null");
-		return solucion_recursivaAux(tree).valido();
+		return solucion_recursivaAux(tree).e1();
 	}
 	
 	/**
@@ -185,14 +171,14 @@ public class Ejercicio2 {
 	 * long nv = t.nv();
 	 * }
 	 */
-	private static Tupla solucion_recursivaAux(Tree<String> tree) {
+	private static Tupla<Boolean, Long> solucion_recursivaAux(Tree<String> tree) {
 		if (tree == null) throw new NullPointerException("El subárbol no puede ser null");
 		return switch (tree) {
 			// Caso 1: Nodo vacío (Caso Base)
-			case TEmpty() -> new Tupla(true, 0L);
+			case TEmpty() -> new Tupla<Boolean, Long>(true, 0L);
 		
 			// Caso 2: Hoja (Nodo sin hijos) (Caso Base)
-			case TLeaf(var lb) -> new Tupla(true, vocales(lb));
+			case TLeaf(var lb) -> new Tupla<Boolean, Long>(true, vocales(lb));
 		
 			// Caso 3: Nodo Interno n-ario (Caso Recursivo)
 			case TNary(var lb, var children) -> {
@@ -200,12 +186,12 @@ public class Ejercicio2 {
 				var t1 = solucion_recursivaAux(children.get(0));
 				
 				// Comparar recursivamente con los demás hijos mientras se mantenga la validez.
-				for (int i = 1; i < children.size() && t1.valido(); i++) {
+				for (int i = 1; i < children.size() && t1.e1(); i++) {
 					var t2 = solucion_recursivaAux(children.get(i));
-					t1 = new Tupla(t2.valido() && t1.nv().equals(t2.nv()), t1.nv());
+					t1 = new Tupla<Boolean, Long>(t2.e1() && t1.e2().equals(t2.e2()), t1.e2());
 				}
 				// Si todos los hijos son válidos y tienen el mismo nv, calcular el total.
-				yield new Tupla(t1.valido(), children.size() * t1.nv() + vocales(lb));
+				yield new Tupla<Boolean, Long>(t1.e1(), children.size() * t1.e2() + vocales(lb));
 			}
 		};
 	}

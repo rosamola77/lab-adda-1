@@ -206,7 +206,7 @@ public class Ejercicio3 {
 	 *
 	 * Implementación:
 	 * <ol>
-	 *   <li>Itera sobre todos los pares de vértices (i,j) con i &lt; j.</li>
+	 *   <li>Itera sobre todos los pares de vértices (i,j) con i < j.</li>
 	 *   <li>Calcula el camino mínimo entre ellos y mide su longitud en número de aristas.</li>
 	 *   <li>Registra el par con mayor longitud; genera un fichero DOT con el camino marcado si existe.</li>
 	 * </ol>
