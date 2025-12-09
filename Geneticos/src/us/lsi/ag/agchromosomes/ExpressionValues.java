@@ -28,7 +28,7 @@ public class ExpressionValues implements ChromosomeValues<Exp, List<Double>, Exp
 	private ExpressionData data;
 	/**
 	 * Indice de la primera constante en el cromosoma.
-	 * Las contantes est�n ubicadas despu�s de los genes
+	 * Las constantes están ubicadas después de los genes
 	 */
 	private static Integer constantsIndex;
 		

@@ -174,7 +174,7 @@ public class DatosJarras {
 		private Operacion(String s){
 			String[] v = s.split(",");
 			Integer ne = v.length;
-			if(ne != 3) throw new IllegalArgumentException("Formato no adecuado en l�nea  "+s);	
+			if(ne != 3) throw new IllegalArgumentException("Formato no adecuado en línea  "+s);	
 			this.id = n;
 			n++;
 			this.descripcionCorta = v[1];

@@ -108,7 +108,7 @@ public class ListaDeAnunciosAEmitir  {
 	public static ListaDeAnunciosAEmitir createValido(List<Integer> anunciosDecididosParaEmitir) {
 		ListaDeAnunciosAEmitir la = new ListaDeAnunciosAEmitir(anunciosDecididosParaEmitir);
 		if (!la.cumpleRestricciones()) {
-			throw new IllegalArgumentException("Estado No v�lido");
+			throw new IllegalArgumentException("Estado No válido");
 		}
 		return la;
 	}

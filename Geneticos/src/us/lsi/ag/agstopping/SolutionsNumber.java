@@ -18,15 +18,15 @@ import us.lsi.common.List2;
  * 
  * <p> Acumula una lista, en la propiedad 
  * <code> AlgoritmoAG.bestChromosomes </code> que guarda los mejores <code> numBestChromosomes </code> 
- * distintos de cada generaci�n.</p>
+ * distintos de cada generación.</p>
  * 
  * 
- * <p> Implementa una condici�n de parada que se cumple cuando se encuentran <code> numBestChromosomes </code> cromosomas
- * que cumplan un  <code> predicate </code> o el n�mero de generaciones supera
+ * <p> Implementa una condición de parada que se cumple cuando se encuentran <code> numBestChromosomes </code> cromosomas
+ * que cumplan un  <code> predicate </code> o el número de generaciones supera
  * <code> AlgoritmoAG.NUM_GENERATIONS</code>  </p>
  * 
  * <p> La propiedad <code> predicate </code> debe ser inicializada desde el problema concreto a resolver. La propiedad numeroDeGeneraciones
- * guarda el n�mero de generaciones </p>
+ * guarda el número de generaciones </p>
  * 
  * @author Miguel Toro
  *

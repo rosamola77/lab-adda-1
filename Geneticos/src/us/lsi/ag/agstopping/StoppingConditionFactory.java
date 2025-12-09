@@ -13,8 +13,8 @@ public class StoppingConditionFactory {
 	 * 
 	 * <ul>
 	 * <li> ElapsedTime: Para cuando el tiempo transcurrido se el especificado en <code> elapsedTime </code>.
-	 * <li> GenerationCount: Para cuando el n�mero de generaciones sea igual al especificado en <code> NUM_GENERATIONS </code>
-	 * <li> SolutionsNumber: Para cuando en una generaci�n encuentra al menos SOLUTIONS_NUMBER de cromososmas 
+	 * <li> GenerationCount: Para cuando el número de generaciones sea igual al especificado en <code> NUM_GENERATIONS </code>
+	 * <li> SolutionsNumber: Para cuando en una generación encuentra al menos SOLUTIONS_NUMBER de cromososmas 
 	 * con <code> fitness</code>  igual o mayor <code> FITNESS </code> o <code> NUM_GENERATIONS </code> ha sido superado.
 	 * </ul> 
 	 *
@@ -22,24 +22,24 @@ public class StoppingConditionFactory {
 	public enum StoppingConditionType{ElapsedTime,GenerationCount,SolutionsNumber};
 	
 	/**
-	 * Condici�n de parada
+	 * Condición de parada
 	 */
 	public static StoppingConditionType stoppingConditionType = StoppingConditionType.SolutionsNumber;
 	/**
-	 * N�mero de soluciones a encontrar si fijamos el criterio de parada en SolutionsNumber
+	 * Número de soluciones a encontrar si fijamos el criterio de parada en SolutionsNumber
 	 */
 	public static int SOLUTIONS_NUMBER_MIN = 1;
 	/**
-	 * Tiempo m�ximo transcurrido para finalizar el algoritmo si usamos la condici�n de finalizaci�n ElapsedTime.
+	 * Tiempo máximo transcurrido para finalizar el algoritmo si usamos la condición de finalización ElapsedTime.
 	 */
 	public static long MAX_ELAPSEDTIME = 1000000000;
 	
 	/**
-	 * Valor m�nimo de la fitness de los cromosomas en las soluciones que vamos buscando si fijamos el criterio de parada en SolutionsNumber
+	 * Valor mínimo de la fitness de los cromosomas en las soluciones que vamos buscando si fijamos el criterio de parada en SolutionsNumber
 	 */
 	public static double FITNESS_MIN = 0.;	
 	/**
-	 * N�mero de generaciones m�ximo para fijar le criterio de parada
+	 * Número de generaciones máximo para fijar le criterio de parada
 	 */
 	public static int NUM_GENERATIONS = Integer.MAX_VALUE;
 	

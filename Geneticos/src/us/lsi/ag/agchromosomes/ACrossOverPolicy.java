@@ -17,7 +17,7 @@ public class ACrossOverPolicy {
 	public static CrossoverType crossoverType = CrossoverType.OnePoint;
 	
 	/**
-	 * N�mero de puntos usados en la partici�n si se usa un operador de cruce de tipo NPointCrossover
+	 * Número de puntos usados en la partición si se usa un operador de cruce de tipo NPointCrossover
 	 */
 	public static int NPOINTCROSSOVER = 3;
 	/**

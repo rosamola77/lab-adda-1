@@ -68,7 +68,7 @@ public record ObjetoMochila(Integer codigo,Integer valor,Integer peso,Integer nu
 	public static ObjetoMochila parse (String s){		
 		String[] v = s.split("[ ,]");
 		Integer ne = v.length;
-		if(ne != 3) throw new IllegalArgumentException("Formato no adecuado en l�nea  "+s);	
+		if(ne != 3) throw new IllegalArgumentException("Formato no adecuado en línea  "+s);	
 		Integer valor = Integer.parseInt(v[0].trim());
 		Integer peso = Integer.parseInt(v[1].trim());
 		Integer numMaxDeUnidades = Integer.parseInt(v[2]);

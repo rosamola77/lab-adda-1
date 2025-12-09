@@ -20,14 +20,14 @@ import org.apache.commons.math3.genetics.CrossoverPolicy;
  * @author Miguel Toro
  * 
  * <p> 
- * Un cromosoma cuya valor decodificado es una lista de ceros y unos del tama�o especificado en el problema.
- * La implementaci�n es una adaptaci�n de la clase {@link org.apache.commons.math3.genetics.Chromosome Chromosome} de Apache. </p>
+ * Un cromosoma cuya valor decodificado es una lista de ceros y unos del tamaño especificado en el problema.
+ * La implementación es una adaptación de la clase {@link org.apache.commons.math3.genetics.Chromosome Chromosome} de Apache. </p>
  *
  */
 public class ABinaryChromosome<S> extends BinaryChromosome implements AChromosome<List<Integer>,List<Integer>,S> {
 	
 	/**
-	 * Dimensi�n del cromosoma
+	 * Dimensión del cromosoma
 	 */
 	
 	protected static Integer DIMENSION;
