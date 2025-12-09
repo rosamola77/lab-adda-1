@@ -7,8 +7,38 @@ import org.apache.commons.math3.genetics.OnePointCrossover;
 import org.apache.commons.math3.genetics.OrderedCrossover;
 import org.apache.commons.math3.genetics.UniformCrossover;
 
+/**
+ * ACrossOverPolicy
+ *
+ * <p>Factoría para crear políticas de cruce (crossover) en algoritmos genéticos.
+ * Proporciona diferentes estrategias de cruce para combinar cromosomas durante
+ * la reproducción en el proceso evolutivo.</p>
+ *
+ * <p>Tipos de operadores de cruce disponibles:
+ * <ul>
+ *   <li><b>Cycle</b>: Cruce cíclico que preserva la posición relativa de los genes</li>
+ *   <li><b>NPoint</b>: Cruce en N puntos configurables</li>
+ *   <li><b>OnePoint</b>: Cruce en un único punto</li>
+ *   <li><b>Ordered</b>: Cruce ordenado que preserva el orden de los elementos</li>
+ *   <li><b>Uniform</b>: Cruce uniforme con probabilidad configurable</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * ACrossOverPolicy.crossoverType = CrossoverType.OnePoint;
+ * CrossoverPolicy policy = ACrossOverPolicy.getCrossoverPolicyBin(CrossoverType.OnePoint);
+ * }</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ */
 public class ACrossOverPolicy {
 	
+	/**
+	 * Enumeración de los tipos de operadores de cruce disponibles.
+	 */
 	public enum CrossoverType{Cycle,NPoint,OnePoint,Ordered,Uniform};
 	
 	/**
@@ -26,9 +56,10 @@ public class ACrossOverPolicy {
 	public static double RATIO_UNIFORMCROSSOVER = 0.7;
 	
 	/**
-	 * @param tipo El tipo del cromosoma
-	 * @param problema Las propiedades del probblema a resolver
-	 * @return Un operador de cruce adecuado para un cromosma del tipo indicado
+	 * Obtiene una política de cruce para cromosomas binarios.
+	 *
+	 * @param tipo el tipo de operador de cruce deseado
+	 * @return un operador de cruce adecuado para cromosomas de tipo {@code Integer}
 	 */
 	public static CrossoverPolicy getCrossoverPolicyBin(CrossoverType tipo){
 		CrossoverPolicy crossOverPolicy = null;	
@@ -42,6 +73,12 @@ public class ACrossOverPolicy {
 		return crossOverPolicy;
 	}
 	
+	/**
+	 * Obtiene una política de cruce para cromosomas de claves aleatorias (RandomKey).
+	 *
+	 * @param tipo el tipo de operador de cruce deseado
+	 * @return un operador de cruce adecuado para cromosomas de tipo {@code Double}
+	 */
 	public static CrossoverPolicy getCrossoverPolicyKey(CrossoverType tipo) {
 		CrossoverPolicy crossOverPolicyKey = null;
 		switch (crossoverType) {
@@ -54,8 +91,13 @@ public class ACrossOverPolicy {
 		return crossOverPolicyKey;
 	}
 
+	/**
+	 * Método principal para pruebas.
+	 *
+	 * @param args argumentos de línea de comandos (no utilizados)
+	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// Método para pruebas
 
 	}
 

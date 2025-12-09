@@ -4,8 +4,34 @@ import org.apache.commons.math3.genetics.FixedElapsedTime;
 import org.apache.commons.math3.genetics.FixedGenerationCount;
 import org.apache.commons.math3.genetics.StoppingCondition;
 
-
-
+/**
+ * StoppingConditionFactory
+ *
+ * <p>Factoría para crear condiciones de parada en algoritmos genéticos.
+ * Proporciona diferentes tipos de condiciones de parada configurables
+ * para controlar cuándo finaliza la evolución de las poblaciones.</p>
+ *
+ * <p>Tipos de condiciones de parada disponibles:
+ * <ul>
+ *   <li><b>ElapsedTime</b>: Finaliza cuando transcurre un tiempo determinado</li>
+ *   <li><b>GenerationCount</b>: Finaliza tras un número específico de generaciones</li>
+ *   <li><b>SolutionsNumber</b>: Finaliza cuando se encuentran suficientes soluciones
+ *       que cumplen un criterio de calidad mínimo (fitness)</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * StoppingConditionFactory.stoppingConditionType = StoppingConditionType.GenerationCount;
+ * StoppingConditionFactory.NUM_GENERATIONS = 100;
+ * StoppingCondition condition = StoppingConditionFactory.getStoppingCondition();
+ * }</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see SolutionsNumber
+ */
 public class StoppingConditionFactory {
 
 	/**
@@ -43,6 +69,15 @@ public class StoppingConditionFactory {
 	 */
 	public static int NUM_GENERATIONS = Integer.MAX_VALUE;
 	
+	/**
+	 * Obtiene la condición de parada configurada según el tipo seleccionado.
+	 *
+	 * <p>Crea y devuelve una instancia de la condición de parada apropiada
+	 * basándose en el valor de {@link #stoppingConditionType} y los parámetros
+	 * configurados correspondientes.</p>
+	 *
+	 * @return la condición de parada configurada
+	 */
 	public static StoppingCondition getStoppingCondition(){
 		return switch(stoppingConditionType){
 		case ElapsedTime -> new FixedElapsedTime(StoppingConditionFactory.MAX_ELAPSEDTIME);
