@@ -30,12 +30,41 @@ import us.lsi.common.Trio;
 import us.lsi.model.PLIModelLexer;
 import us.lsi.model.PLIModelParser;
 
-
+/**
+ * AuxGrammar
+ *
+ * <p>Clase auxiliar para el procesamiento de gramáticas ANTLR utilizadas
+ * en modelos de programación lineal entera (PLI). Proporciona utilidades
+ * para validación, manejo de errores, y procesamiento de árboles sintácticos.</p>
+ *
+ * <p>Esta clase gestiona la validación semántica de modelos PLI, incluyendo:
+ * <ul>
+ *   <li>Validación de tipos de variables y expresiones</li>
+ *   <li>Reporte de errores con información de línea y columna</li>
+ *   <li>Procesamiento de árboles de análisis sintáctico ANTLR</li>
+ *   <li>Utilidades para manipulación de expresiones del modelo</li>
+ * </ul>
+ * </p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see us.lsi.model.PLIModelParser
+ * @see us.lsi.model.PLIModelLexer
+ */
 public class AuxGrammar {
 
-
+	/**
+	 * Enumeración de tipos de datos soportados en el modelo.
+	 */
 	public static enum Type{INT,DOUBLE,BOOLEAN};
 	
+	/**
+	 * Obtiene la información de línea y columna de un contexto de parsing.
+	 *
+	 * @param ctx contexto del parser ANTLR
+	 * @return cadena con formato de error indicando línea y columnas
+	 */
 	public static String  lineaColumna(ParserRuleContext ctx) {
 		Integer line = ctx.getStart().getLine();
 		Integer columnStart = ctx.start.getCharPositionInLine();
@@ -43,6 +72,14 @@ public class AuxGrammar {
 		return String.format("Error en la línea %d, entre columnas %d-%d", line, columnStart, columnEnd);
 	}
 	
+	/**
+	 * Valida una condición y registra un error si no se cumple.
+	 *
+	 * @param ctx contexto del parser donde ocurre la validación
+	 * @param txt mensaje de error a mostrar
+	 * @param condition condición a validar
+	 * @return {@code true} si la condición se cumple; {@code false} en caso contrario
+	 */
 	public static Boolean assertion(ParserRuleContext ctx, String txt, Boolean condition) {
 		Boolean r = true;
 		if (!condition) {

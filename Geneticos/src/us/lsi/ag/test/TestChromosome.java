@@ -11,8 +11,29 @@ import us.lsi.ag.agchromosomes.Chromosomes;
 import us.lsi.ag.agchromosomes.Chromosomes.ChromosomeType;
 import us.lsi.tiposrecursivos.ast.Exp;
 
+/**
+ * TestChromosome
+ *
+ * <p>Clase de prueba para los diferentes tipos de cromosomas en algoritmos
+ * genéticos. Contiene implementaciones de prueba de datos para validar
+ * el funcionamiento de los cromosomas.</p>
+ *
+ * <p>Proporciona clases internas que implementan los diferentes tipos de
+ * datos (PermutationData, RangeIntegerData, RangeDoubleData, BinaryData)
+ * para probar cada tipo de cromosoma con casos simples.</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see us.lsi.ag.agchromosomes.Chromosomes
+ */
 public class TestChromosome {
 	
+	/**
+	 * PD - Datos de prueba para permutaciones.
+	 *
+	 * <p>Implementación simple de PermutationData para testing.</p>
+	 */
     public static class PD implements PermutationData<List<Integer>> {
     	public Integer size() {
     		return 20;

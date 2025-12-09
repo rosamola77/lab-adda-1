@@ -19,9 +19,40 @@ import us.lsi.solve.AuxGrammar.ListString;
 import us.lsi.solve.AuxGrammar.Type;
 import us.lsi.streams.Stream2;
 
-
+/**
+ * PLIModelVisitorC
+ *
+ * <p>Visitor de ANTLR para procesar árboles sintácticos de modelos de
+ * Programación Lineal Entera (PLI). Genera el código correspondiente en
+ * formato compatible con solvers de optimización.</p>
+ *
+ * <p>Esta clase extiende {@link PLIModelBaseVisitor} y proporciona la
+ * implementación del patrón Visitor para recorrer y procesar los nodos
+ * del árbol sintáctico generado por el parser de modelos PLI.</p>
+ *
+ * <p>Funcionalidades principales:
+ * <ul>
+ *   <li>Conversión de expresiones del modelo a formato de solver</li>
+ *   <li>Procesamiento de restricciones y función objetivo</li>
+ *   <li>Manejo de variables de decisión y sus dominios</li>
+ *   <li>Generación de código optimizado para solvers</li>
+ * </ul>
+ * </p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see PLIModelBaseVisitor
+ * @see us.lsi.model.PLIModelParser
+ */
 public class PLIModelVisitorC extends PLIModelBaseVisitor<Object>{
 	
+	/**
+	 * Invierte los signos de una expresión matemática.
+	 *
+	 * @param s expresión matemática como cadena
+	 * @return expresión con signos invertidos
+	 */
 	public static String negative(String s) {
 		s = s.trim();
 		if(s=="") return s;
