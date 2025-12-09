@@ -62,16 +62,24 @@ public class Interseccion {
 		return new Interseccion(id);
 	}
 	
-	/** Identificador único de la intersección. */
+	/**
+	 * Identificador único de la intersección.
+	 */
 	private Integer id = null;
 	
-	/** Indica si la intersección contiene un monumento. */
+	/**
+	 * Indica si la intersección contiene un monumento.
+	 */
 	private Boolean monumento = null;
 	
-	/** Nivel de relevancia de la intersección. */
+	/**
+	 * Nivel de relevancia de la intersección.
+	 */
 	private Integer relevancia = null;
 	
-	/** Nombre de la intersección. */
+	/**
+	 * Nombre de la intersección.
+	 */
 	private String nombre = null;
 
 	/**

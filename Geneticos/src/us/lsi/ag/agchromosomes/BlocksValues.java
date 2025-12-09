@@ -48,7 +48,9 @@ public class BlocksValues<S> implements ChromosomeValues<List<Integer>, List<Dou
         return new BlocksValues<S>(data);
     }
 
-	/** Datos del problema por bloques. */
+	/**
+	 * Datos del problema por bloques.
+	 */
     private BlocksData<S> data;
 
     /**

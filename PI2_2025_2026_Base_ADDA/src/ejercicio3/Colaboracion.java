@@ -49,13 +49,19 @@ public class Colaboracion {
 		return new Colaboracion(formato);
 	}
 
-	/** Contador estático para asignar identificadores únicos. */
+	/**
+	 * Contador estático para asignar identificadores únicos.
+	 */
 	private static int num;
 	
-	/** Identificador único de la colaboración. */
+	/**
+	 * Identificador único de la colaboración.
+	 */
 	private int id;
 	
-	/** Número de colaboraciones realizadas. */
+	/**
+	 * Número de colaboraciones realizadas.
+	 */
 	private int nColaboraciones;
 
 	/**

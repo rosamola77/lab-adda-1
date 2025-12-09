@@ -41,7 +41,9 @@ public class BinaryValues<S> implements ChromosomeValues<List<Integer>, List<Int
 		return new BinaryValues<S>(data);
 	}
 
-	/** Datos del problema binario. */
+	/**
+	 * Datos del problema binario.
+	 */
 	private BinaryData<S> data;
 
 	/**

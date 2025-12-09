@@ -53,16 +53,24 @@ public class Calle {
 		return new Calle(formato);
 	}
 
-	/** Contador estático para asignar identificadores únicos. */
+	/**
+	 * Contador estático para asignar identificadores únicos.
+	 */
 	private static int num;
 	
-	/** Identificador único de la calle. */
+	/**
+	 * Identificador único de la calle.
+	 */
 	private int id;
 	
-	/** Duración del recorrido de la calle en minutos. */
+	/**
+	 * Duración del recorrido de la calle en minutos.
+	 */
 	private int duracion;
 	
-	/** Nivel de esfuerzo requerido para recorrer la calle. */
+	/**
+	 * Nivel de esfuerzo requerido para recorrer la calle.
+	 */
 	private int esfuerzo;
 
 	/**

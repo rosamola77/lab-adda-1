@@ -57,13 +57,19 @@ public class Investigador {
 		return new Investigador(id);
 	}
 	
-	/** Identificador único del investigador. */
+	/**
+	 * Identificador único del investigador.
+	 */
 	private Integer id = null;
 	
-	/** Año de nacimiento del investigador. */
+	/**
+	 * Año de nacimiento del investigador.
+	 */
 	private Integer anyoNacimiento = null;
 	
-	/** Universidad de afiliación del investigador. */
+	/**
+	 * Universidad de afiliación del investigador.
+	 */
 	private String universidad = null;
 
 	/**

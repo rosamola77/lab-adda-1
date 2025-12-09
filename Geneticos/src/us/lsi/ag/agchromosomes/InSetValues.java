@@ -49,7 +49,9 @@ public class InSetValues<S> implements ChromosomeValues<List<Integer>, List<Doub
 		return new InSetValues<S>(data);
 	}
 
-	/** Datos del problema de conjuntos. */
+	/**
+	 * Datos del problema de conjuntos.
+	 */
 	private InSetData<S> data;
 
 	/**
