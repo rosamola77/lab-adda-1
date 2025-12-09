@@ -13,33 +13,86 @@ import us.lsi.tiposrecursivos.ast.Operators;
 import us.lsi.tiposrecursivos.ast.Type;
 import us.lsi.tiposrecursivos.ast.Var;
 
+/**
+ * DatosExpression
+ *
+ * <p>Implementación de datos para problemas de evolución de expresiones
+ * matemáticas usando algoritmos genéticos. Define el conjunto de operadores,
+ * variables y constantes disponibles para construir expresiones.</p>
+ *
+ * <p>Este problema consiste en encontrar una expresión matemática que mejor
+ * se ajuste a un conjunto de datos de entrada/salida mediante evolución
+ * genética de expresiones simbólicas.</p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * DatosExpression datos = new DatosExpression();
+ * // Configurar datos de entrada/salida
+ * // Ejecutar algoritmo genético para evolucionar expresión
+ * }</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see ExpressionData
+ */
 public class DatosExpression implements ExpressionData {
 	
+	/**
+	 * Constructor que inicializa los operadores disponibles.
+	 */
 	public DatosExpression() {
 		Operators.addOperators();
 	}
 	
+	/** Lista de valores de la variable independiente x para pruebas. */
 	public static List<Double> lsx = Arrays.asList(0.0,50.0,100.0,150.0,200.0,250.0,300.0,350.0,400.0,450.0,500.0,550.0,600.0,650.0,700.0,750.0,
 			800.0,850.0,900.0,950.0);
+	
+	/** Lista de valores esperados (salidas) para las pruebas. */
 	public static List<Double> lsv = Arrays.asList(3.0,130003.0,1020003.0,3420003.0,8080003.0,
 			1.5750003E7,2.7180003E7,4.3120003E7,6.4320003E7,9.1530003E7,1.25500003E8,1.66980003E8,
 			2.16720003E8,2.75470003E8,3.43980003E8,4.23000003E8,5.13280003E8,6.15570003E8,7.30620003E8,
-			8.59180003E8);		   
+			8.59180003E8);
+	
+	/**
+	 * Obtiene el número de variables disponibles en las expresiones.
+	 *
+	 * @return el número de variables (1 en este caso: x)
+	 */
 	@Override
 	public Integer numVariables() {
 		return 1;
 	}
 
+	/**
+	 * Obtiene el número de constantes que pueden aparecer en las expresiones.
+	 *
+	 * @return el número de constantes
+	 */
 	@Override
 	public Integer numConstants() {
 		return 2;
 	}
 
+	/**
+	 * Obtiene el valor máximo para las constantes generadas.
+	 *
+	 * @return el valor máximo de las constantes
+	 */
 	@Override
 	public Integer maxValueConstant() {
 		return 5;
 	}
 
+	/**
+	 * Obtiene la lista de operadores disponibles para construir expresiones.
+	 *
+	 * <p>Incluye operadores aritméticos básicos (suma, multiplicación) y
+	 * funciones (potencias, raíz cuadrada).</p>
+	 *
+	 * @return lista de operadores disponibles
+	 */
 	@Override
 	public List<Operator> operators() {		
 		Operator plus = Operators.get2("+", Type.Double, Type.Double);
