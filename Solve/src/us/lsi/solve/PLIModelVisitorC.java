@@ -55,7 +55,7 @@ public class PLIModelVisitorC extends PLIModelBaseVisitor<Object>{
 	 */
 	public static String negative(String s) {
 		s = s.trim();
-		if(s=="") return s;
+		if(s.isEmpty()) return s;
 		if(Character.isAlphabetic(s.charAt(0))) s = " + "+s;
 		String r = "";
 		for(int i =0; i<s.length();i++) {
