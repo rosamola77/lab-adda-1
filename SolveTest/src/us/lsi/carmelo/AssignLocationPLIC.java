@@ -1,5 +1,27 @@
 package us.lsi.carmelo;
 
+/**
+ * AssignLocationPLIC
+ *
+ * <p>Versión mejorada de AssignLocationPLI con restricciones y funciones adicionales.</p>
+ *
+ * <p>Esta clase extiende el modelo básico de asignación de componentes a ubicaciones
+ * añadiendo funciones de negación para restricciones y utilizando utilidades
+ * adicionales para el procesamiento de archivos.</p>
+ *
+ * <p>Incluye métodos adicionales como:
+ * <ul>
+ * <li>getNotAlpha - Negación de compatibilidad componente-ubicación</li>
+ * <li>getNotGamma - Negación de compatibilidad componente-transporte</li>
+ * <li>getNotRho - Negación de técnica aplicada entre ubicaciones</li>
+ * </ul></p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see AssignLocationPLI
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

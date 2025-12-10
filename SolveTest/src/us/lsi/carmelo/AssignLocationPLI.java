@@ -1,5 +1,29 @@
 package us.lsi.carmelo;
 
+/**
+ * AssignLocationPLI
+ *
+ * <p>Clase para resolver el problema de asignación de componentes a ubicaciones
+ * con técnicas de transporte utilizando programación lineal entera (PLI) con Gurobi.</p>
+ *
+ * <p>Este problema implica asignar componentes a ubicaciones y seleccionar técnicas
+ * de transporte entre ubicaciones, minimizando costes, emisiones CO2 y tiempos,
+ * sujeto a restricciones de precedencia, compatibilidad y capacidad.</p>
+ *
+ * <p>El modelo considera:
+ * <ul>
+ * <li>N componentes que deben ser procesados</li>
+ * <li>L ubicaciones donde pueden procesarse</li>
+ * <li>T técnicas de transporte disponibles</li>
+ * <li>Relaciones de precedencia entre componentes</li>
+ * <li>Restricciones de compatibilidad (alpha, gamma, rho)</li>
+ * <li>Costes, emisiones CO2 y tiempos asociados</li>
+ * </ul></p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ */
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -156,6 +180,15 @@ public class AssignLocationPLI {
 	}
 
 	
+	/**
+	 * Lee y procesa un archivo de datos del problema de asignación.
+	 *
+	 * <p>El archivo debe contener secciones delimitadas por etiquetas como
+	 * #components, #locations, #transportation_techniques, #precedes, etc.</p>
+	 *
+	 * @param file ruta del archivo de datos a leer
+	 * @throws IllegalArgumentException si el archivo no existe o no tiene el formato correcto
+	 */
 	public static void leeFichero(String file) {
 		Scanner sc = null;
 		try {
@@ -365,6 +398,14 @@ public class AssignLocationPLI {
 
 	}
 	
+	/**
+	 * Ejecuta el modelo de asignación de ubicaciones y técnicas.
+	 *
+	 * <p>Lee el archivo de datos, genera el modelo PLI, lo resuelve con Gurobi
+	 * y muestra la solución óptima encontrada.</p>
+	 *
+	 * @throws IOException si hay error al leer/escribir archivos
+	 */
 	public static void asignLocTec_model() throws IOException {
 		AssignLocationPLI.leeFichero("ficheros/datos3comp.txt");
 		AuxGrammar.generate(AssignLocationPLI.class, "ficheros/asignLoc_cost_filters.lsi", "ficheros/asignLoc.lp");
@@ -378,6 +419,12 @@ public class AssignLocationPLI {
 		}
 	}
 
+	/**
+	 * Método principal para ejecutar el modelo de asignación.
+	 *
+	 * @param args argumentos de línea de comandos (no utilizados)
+	 * @throws IOException si hay error en la ejecución
+	 */
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		asignLocTec_model();
