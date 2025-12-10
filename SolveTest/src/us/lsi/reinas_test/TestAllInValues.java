@@ -13,8 +13,26 @@ import us.lsi.gurobi.GurobiSolution;
 import us.lsi.mochila_test.DataMochila;
 import us.lsi.solve_test.AuxGrammar;
 
+/**
+ * TestAllInValues
+ *
+ * <p>Clase de prueba avanzada para el problema de las N-Reinas usando
+ * restricciones AllInValues. Prueba la generación y resolución de modelos
+ * PLI con restricciones sobre conjuntos de valores.</p>
+ *
+ * <p>Valida el uso de restricciones AllInValues para garantizar que
+ * todas las reinas estén en posiciones válidas sin atacarse entre sí.</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see TestReinas
+ */
 public class TestAllInValues {
 	
+	/**
+	 * Prueba de índices y posiciones en el tablero.
+	 */
 	public static void test0() {
 		Integer n = 5;
 		for(int y= 0;y<n;y++)
@@ -22,6 +40,13 @@ public class TestAllInValues {
 				String2.toConsole("y=%d,x=%d,y-x=%d,y+x=%d",y,x,y-x,y+x);
 	}
 	
+	/**
+	 * Extrae el índice i de una cadena con formato "x_y_z".
+	 *
+	 * @param s cadena a procesar
+	 * @param i índice a extraer
+	 * @return el valor del índice i
+	 */
 	private static Integer index(String s, Integer i) {
 		Integer r = 0;
 		String[] p = s.split("_");
@@ -31,6 +56,12 @@ public class TestAllInValues {
 		return r;
 	}
 	
+	/**
+	 * Prueba de resolución del problema con AllInValues.
+	 *
+	 * @param file nombre del archivo de modelo
+	 * @throws IOException si hay error al leer/escribir archivos
+	 */
 	public static void test1(String file) throws IOException {
 		AuxGrammar.generate(DataMochila.class,"ficheros/"+file+".lsi","ficheros/"+file+".lp");
 		GurobiSolution s = GurobiLp.solveSolution("ficheros/"+file+".lp");

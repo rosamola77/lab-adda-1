@@ -13,9 +13,29 @@ import us.lsi.solve_test.AuxGrammar;
 import us.lsi.solve_test.AuxGrammar.ListString;
 import us.lsi.solve_test.AuxGrammar.Type;
 
-
+/**
+ * Test
+ *
+ * <p>Clase de prueba para el problema de la mochila usando Gurobi.
+ * Contiene múltiples métodos de test para validar la generación de
+ * modelos PLI y su resolución con el solver Gurobi.</p>
+ *
+ * <p>Incluye pruebas de conversión de tipos, generación de modelos,
+ * y resolución del problema de la mochila con diferentes configuraciones.</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see DataMochila
+ * @see us.lsi.gurobi.GurobiLp
+ */
 public class Test {
 	
+	/**
+	 * Ejecuta el test del problema de la mochila.
+	 *
+	 * @throws IOException si hay error en la generación o resolución
+	 */
 	public static void mochila() throws IOException {
 		DataMochila.iniMochila();
 		AuxGrammar.generate(DataMochila.class,"ficheros/mochila.lsi","ficheros/mochila.lp");
@@ -23,11 +43,22 @@ public class Test {
 		String2.toConsole(s.toString((k,v)->v>0));
 	}
 	
+	/**
+	 * Ejecuta un ejemplo de generación y resolución de modelo.
+	 *
+	 * @throws IOException si hay error en el procesamiento
+	 */
 	public static void example() throws IOException {
 		AuxGrammar.generate(DataMochila.class,"ficheros/model_3.txt","ficheros/model_3.lp");
 		GurobiLp.solve("ficheros/model_3.lp");
 	}
 
+	/**
+	 * Prueba de conversión de tipos en AuxGrammar.
+	 *
+	 * @throws NoSuchMethodException si no se encuentra el método
+	 * @throws SecurityException si hay problemas de seguridad
+	 */
 	public static void test1() throws NoSuchMethodException, SecurityException {
 		DataMochila.iniMochila();
 		AuxGrammar.dataClass = DataMochila.class;
