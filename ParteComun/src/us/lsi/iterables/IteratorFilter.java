@@ -1,5 +1,31 @@
 package us.lsi.iterables;
 
+/**
+ * IteratorFilter
+ *
+ * <p>Iterador que filtra elementos según un predicado, similar a la
+ * operación filter de Stream.</p>
+ *
+ * <p>Esta clase implementa el patrón Iterator y permite filtrar elementos
+ * manteniendo solo aquellos que cumplen con el predicado especificado.</p>
+ *
+ * <p>La implementación mantiene un elemento siguiente (ne) que se calcula
+ * de forma perezosa, asegurando eficiencia en el filtrado.</p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * Iterable<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+ * IteratorFilter<Integer> even = 
+ *     IteratorFilter.of(numbers.iterator(), n -> n % 2 == 0);
+ * }</p>
+ *
+ * @param <E> tipo de elementos del iterador
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ */
+
 import java.util.Iterator;
 import java.util.function.Predicate;
 

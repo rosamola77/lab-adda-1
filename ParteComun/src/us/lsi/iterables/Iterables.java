@@ -1,5 +1,33 @@
 package us.lsi.iterables;
 
+/**
+ * Iterables
+ *
+ * <p>Clase de utilidades para trabajar con iterables, proporcionando operaciones
+ * funcionales similares a las de Stream pero sobre iteradores.</p>
+ *
+ * <p>Proporciona métodos para:
+ * <ul>
+ * <li>Operaciones de transformación (map, flatMap)</li>
+ * <li>Operaciones de filtrado (filter, distinct)</li>
+ * <li>Operaciones de combinación (zip, cartesianProduct)</li>
+ * <li>Operaciones de agregación (reduce, collect)</li>
+ * <li>Operaciones de generación (range, enumerate, repeat)</li>
+ * <li>Operaciones de partición y agrupación</li>
+ * </ul></p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * Iterable<Integer> numbers = Iterables.range(1, 10);
+ * Iterable<Integer> even = Iterables.filter(numbers, n -> n % 2 == 0);
+ * List<Integer> result = Iterables.toList(even);
+ * }</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ */
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
