@@ -7,6 +7,24 @@ import java.util.stream.Stream;
 
 import us.lsi.math.Math2;
 
+/**
+ * Test2
+ *
+ * <p>Clase de prueba para verificar el funcionamiento de IteratorRangeInteger
+ * y demostrar operaciones con streams.</p>
+ *
+ * <p>Incluye métodos auxiliares para:
+ * <ul>
+ * <li>Generar cuadrados en un rango</li>
+ * <li>Filtrar múltiplos de un número</li>
+ * <li>Aplanar colecciones de conjuntos</li>
+ * <li>Generar números primos</li>
+ * </ul></p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ */
 public class Test2 {
 	
 	public static IntStream cuadrados(Integer a, Integer b){

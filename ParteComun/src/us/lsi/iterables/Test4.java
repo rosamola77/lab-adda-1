@@ -3,6 +3,31 @@ package us.lsi.iterables;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Test4
+ *
+ * <p>Clase de prueba completa para verificar diversas funcionalidades
+ * de la clase Iterables.</p>
+ *
+ * <p>Incluye pruebas de:
+ * <ul>
+ * <li>Conversiones a listas y conjuntos</li>
+ * <li>Agrupamientos por función clasificadora</li>
+ * <li>Conteo de elementos</li>
+ * <li>Búsquedas de primero y último</li>
+ * <li>Concatenación de strings</li>
+ * <li>Predicados all/none</li>
+ * <li>Algoritmos secuenciales</li>
+ * <li>Reducciones (reduce y reduceRight)</li>
+ * </ul></p>
+ *
+ * <p>También define un record Tm (Tuple de Matemáticas) e iterador Itm
+ * para demostrar el algoritmo de Euclides iterativo.</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ */
 public class Test4 {
 	
 	public static record Tm(Integer a, Integer b) {

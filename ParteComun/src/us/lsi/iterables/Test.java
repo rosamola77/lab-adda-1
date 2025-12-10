@@ -4,6 +4,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Test
+ *
+ * <p>Clase de prueba para verificar el funcionamiento de los iteradores
+ * IteratorFilter e IteratorFlatMap.</p>
+ *
+ * <p>Demuestra:
+ * <ul>
+ * <li>Filtrado de elementos negativos con IteratorFilter</li>
+ * <li>Aplanamiento de colecciones anidadas con IteratorFlatMap</li>
+ * </ul></p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ */
 public class Test {
 
 	public static void main(String[] args) {

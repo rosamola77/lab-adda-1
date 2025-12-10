@@ -4,6 +4,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Test3
+ *
+ * <p>Clase de prueba para verificar el funcionamiento de IteratorFlatMap
+ * con colecciones anidadas.</p>
+ *
+ * <p>Demuestra el aplanamiento de una lista de conjuntos en un único
+ * iterador secuencial de elementos.</p>
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ */
 public class Test3 {
 
 	public static void main(String[] args) {
