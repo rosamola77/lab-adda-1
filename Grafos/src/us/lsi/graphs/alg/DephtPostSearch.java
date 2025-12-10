@@ -15,6 +15,33 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.streams.Stream2;
 
+/**
+ * DephtPostSearch
+ *
+ * <p>Implementación de búsqueda en profundidad en postorden (DFS postorder).
+ * Este algoritmo recorre el grafo primero completando todos los subárboles
+ * antes de visitar un vértice, lo que resulta útil para ordenamiento
+ * topológico inverso.</p>
+ *
+ * <p>El postorden garantiza que un vértice se visita después de todos
+ * sus descendientes en el árbol de expansión DFS.</p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * EGraph<V,E> graph = ...;
+ * DephtPostSearch<V,E> dps = DephtPostSearch.of(graph, startVertex);
+ * dps.stream().forEach(v -> System.out.println(v));
+ * }</p>
+ *
+ * @param <V> tipo de los vértices
+ * @param <E> tipo de las aristas
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see DephtSearch
+ * @see EGraph
+ */
 public class DephtPostSearch<V, E> implements Iterator<V>, Iterable<V>  {
 	
 	/**

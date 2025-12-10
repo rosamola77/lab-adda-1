@@ -15,6 +15,37 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.streams.Stream2;
 
+/**
+ * TopologicalSearch
+ *
+ * <p>Implementación de búsqueda en orden topológico para grafos dirigidos acíclicos (DAG).
+ * El ordenamiento topológico es una ordenación lineal de los vértices tal que para cada
+ * arista dirigida (u,v), el vértice u aparece antes que v en la ordenación.</p>
+ *
+ * <p>Este algoritmo es fundamental para:
+ * <ul>
+ *   <li>Planificación de tareas con dependencias</li>
+ *   <li>Resolución de dependencias en compilación</li>
+ *   <li>Análisis de precedencias</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * EGraph<V,E> graph = ...;
+ * TopologicalSearch<V,E> ts = TopologicalSearch.topological(graph, startVertex);
+ * ts.stream().forEach(v -> System.out.println(v));
+ * }</p>
+ *
+ * @param <V> tipo de los vértices
+ * @param <E> tipo de las aristas
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see DephtPostSearch
+ * @see EGraph
+ */
 public class TopologicalSearch<V, E> implements Iterator<V>, Iterable<V> {
 	
 	/**
