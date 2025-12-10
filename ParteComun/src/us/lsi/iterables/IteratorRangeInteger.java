@@ -6,8 +6,38 @@ import java.util.stream.Stream;
 import us.lsi.common.Preconditions;
 import us.lsi.streams.Stream2;
 
+/**
+ * IteratorRangeInteger
+ *
+ * <p>Iterador que genera una secuencia aritmética de enteros.
+ * Produce enteros desde un valor inicial hasta un valor final (no incluido),
+ * con un incremento especificado.</p>
+ *
+ * <p>Permite crear rangos crecientes (incremento positivo) o decrecientes
+ * (incremento negativo).</p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * // Rango creciente: 0, 5, 10, 15, 20
+ * Iterable<Integer> rango1 = IteratorRangeInteger.of(0, 25, 5);
+ * 
+ * // Rango decreciente: 100, 93, 86, ..., 37
+ * Iterable<Integer> rango2 = IteratorRangeInteger.of(100, 35, -7);
+ * }</p>
+ *
+ * @author Miguel Toro
+ */
 public class IteratorRangeInteger implements Iterator<Integer>, Iterable<Integer> {
 	
+	/**
+	 * Crea un iterador de rango de enteros.
+	 *
+	 * @param a valor inicial (incluido)
+	 * @param b valor final (no incluido)
+	 * @param c incremento (positivo para creciente, negativo para decreciente)
+	 * @return el iterador de rango
+	 * @throws IllegalArgumentException si los parámetros no son consistentes
+	 */
 	public static IteratorRangeInteger of(Integer a, Integer b, Integer c) {
 		return new IteratorRangeInteger(a, b, c);
 	}

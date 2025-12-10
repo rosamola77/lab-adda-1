@@ -4,12 +4,42 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * IteratorDistinct
+ *
+ * <p>Iterador que elimina elementos duplicados de un iterable.
+ * Produce solo los elementos únicos, manteniendo el orden de primera
+ * aparición y descartando las ocurrencias subsiguientes de elementos
+ * ya vistos.</p>
+ *
+ * <p>Utiliza un conjunto interno para realizar un seguimiento de los
+ * elementos ya procesados, garantizando que cada elemento aparezca solo
+ * una vez en la secuencia resultante.</p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * List<Integer> lista = List.of(1, 2, 3, 2, 4, 1, 5);
+ * Iterable<Integer> unicos = IteratorDistinct.of(lista);
+ * // Produce: 1, 2, 3, 4, 5
+ * }</p>
+ *
+ * @param <E> tipo de elementos
+ *
+ * @author Miguel Toro
+ */
 public class IteratorDistinct<E> implements Iterator<E>,Iterable<E> {
 	
 	private Iterator<E> it;
 	private Set<E> set;
 	private E next;
 	
+	/**
+	 * Crea un iterador de elementos distintos.
+	 *
+	 * @param <E> tipo de elementos
+	 * @param iterable el iterable de entrada
+	 * @return iterador que produce solo elementos únicos
+	 */
 	public static <E> IteratorDistinct<E> of(Iterable<E> iterable) {
 		return new IteratorDistinct<E>(iterable);
 	}
