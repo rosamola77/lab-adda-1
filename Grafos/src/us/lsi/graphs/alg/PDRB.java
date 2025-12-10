@@ -23,6 +23,40 @@ import org.jgrapht.Graphs;
 import org.jgrapht.graph.GraphWalk;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
+/**
+ * PDRB (Programación Dinámica con Reducción y Backtracking)
+ *
+ * <p>Implementación híbrida que combina programación dinámica recursiva con
+ * técnicas de backtracking. Utiliza memoización para evitar recalcular
+ * subproblemas y poda para eliminar ramas no prometedoras.</p>
+ *
+ * <p>Características principales:
+ * <ul>
+ *   <li>Memoria de subproblemas resueltos (memoización)</li>
+ *   <li>Poda basada en cotas (upper/lower bounds)</li>
+ *   <li>Inicialización opcional con solución voraz</li>
+ *   <li>Soporta minimización, maximización y búsqueda de todas las soluciones</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * EGraph<V,E> graph = ...;
+ * PDRB<V,E,S> pdrb = PDRB.ofGreedy(graph);
+ * Optional<GraphPath<V,E>> path = pdrb.search();
+ * }</p>
+ *
+ * @param <V> tipo de los vértices
+ * @param <E> tipo de las aristas
+ * @param <S> tipo de la solución
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see PDR
+ * @see BT
+ * @see EGraph
+ */
 public class PDRB<V, E, S> {
 	
 	public static <V, E, S> PDRB<V, E, S> ofGreedy(EGraph<V, E> graph) {
