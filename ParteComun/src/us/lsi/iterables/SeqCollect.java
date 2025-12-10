@@ -4,12 +4,45 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
 
+/**
+ * SeqCollect
+ *
+ * <p>Utilidades para realizar operaciones de recolección (collect) y
+ * reducción (reduce) sobre iteradores de forma secuencial.</p>
+ *
+ * <p>Proporciona implementaciones tanto iterativas como recursivas de
+ * acumulación por la izquierda y por la derecha, así como operaciones
+ * de reducción usando operadores binarios.</p>
+ *
+ * <p>Operaciones disponibles:</p>
+ * <ul>
+ * <li>seqCollectLeft: Acumulación secuencial por la izquierda (iterativa)</li>
+ * <li>seqCollectLeftRecursivo: Acumulación por la izquierda (recursiva)</li>
+ * <li>seqCollectRight: Acumulación secuencial por la derecha</li>
+ * <li>reduceLeft: Reducción por la izquierda</li>
+ * <li>reduceRight: Reducción por la derecha</li>
+ * </ul>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * Iterator<Integer> nums = List.of(1, 2, 3, 4, 5).iterator();
+ * Optional<Integer> suma = SeqCollect.reduceLeft(nums, Integer::sum);
+ * // Resultado: 15
+ * }</p>
+ *
+ * @author Miguel Toro
+ */
 public class SeqCollect {
 	
 	/**
-	 * @param s Un iterador
-	 * @param a Un acumulador secuencial
-	 * @return El resultado de acumular secuencialmente por la izquierda implementado de forma iterativa
+	 * Acumula secuencialmente por la izquierda de forma iterativa.
+	 *
+	 * @param <E> tipo de elementos del iterador
+	 * @param <B> tipo del acumulador intermedio
+	 * @param <R> tipo del resultado final
+	 * @param s el iterador de entrada
+	 * @param a el acumulador secuencial
+	 * @return el resultado de acumular secuencialmente por la izquierda
 	 */
 	public static <E,B,R> R seqCollectLeft(Iterator<E> s, SeqCollector<E,B,R> a) {
 		B b = a.supplier().get();
@@ -21,9 +54,14 @@ public class SeqCollect {
 	}
 	
 	/**
-	 * @param s Un iterador
-	 * @param a Un acumulador secuencial
-	 * @return El resultado de acumular secuencialmente implementado de forma recursiva
+	 * Acumula secuencialmente por la izquierda de forma recursiva.
+	 *
+	 * @param <E> tipo de elementos del iterador
+	 * @param <B> tipo del acumulador intermedio
+	 * @param <R> tipo del resultado final
+	 * @param s el iterador de entrada
+	 * @param a el acumulador secuencial
+	 * @return el resultado de acumular secuencialmente por la izquierda
 	 */
 	public static <E,B,R> R seqCollectLeftRecursivo(Iterator<E> s, SeqCollector<E,B,R> a) {
 		B b = a.supplier().get();
@@ -41,9 +79,12 @@ public class SeqCollect {
 	}
 	
 	/**
-	 * @param s Un iterador
-	 * @param op Un operador binario
-	 * @return El resultado de acumular por la izquierda secuencialmente s mediante op (reducir por la izquierda)
+	 * Reduce por la izquierda secuencialmente usando un operador binario.
+	 *
+	 * @param <E> tipo de elementos
+	 * @param s el iterador de entrada
+	 * @param op el operador binario para la reducción
+	 * @return Optional con el resultado de la reducción, o vacío si el iterador está vacío
 	 */
 	public static <E> Optional<E> reduceLeft(Iterator<E> s, BinaryOperator<E> op) {
 		if(!s.hasNext()) return Optional.empty();
@@ -56,9 +97,14 @@ public class SeqCollect {
 	}
 	
 	/**
-	 * @param s Un iterador
-	 * @param a Un acumulador secuencial
-	 * @return El resultado de acumular secuencialmente por la derecha 
+	 * Acumula secuencialmente por la derecha.
+	 *
+	 * @param <E> tipo de elementos del iterador
+	 * @param <B> tipo del acumulador intermedio
+	 * @param <R> tipo del resultado final
+	 * @param s el iterador de entrada
+	 * @param a el acumulador secuencial
+	 * @return el resultado de acumular secuencialmente por la derecha
 	 */
 	public static <E,B,R> R seqCollectRight(Iterator<E> s, SeqCollector<E,B,R> a) {
 		B b = seqCollectRightP(s,a);
@@ -78,9 +124,12 @@ public class SeqCollect {
 	}
 
 	/**
-	 * @param s Un iterador
-	 * @param op Un operador binario
-	 * @return El resultado de acumular por la derecha s mediante op (reducir por la derecha)
+	 * Reduce por la derecha secuencialmente usando un operador binario.
+	 *
+	 * @param <E> tipo de elementos
+	 * @param s el iterador de entrada
+	 * @param op el operador binario para la reducción
+	 * @return Optional con el resultado de la reducción, o vacío si el iterador está vacío
 	 */
 	public static <E> Optional<E> reduceRight(Iterator<E> s, BinaryOperator<E> op) {
 		if(!s.hasNext()) return Optional.empty();
