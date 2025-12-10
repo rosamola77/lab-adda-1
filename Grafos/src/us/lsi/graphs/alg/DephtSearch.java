@@ -13,14 +13,50 @@ import org.jgrapht.Graphs;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.streams.Stream2;
 
+/**
+ * DephtSearch
+ *
+ * <p>Implementación del algoritmo de búsqueda en profundidad (DFS - Depth-First Search)
+ * en preorden para recorrer grafos. Explora el grafo siguiendo un camino hasta el
+ * final antes de retroceder y explorar otras alternativas.</p>
+ *
+ * <p>Características:
+ * <ul>
+ * <li>Utiliza una pila (Stack) para mantener el orden de exploración</li>
+ * <li>Realiza un recorrido en preorden (visita el vértice antes que sus descendientes)</li>
+ * <li>Implementa Iterator e Iterable para permitir recorridos</li>
+ * <li>Mantiene un mapa de aristas al origen para reconstruir caminos</li>
+ * <li>Útil para detectar ciclos y ordenación topológica</li>
+ * </ul></p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * EGraph<V,E> graph = ...;
+ * DephtSearch<V,E> dfs = DephtSearch.of(graph, startVertex);
+ * for (V vertex : dfs) {
+ *     System.out.println(vertex);
+ * }
+ * }</p>
+ *
+ * @param <V> tipo de los vértices
+ * @param <E> tipo de las aristas
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see EGraph
+ * @see DephtPostSearch
+ */
 public class DephtSearch<V, E> implements Iterator<V>, Iterable<V> {
 	
 	/**
-	 * @param <V> El tipo de los v&eacute;rtices
-	 * @param <E> El tipo de las aristas
-	 * @param g Un grafo 
-	 * @param startVertex El v�rtice inicial
-	 * @return Una algoritmo de b&uacute;squeda en profundidad en preorden
+	 * Crea un nuevo algoritmo de búsqueda en profundidad en preorden.
+	 *
+	 * @param <V> tipo de los vértices
+	 * @param <E> tipo de las aristas
+	 * @param g grafo sobre el que realizar la búsqueda
+	 * @param startVertex vértice inicial desde donde comenzar la búsqueda
+	 * @return una nueva instancia de DephtSearch configurada
 	 */
 	public static <V, E> DephtSearch<V, E> of(EGraph<V, E> g, V startVertex) {
 		return new DephtSearch<V, E>(g, startVertex);

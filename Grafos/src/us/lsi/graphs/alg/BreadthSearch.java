@@ -16,14 +16,48 @@ import org.jgrapht.Graphs;
 import us.lsi.graphs.virtual.EGraph;
 import us.lsi.streams.Stream2;
 
+/**
+ * BreadthSearch
+ *
+ * <p>Implementación del algoritmo de búsqueda en anchura (BFS - Breadth-First Search)
+ * para recorrer grafos. Explora el grafo nivel por nivel, visitando todos los
+ * vecinos de un vértice antes de pasar a los vecinos de los vecinos.</p>
+ *
+ * <p>Características:
+ * <ul>
+ * <li>Utiliza una cola FIFO para mantener el orden de exploración</li>
+ * <li>Garantiza encontrar el camino más corto en grafos no ponderados</li>
+ * <li>Implementa Iterator e Iterable para permitir recorridos</li>
+ * <li>Mantiene un mapa de aristas al origen para reconstruir caminos</li>
+ * </ul></p>
+ *
+ * <p>Ejemplo de uso:
+ * {@code
+ * EGraph<V,E> graph = ...;
+ * BreadthSearch<V,E> bfs = BreadthSearch.of(graph, startVertex);
+ * for (V vertex : bfs) {
+ *     System.out.println(vertex);
+ * }
+ * }</p>
+ *
+ * @param <V> tipo de los vértices
+ * @param <E> tipo de las aristas
+ *
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * @see EGraph
+ */
 public class BreadthSearch<V,E> implements Iterator<V>, Iterable<V> {
 	
 	/**
-	 * @param <V> El tipo de los v&eacute;rtices
-	 * @param <E> El tipo de las aristas
-	 * @param g Un grafo 
-	 * @param startVertex El v�rtice inicial
-	 * @return Una algoritmo de b&uacute;squeda en anchura
+	 * Crea un nuevo algoritmo de búsqueda en anchura.
+	 *
+	 * @param <V> tipo de los vértices
+	 * @param <E> tipo de las aristas
+	 * @param g grafo sobre el que realizar la búsqueda
+	 * @param startVertex vértice inicial desde donde comenzar la búsqueda
+	 * @return una nueva instancia de BreadthSearch configurada
 	 */
 	public static <V, E> BreadthSearch<V, E> of(EGraph<V, E> g, V startVertex) {
 		return new BreadthSearch<V, E>(g, startVertex);
