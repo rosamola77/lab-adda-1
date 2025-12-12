@@ -1,15 +1,56 @@
 package us.lsi.geometria;
 
+/**
+ * Segmento2D
+ * 
+ * <p>Representa un segmento de recta en el plano bidimensional definido por dos puntos extremos.
+ * Proporciona operaciones para calcular la longitud y realizar transformaciones geométricas.</p>
+ * 
+ * <p>Operaciones soportadas:
+ * <ul>
+ *   <li>Cálculo de longitud del segmento</li>
+ *   <li>Traslación, rotación y homotecia</li>
+ *   <li>Proyección y simetría respecto a rectas</li>
+ * </ul></p>
+ * 
+ * @param p1 primer punto extremo del segmento
+ * @param p2 segundo punto extremo del segmento
+ * 
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ * 
+ * @see Punto2D
+ * @see Vector2D
+ * @see ObjetoGeometrico2D
+ */
 public record Segmento2D(Punto2D p1, Punto2D p2) implements ObjetoGeometrico2D {
 	
+	/**
+	 * Crea un segmento con los puntos extremos especificados.
+	 * 
+	 * @param p1 primer punto extremo
+	 * @param p2 segundo punto extremo
+	 * @return un nuevo segmento
+	 */
 	public static Segmento2D of(Punto2D p1, Punto2D p2) {
 		return new Segmento2D(p1, p2);
 	}
 
+	/**
+	 * Obtiene el vector director del segmento (de p1 a p2).
+	 * 
+	 * @return el vector director del segmento
+	 */
 	public Vector2D vector() {
 		return Vector2D.of(this.p1, this.p2);
 	}
 
+	/**
+	 * Calcula la longitud del segmento.
+	 * 
+	 * @return la longitud del segmento
+	 */
 	public Double longitud() {
 		return p1.distanciaA(p2);
 	}
