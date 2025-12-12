@@ -4,6 +4,24 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * VirtualVertex
+ * 
+ * <p>Interfaz que representa un vértice en un grafo virtual. Los vértices virtuales
+ * generan dinámicamente sus vecinos y aristas a través de acciones.</p>
+ * 
+ * <p>Un grafo virtual no almacena explícitamente todos los vértices y aristas,
+ * sino que los genera bajo demanda cuando se exploran. Esto es útil para
+ * grafos de gran tamaño o infinitos.</p>
+ * 
+ * @param <V> el tipo de vértice virtual
+ * @param <E> el tipo de arista con acción
+ * @param <A> el tipo de acción
+ * 
+ * @author Miguel Toro
+ * @version 1.0
+ * @since 1.0
+ */
 public interface VirtualVertex<V extends VirtualVertex<V, E, A>, E extends SimpleEdgeAction<V, A>, A> {
 
 	/**
