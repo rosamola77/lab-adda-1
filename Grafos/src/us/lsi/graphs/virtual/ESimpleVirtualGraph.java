@@ -13,25 +13,26 @@ import us.lsi.path.EGraphPath;
 import us.lsi.path.EGraphPath.PathType;
 
 /**
- * <p> Implementaci�n de un grafo virtual simple 
- * Asumimos que los v�rtices son subtipo de VirtualVertex &lt; V,E &gt;
- * Asumimos que las aristas son subtipos de SimpleEdge &lt; V &gt; 
- * </p>
+ * ESimpleVirtualGraph
+ *
+ * <p>Implementación de un grafo virtual simple.
+ * Asumimos que los vértices son subtipo de VirtualVertex &lt; V,E &gt;
+ * y las aristas son subtipos de SimpleEdgeAction &lt; V &gt;.</p>
  * 
- * <p> El grafo es inmutable por lo que no est�n permitadas las operaci�n de modificaci�n. Tampoco
- * est�n permitidas las operaciones de consulta de todos los v�rtices o todas las aristas.
- *  Si se invocan alguna de ellas se disparar� 
- * la excepci�n UnsupportedOperationException </p>
+ * <p>El grafo es inmutable por lo que no están permitadas las operaciones de modificación. Tampoco
+ * están permitadas las operaciones de consulta de todos los vértices o todas las aristas.
+ * Si se invocan alguna de ellas se disparará la excepción UnsupportedOperationException.</p>
+ * 
+ * <p>Los vértices y aristas se generan dinámicamente bajo demanda mediante
+ * las interfaces VirtualVertex y Action.</p>
+ *
+ * @param <V> tipo de los vértices (debe implementar VirtualVertex)
+ * @param <E> tipo de las aristas (debe implementar SimpleEdgeAction)
  * 
  * @see us.lsi.graphs.virtual.VirtualVertex
- * 
- * 
+ * @see us.lsi.graphs.virtual.Action
  * 
  * @author Miguel Toro
- *
- * @param <V> El tipo de los v�rtices
- * @param <E> El tipo de las aristas
- * 
  */
 public class ESimpleVirtualGraph<V extends VirtualVertex<V,E,?>, E extends SimpleEdgeAction<V,?>> 
 		implements EGraph<V,E> {
