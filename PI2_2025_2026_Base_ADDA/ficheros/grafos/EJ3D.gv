@@ -1,0 +1,23 @@
+strict graph G {
+  1 [ color="black" label="inv-1" ];
+  2 [ color="black" label="inv-2" ];
+  3 [ color="black" label="inv-3" ];
+  4 [ color="black" label="inv-4" ];
+  5 [ color="black" label="inv-5" ];
+  6 [ color="black" label="inv-6" ];
+  7 [ color="black" label="inv-7" ];
+  8 [ color="black" label="inv-8" ];
+  9 [ color="black" label="inv-9" ];
+  1 -- 6 [ color="magenta" label="3" ];
+  1 -- 2 [ color="magenta" label="5" ];
+  1 -- 4 [ label="7" ];
+  4 -- 7 [ label="6" ];
+  4 -- 5 [ label="3" ];
+  4 -- 6 [ label="5" ];
+  5 -- 8 [ label="4" ];
+  6 -- 9 [ label="3" ];
+  6 -- 7 [ color="magenta" label="6" ];
+  7 -- 8 [ color="magenta" label="6" ];
+  7 -- 9 [ label="2" ];
+  2 -- 3 [ color="magenta" label="1" ];
+}

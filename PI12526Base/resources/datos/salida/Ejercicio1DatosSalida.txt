@@ -1,0 +1,6 @@
+6=[rapiña], 7=[erapiña], 8=[perapiña]
+7=[iamelon, 12melon, 12melon], 9=[ia12melon], 11=[sandiamelon]
+8=[onaranja], 12=[mangonaranja]
+5=[9kiwi], 6=[gokiwi], 7=[igokiwi, go9kiwi], 8=[higokiwi]
+7=[telimon, 24limon], 9=[matelimon, te24limon], 11=[tomatelimon]
+7=[5frutas, 5frutas], 9=[521frutas], 10=[zumofrutas], 12=[zumo15frutas]

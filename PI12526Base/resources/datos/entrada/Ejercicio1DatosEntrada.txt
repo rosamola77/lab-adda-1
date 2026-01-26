@@ -1,0 +1,6 @@
+5,pera,10,piña,20
+10,sandia,20,melon,30
+4,mango,8,naranja,16
+5,higo,15,kiwi,25
+20,tomate,30,limon,40
+15,zumo,25,frutas,50

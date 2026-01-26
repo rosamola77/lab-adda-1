@@ -1,0 +1,10 @@
+# Eclipse-specific files
+
+# Compiled files
+*.class
+bin/
+target/
+
+# Operating system files
+.DS_Store
+Thumbs.db
